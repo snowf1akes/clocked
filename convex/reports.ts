@@ -59,7 +59,13 @@ export const list = query({
       .withIndex("by_owner", (q) => q.eq("owner", user.tokenIdentifier))
       .order("desc")
       .take(50);
-    return rows.map(({ report: _, ...summary }) => summary);
+    // the list view only needs a summary, never the whole report
+    return rows.map(({ report, ...summary }) => ({
+      ...summary,
+      overall: (report?.overall_risk as string | undefined) ?? null,
+      pay: typeof report?.offer?.total_pay_usd === "number" ? (report.offer.total_pay_usd as number) : null,
+      titles: Array.isArray(report?.flags) ? (report.flags as { title: string }[]).slice(0, 3).map((f) => f.title) : [],
+    }));
   },
 });
 

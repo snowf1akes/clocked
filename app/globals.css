@@ -1,41 +1,59 @@
 :root {
-  --bg: #faf8f5;
-  --card: #ffffff;
-  --ink: #1d1a17;
-  --muted: #6b645c;
-  --line: #e7e1d9;
-  --red: #c2321f;
-  --red-bg: #fdecea;
-  --amber: #a15c00;
-  --amber-bg: #fff3df;
-  --green: #1f7a4d;
-  --accent: #3b2fd6;
-  color-scheme: light dark;
-}
+  --canvas: #f7f6f9;
+  --surface: #ffffff;
+  --ink: #1c1622;
+  --ink-2: #463f4f;
+  --muted: #6b6374;
+  --line: #e9e5ee;
+  --line-strong: #dcd6e3;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #141210;
-    --card: #1e1b18;
-    --ink: #f2eee9;
-    --muted: #a39b91;
-    --line: #34302b;
-    --red: #ff7a66;
-    --red-bg: #3a1a15;
-    --amber: #ffb547;
-    --amber-bg: #3a2a10;
-    --green: #5fd49a;
-    --accent: #9d95ff;
-  }
+  --side: #221a2a;
+  --side-raise: #2e2437;
+  --side-ink: #f4eef7;
+  --side-muted: #b3a9bd;
+
+  --pink: #ff4f8a;
+  --pink-press: #f23a79;
+  --pink-soft: #fde6ef;
+  --pink-ink: #9c1f50;
+  --lav: #efebf6;
+
+  --red: #c0302a;
+  --red-soft: #fdecea;
+  --amber: #8f5300;
+  --amber-soft: #fff2dc;
+  --green: #1b7349;
+  --green-soft: #e3f4ea;
+
+  --radius: 16px;
+  --shadow: 0 1px 2px rgb(34 26 42 / 0.05), 0 8px 24px -12px rgb(34 26 42 / 0.12);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color-scheme: light;
+  accent-color: var(--pink);
 }
 
 * { box-sizing: border-box; margin: 0; }
 
+html { -webkit-text-size-adjust: 100%; }
+
 body {
-  background: var(--bg);
+  background: var(--canvas);
   color: var(--ink);
-  font: 16px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font: 400 1rem/1.55 var(--font-body), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
 }
 
-button { font: inherit; cursor: pointer; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:disabled { cursor: default; }
+
+::selection { background: var(--pink-soft); color: var(--pink-ink); }
+
+:focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; border-radius: 8px; }
+
+html { scrollbar-color: var(--line-strong) transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; }
+}
