@@ -40,13 +40,15 @@ At a high level, Clocked is a Next.js app on Vercel, a Convex database, Auth0 si
 
 TECH STACK
 
-• Frontend: Next.js 16, React 19, TypeScript. One page with three views.
-• Sign-in: Auth0. Sign-in token, checked on the server with jose.
-• Backend: Vercel functions (Node + Python). The scan route, and PDF reading with PyMuPDF.
-• Contract AI: Claude Opus 5.5, structured JSON output, no tools. Two reading passes per contract.
-• Database: Convex. Reports per user, daily scan count, live list, hourly auto-delete.
-• Market research: Apify: reddit-scraper-lite, upwork-job-scraper. 4 runs, 1,050 posts and jobs.
-• Data labeling: Claude Opus 5.5 (offline scripts). Labels each price and complaint; code checks every label.
+Sponsor technologies first.
+
+• Apify (market research): reddit-scraper-lite and upwork-job-scraper actors, started and polled through the Apify REST API. 4 runs, 1,050 posts and job posts. Powers an automated research pipeline: scrape → PII scrubbing → AI price extraction → code fact-check → market benchmarks.
+• Convex (database and live backend): per-user reports with owner-scoped functions, a daily scan quota, a live-updating scan list, and an hourly cron that auto-deletes expired reports.
+• Anthropic Claude Opus 5.5 (the AI layer): a multi-pass AI workflow. Two structured-output passes per contract run in parallel (unfair terms, then vague wording), tool-free by design, with every answer fact-checked by code. Offline, the same model extracts prices and classifies community complaints.
+• Auth0 (sign-in): JWT-based sign-in, tokens kept in memory, verified server-side against Auth0's JWKS with jose.
+• Next.js 16 + React 19 + TypeScript on Vercel: one page with three views; a Node function runs the scan and a Python function (PyMuPDF) reads PDFs and detects hidden text.
+• Deterministic verification layer (our code): hidden-text stripping, PII scrubbing, quote-in-contract checks, case lookup by clause type, and a pure-math Pay Checker with 11 tests. The model reads language; code decides numbers and rules.
+
 APIFY: THE MARKET RESEARCH PIPELINE
 
 Nobody publishes UGC rates, so we built the dataset ourselves.
