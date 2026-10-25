@@ -1,7 +1,7 @@
 "use client";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useConvexAuth, useMutation, useQuery } from "convex/react";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import type { Verdict } from "@/lib/rate";
@@ -71,9 +71,9 @@ export default function Home() {
     }
   }
 
-  async function demo() {
-    const blob = await (await fetch("/demo-contract.pdf")).blob();
-    scan(new File([blob], "demo-contract.pdf", { type: "application/pdf" }));
+  async function demo(name: string) {
+    const blob = await (await fetch(`/${name}`)).blob();
+    scan(new File([blob], name, { type: "application/pdf" }));
   }
 
   return (
@@ -118,9 +118,14 @@ export default function Home() {
           />
           <span>{busy ? "Reading your contract…" : "Upload a contract PDF or snap a photo"}</span>
         </label>
-        <button className={s.ghost} onClick={demo} disabled={busy}>
-          Try the demo contract
-        </button>
+        <span className={s.demos}>
+          <button className={s.ghost} onClick={() => demo("demo-contract.pdf")} disabled={busy}>
+            Demo: obvious traps
+          </button>
+          <button className={s.ghost} onClick={() => demo("demo-subtle.pdf")} disabled={busy}>
+            Demo: subtle wording
+          </button>
+        </span>
       </section>
       )}
 
@@ -168,8 +173,9 @@ function Report({ r }: { r: Result }) {
               {v.underpaid_by > 0 ? `This deal underpays you by ${usd(v.underpaid_by)}` : "The pay is at or above market"}
             </h2>
             <p>
-              {usd(v.offer_per_video)} per video. Only {v.percentile}% of {v.n} rates creators reported were lower. Typical range: {usd(v.p25)}–{usd(v.p75)} per video.
+              {usd(v.offer_per_video)} per video. Only {v.percentile}% of {v.n} {v.compared_to ?? "UGC deals"} creators reported were lower. Typical range: {usd(v.p25)}–{usd(v.p75)} per video.
             </p>
+            {v.category_note && <p className={s.note}>{v.category_note}</p>}
             {r.brand_posts && (
               <p className={s.note}>
                 Brands posting UGC jobs on Upwork offer a median of {usd(r.brand_posts.median)} per video ({r.brand_posts.n} jobs). That gap is why creators get lowballed.
@@ -188,29 +194,17 @@ function Report({ r }: { r: Result }) {
         )}
       </section>
 
-      <section>
-        <h2 className={s.h2}>
-          {r.flags.length} red flag{r.flags.length === 1 ? "" : "s"}
-        </h2>
-        <div className={s.flags}>
-          {r.flags.map((f, i) => (
-            <article key={i} className={s.flag} data-sev={f.severity}>
-              <p className={s.sev}>{f.severity} risk</p>
-              <h3>{f.title}</h3>
-              <blockquote>&ldquo;{f.quote}&rdquo;</blockquote>
-              <dl>
-                <dt>What it means</dt>
-                <dd>{f.meaning}</dd>
-                <dt>What could happen</dt>
-                <dd>{f.risk}</dd>
-                <dt>Ask for instead</dt>
-                <dd>{f.ask}</dd>
-              </dl>
-              {LAW_NOTE[f.category] && <p className={s.law}>{LAW_NOTE[f.category]}</p>}
-            </article>
-          ))}
-        </div>
-      </section>
+      <Flags
+        title="Clearly unfair"
+        note="Terms that take something from you as written."
+        flags={r.flags.filter((f) => f.tier !== "vague")}
+      />
+      <Flags
+        title="Looks fine, reads against you"
+        note="Small wording choices that a brand could use against you later. These are the ones people miss."
+        flags={r.flags.filter((f) => f.tier === "vague")}
+      />
+
 
       {r.timeline.length > 0 && (
         <section>
@@ -290,5 +284,83 @@ function History({ openId, onOpen }: { openId: Id<"reports"> | null; onOpen: (id
         ))}
       </ul>
     </section>
+  );
+}
+
+function Flags({ title, note, flags }: { title: string; note: string; flags: ScanFlag[] }) {
+  if (!flags.length) return null;
+  return (
+    <section>
+      <h2 className={s.h2}>
+        {title} <span className={s.count}>{flags.length}</span>
+      </h2>
+      <p className={s.note}>{note}</p>
+      <div className={s.flags}>
+        {flags.map((f, i) => (
+          <article key={i} className={s.flag} data-sev={f.severity}>
+            <p className={s.sev}>{f.severity} risk</p>
+            <h3>{f.title}</h3>
+            {f.standard ? (
+              <div className={s.diff}>
+                <p>
+                  <span className={s.label}>Your contract</span>
+                  <Changed a={f.quote} b={f.standard} />
+                </p>
+                <p className={s.fair}>
+                  <span className={s.label}>Fair version</span>
+                  <Changed a={f.standard} b={f.quote} />
+                </p>
+              </div>
+            ) : (
+              <blockquote>&ldquo;{f.quote}&rdquo;</blockquote>
+            )}
+            <dl>
+              <dt>What it means</dt>
+              <dd>{f.meaning}</dd>
+              <dt>What could happen</dt>
+              <dd>{f.risk}</dd>
+              <dt>Ask for instead</dt>
+              <dd>{f.ask}</dd>
+            </dl>
+            {LAW_NOTE[f.category] && <p className={s.law}>{LAW_NOTE[f.category]}</p>}
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// Shows `a` with the words that are not in `b` highlighted (longest common word sequence).
+function Changed({ a, b }: { a: string; b: string }) {
+  const A = a.split(/\s+/);
+  const B = b.split(/\s+/);
+  const key = (w: string) => w.toLowerCase().replace(/[^\w$%]/g, "");
+  const L = Array.from({ length: A.length + 1 }, () => new Array<number>(B.length + 1).fill(0));
+  for (let i = A.length - 1; i >= 0; i--)
+    for (let j = B.length - 1; j >= 0; j--)
+      L[i][j] = key(A[i]) === key(B[j]) ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
+  const out: { w: string; on: boolean }[] = [];
+  let i = 0;
+  let j = 0;
+  while (i < A.length) {
+    if (j < B.length && key(A[i]) === key(B[j])) {
+      out.push({ w: A[i], on: false });
+      i++;
+      j++;
+    } else if (j < B.length && L[i][j + 1] >= L[i + 1][j]) {
+      j++;
+    } else {
+      out.push({ w: A[i], on: true });
+      i++;
+    }
+  }
+  return (
+    <>
+      {out.map((t, i) => (
+        <Fragment key={i}>
+          {t.on ? <mark>{t.w}</mark> : t.w}{" "}
+        </Fragment>
+      ))}
+    </>
   );
 }

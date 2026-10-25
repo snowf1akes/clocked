@@ -3,12 +3,10 @@
 // Run: node --env-file=.env.local scripts/clean.ts
 import Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
-import { existsSync } from "node:fs";
-import { readFile, writeFile } from "node:fs/promises";
+import { readdir, readFile, writeFile } from "node:fs/promises";
 import { z } from "zod";
-import type { RateRow } from "../lib/rate.ts";
+import { COMPANY_TYPES, type RateRow } from "../lib/rate.ts";
 
-const SOURCES = ["reddit", "upwork", "fiverr"] as const;
 type Item = { source: RateRow["source"]; url: string; text: string };
 
 const Rows = z.object({
@@ -17,6 +15,7 @@ const Rows = z.object({
     per_video_usd: z.number(),
     paid_usage_addon_pct: z.number().nullable(),
     perpetual_addon_pct: z.number().nullable(),
+    category: z.enum(COMPANY_TYPES),
     quote: z.string(),
   })),
 });
@@ -30,16 +29,21 @@ Return a row only for items that state a concrete price a brand paid, offered, o
 - per_video_usd: base price for ONE video in USD. Divide a package price by its number of videos. If usage or ad rights are priced separately, leave them out of the base. If the number of videos is unclear, skip the item.
 - paid_usage_addon_pct: extra percent of base charged for paid-ad / whitelisting / Spark ads rights, if the item states one (e.g. "+30% for 30 days paid usage" -> 30; "$150 video, $75 for paid usage" -> 50). Else null.
 - perpetual_addon_pct: extra percent of base charged for forever / perpetual usage, if stated. Else null.
+- category: what the brand in this deal sells. education_study = study tools, tutoring, language and edtech apps; tech_apps = other software, AI tools, gadgets; beauty_skincare includes haircare and makeup; health_fitness includes supplements and wellness. Use "other" when the item doesn't say or hint at it. Do not guess from the subreddit.
 - quote: copy the exact words from the item that give the price, at most 30 words. Do not paraphrase.`;
 
 const pick = (o: Record<string, unknown>, keys: string[]) => keys.map((k) => o[k]).find((v) => typeof v === "string" && v) as string | undefined;
 
 async function load(): Promise<Item[]> {
   const items: Item[] = [];
-  for (const source of SOURCES) {
-    const file = `data/raw/${source}.json`;
-    if (!existsSync(file)) continue;
-    for (const o of JSON.parse(await readFile(file, "utf8")) as Record<string, unknown>[]) {
+  const seen = new Set<string>();
+  // data/raw/<source>[_anything].json, e.g. reddit.json, reddit_brands.json, upwork.json
+  for (const name of (await readdir("data/raw")).filter((f) => f.endsWith(".json"))) {
+    const source = name.split(/[_.]/)[0] as RateRow["source"];
+    for (const o of JSON.parse(await readFile(`data/raw/${name}`, "utf8")) as Record<string, unknown>[]) {
+      const key = String(o.id ?? o.url ?? JSON.stringify(o).slice(0, 200));
+      if (seen.has(key)) continue; // the same post often comes back from several searches
+      seen.add(key);
       // keep every short scalar field: the actors name things differently and change them
       const text = Object.entries(o)
         .filter(([k, v]) => k !== "html" && (typeof v === "string" && v.length < 4000) || typeof v === "number")
@@ -76,14 +80,14 @@ async function main() {
         const it = items[r.index];
         if (!it || !idx.includes(r.index) || !norm(it.text).includes(norm(r.quote))) continue;
         if (!(r.per_video_usd >= 10 && r.per_video_usd <= 5000)) continue;
-        out.push({ source: it.source, url: it.url, per_video_usd: r.per_video_usd, paid_usage_addon_pct: r.paid_usage_addon_pct, perpetual_addon_pct: r.perpetual_addon_pct, quote: r.quote });
+        out.push({ source: it.source, url: it.url, per_video_usd: r.per_video_usd, paid_usage_addon_pct: r.paid_usage_addon_pct, perpetual_addon_pct: r.perpetual_addon_pct, quote: r.quote, category: r.category });
       }
     }));
     console.log(`batches ${Math.min(b + 5, batches.length)}/${batches.length}, ${out.length} rows`);
   }
   await writeFile("data/rates.json", JSON.stringify(out, null, 1));
   const c = (f: (r: RateRow) => boolean) => out.filter(f).length;
-  console.log(`${out.length} rows -> data/rates.json | reddit ${c((r) => r.source === "reddit")}, upwork ${c((r) => r.source === "upwork")} | paid add-on stated ${c((r) => r.paid_usage_addon_pct !== null)}, forever add-on stated ${c((r) => r.perpetual_addon_pct !== null)}`);
+  console.log(`${out.length} rows -> data/rates.json | reddit ${c((r) => r.source === "reddit")}, upwork ${c((r) => r.source === "upwork")} | ${COMPANY_TYPES.map((t) => `${t} ${c((r) => r.category === t && r.source !== "upwork")}`).join(", ")} (creator rates) | paid add-on stated ${c((r) => r.paid_usage_addon_pct !== null)}, forever add-on stated ${c((r) => r.perpetual_addon_pct !== null)}`);
 }
 
 main();

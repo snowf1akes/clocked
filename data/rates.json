@@ -1,51 +1,12 @@
 [
  {
   "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1vbfif0/need_advice_as_a_seasoned_ugc_creator/",
-  "per_video_usd": 375,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "I charge $250–500/video."
- },
- {
-  "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1vbfif0/need_advice_as_a_seasoned_ugc_creator/p0wd087/",
-  "per_video_usd": 250,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "The $250 rate was for a longtime client, ongoing, and they did the editing."
- },
- {
-  "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1vikz7i/am_i_being_lowballed/p2ex26o/",
-  "per_video_usd": 30,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "Campaigns that pay $30+ usd per video"
- },
- {
-  "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1vvk4ge/lowballers/p5ah211/",
-  "per_video_usd": 20,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "I’ve seen so many postings where it’s $20 a video"
- },
- {
-  "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1uwami0/whitelisting_addon_fee/",
-  "per_video_usd": 300,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "They wanted 6 videos for one month on my instagram with Whitelisting. We did agree to 300 a video."
- },
- {
-  "source": "reddit",
   "url": "https://www.reddit.com/r/UGCcreators/comments/1r2zl9w/looking_for_ugc_creators_wedding_tech_brand/",
   "per_video_usd": 1000,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "Budget: $500–$1,500 per video depending on quality, experience, and usage rights"
+  "quote": "Budget: $500–$1,500 per video depending on quality, experience, and usage rights",
+  "category": "tech_apps"
  },
  {
   "source": "reddit",
@@ -53,31 +14,8 @@
   "per_video_usd": 70,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "Pay Rate: $70 per approved video. Payment is sent via PayPal after final approval."
- },
- {
-  "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1x2cej7/should_i_be_charging_more_than_this_company_is/pf14mo7/",
-  "per_video_usd": 200,
-  "paid_usage_addon_pct": 30,
-  "perpetual_addon_pct": null,
-  "quote": "As a beginner, you could do $200 for the video, $60 for the usage rights (30% of the $200)"
- },
- {
-  "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1pcz54z/paid_earn_up_to_500_per_video_ugc_creators_wanted/",
-  "per_video_usd": 325,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "Pay Range: $150–$500 per video Final rate varies by platform, length, and quality"
- },
- {
-  "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1x2nue9/where_do_you_find_quality_ugc_creators_for_a/pf9jryv/",
-  "per_video_usd": 300,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "For health-tech start with 3–5 creators at $200–400/video"
+  "quote": "Pay Rate: $70 per approved video. Payment is sent via PayPal after final approval.",
+  "category": "other"
  },
  {
   "source": "reddit",
@@ -85,7 +23,8 @@
   "per_video_usd": 90,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "Collab Paid for Peptides Brand ($90 per video)"
+  "quote": "Collab Paid for Peptides Brand ($90 per video)",
+  "category": "health_fitness"
  },
  {
   "source": "reddit",
@@ -93,7 +32,62 @@
   "per_video_usd": 65,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "– $30-100 per video – 1 short video(20s-40s) – This is ad-focused content (TikTok in-feed ads)"
+  "quote": "– $30-100 per video – 1 short video(20s-40s)",
+  "category": "tech_apps"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1vikz7i/am_i_being_lowballed/p2ex26o/",
+  "per_video_usd": 30,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "I’ll get you onto Campaigns that pay $30+ usd per video",
+  "category": "other"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1vvk4ge/lowballers/p5ah211/",
+  "per_video_usd": 20,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "I’ve seen so many postings where it’s $20 a video",
+  "category": "other"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1uwami0/whitelisting_addon_fee/",
+  "per_video_usd": 300,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "They wanted 6 videos for one month on my instagram with Whitelisting. We did agree to 300 a video.",
+  "category": "beauty_skincare"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1wtuyna/are_people_really_making_10k_a_month_with_ugc/pd5b0hp/",
+  "per_video_usd": 45,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "a year ago my first video paid me $45",
+  "category": "other"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1pcz54z/paid_earn_up_to_500_per_video_ugc_creators_wanted/",
+  "per_video_usd": 150,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Pay Range: $150–$500 per video Final rate varies by platform, length, and quality",
+  "category": "tech_apps"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1vbfif0/need_advice_as_a_seasoned_ugc_creator/p0wd087/",
+  "per_video_usd": 250,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "The $250 rate was for a longtime client, ongoing, and they did the editing.",
+  "category": "other"
  },
  {
   "source": "reddit",
@@ -101,7 +95,8 @@
   "per_video_usd": 150,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "$150 minimum per video (B-roll or scripts)"
+  "quote": "$150 minimum per video (B-roll or scripts)",
+  "category": "health_fitness"
  },
  {
   "source": "reddit",
@@ -109,31 +104,8 @@
   "per_video_usd": 350,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "Fee: $350 per creator (non-negotiable)"
- },
- {
-  "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1u7ti31/nano_influencer_dietitian_brand_deal/",
-  "per_video_usd": 150,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "I’ve done matcha UGC deal with a script and then another one for an energy bar with free script for $150 each."
- },
- {
-  "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1tjf1px/how_much_should_i_spend_per_ugc_video/",
-  "per_video_usd": 200,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "I just paid a UGC creator $200 USD for a product review of my clothing brand."
- },
- {
-  "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1vlntbc/do_most_brands_start_out_lowballing/p3gx2e0/",
-  "per_video_usd": 25,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "i signed unlimited perpetual rights for $25 a video when i was new."
+  "quote": "Fee: $350 per creator (non-negotiable)",
+  "category": "health_fitness"
  },
  {
   "source": "reddit",
@@ -141,15 +113,8 @@
   "per_video_usd": 550,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "the prices they charged for ONE (1) mediocre, and I mean MEDIOCRE videos was $550. And they would upsell by offering 3 videos for $1,200."
- },
- {
-  "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1v03sp5/stop_lowballing_yourself_charge_your_worth/oyfjto4/",
-  "per_video_usd": 80,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "Brands pay the agency $550 for the exact same tier of creator they could hire directly for $80"
+  "quote": "the prices they charged for ONE (1) mediocre, and I mean MEDIOCRE videos was $550",
+  "category": "other"
  },
  {
   "source": "reddit",
@@ -157,23 +122,8 @@
   "per_video_usd": 20,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "The $400 deal is the issue: 20 videos a month means $20 per video"
- },
- {
-  "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1sk5pjj/how_do_you_charge_for_whitelisting_ad_usage_rights/og01gl4/",
-  "per_video_usd": 200,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": 65,
-  "quote": "So if your base rate for the video is $200, two years of paid ads rights would bring the total closer to $330."
- },
- {
-  "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1wqd94n/ive_been_unemployed_since_graduation_and_want_to/pc65ww9/",
-  "per_video_usd": 150,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "Traditional UGC starts at a minimum of $150 a video."
+  "quote": "The $400 deal is the issue: 20 videos a month means $20 per video",
+  "category": "other"
  },
  {
   "source": "reddit",
@@ -181,15 +131,8 @@
   "per_video_usd": 250,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "This company wants to pay me $250 for an unboxing video crossposted to Instagram, TikTok, and YouTube Shorts with 30 days ad usage."
- },
- {
-  "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1vu2dq2/how_much_do_you_usually_charge/",
-  "per_video_usd": 15,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "people say 10 USD or 20 USD per video + bonus"
+  "quote": "This company wants to pay me $250 for an unboxing video crossposted to Instagram, TikTok, and YouTube Shorts with 30 days ad usage.",
+  "category": "other"
  },
  {
   "source": "reddit",
@@ -197,7 +140,8 @@
   "per_video_usd": 550,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "I did a gig last week where I did one 30-second video for $550"
+  "quote": "I did a gig last week where I did one 30-second video for $550",
+  "category": "other"
  },
  {
   "source": "reddit",
@@ -205,23 +149,8 @@
   "per_video_usd": 440,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "I literally got an order today for a 60-second video where I play 2 people, and charged them $440"
- },
- {
-  "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1u6m0mf/how_are_you_guys_not_finding_deals_consistently/orzr534/",
-  "per_video_usd": 159,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "If your making 159 per video you should charge more"
- },
- {
-  "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1vsli1u/fitness_ugc_creators_how_much_do_you_charge_per/p4n762k/",
-  "per_video_usd": 300,
-  "paid_usage_addon_pct": 40,
-  "perpetual_addon_pct": null,
-  "quote": "filming only, they send the script and the product, 30 seconds: $250 to $350"
+  "quote": "I literally got an order today for a 60-second video where I play 2 people, and charged them $440",
+  "category": "other"
  },
  {
   "source": "reddit",
@@ -229,79 +158,62 @@
   "per_video_usd": 25,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "i took $25 a video with unlimited rights when i started."
+  "quote": "i took $25 a video with unlimited rights when i started.",
+  "category": "other"
  },
  {
   "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1vc2hxq/wild_request_from_a_brand/p14om6y/",
-  "per_video_usd": 25,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "i signed away unlimited perpetual rights for $25 a video when i was new"
- },
- {
-  "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1vz37gl/how_would_you_respond_to_this_brand_offer_need/",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1u7ti31/nano_influencer_dietitian_brand_deal/",
   "per_video_usd": 150,
-  "paid_usage_addon_pct": 33,
+  "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "3 Video at $150 per video concept (up from the $100 we normally work to) 3 concepts, each with 2-3 alternate hooks $50 for the 30 days of Meta whitelisting"
+  "quote": "I’ve done matcha UGC deal with a script and then another one for an energy bar with free script for $150 each",
+  "category": "food_beverage"
  },
  {
   "source": "reddit",
-  "url": "https://www.reddit.com/r/UGCcreators/comments/1qtbron/why_brands_pay_up_to_400_for_one_ugg_concept_and/",
-  "per_video_usd": 325,
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1tjf1px/how_much_should_i_spend_per_ugc_video/",
+  "per_video_usd": 200,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "they're happy to pay $250 to $400 for a single concept when a creator actually understands performance marketing"
+  "quote": "I just paid a UGC creator $200 USD for a product review of my clothing brand.",
+  "category": "fashion_apparel"
  },
  {
-  "source": "upwork",
-  "url": "https://www.upwork.com/jobs/Daily-span-class-highlight-Video-span-Content-Creator-for-Note-Taking-App_~022113806849505755959/?referrer_url_path=/nx/search/jobs/",
-  "per_video_usd": 11,
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1qg6avk/paid_ugc_collab_skincare_app_2030s_videos_520/o0cquf0/",
+  "per_video_usd": 33.33,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "This is a part-time role for about 25-30 videos per month, with a monthly payment of around $300."
+  "quote": "im doing a skincare app for 1 post a day for 1k a month retainer and the videos are 15 seconds or less",
+  "category": "tech_apps"
  },
  {
-  "source": "upwork",
-  "url": "https://www.upwork.com/jobs/Swedish-span-class-highlight-Video-span-Presenters-Wanted-for-Mobile-Content-500-000-Retainer_~022113753004120936059/?referrer_url_path=/nx/search/jobs/",
-  "per_video_usd": 75,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "Asset Unit Rate: $50-100 per approved 60-second video"
- },
- {
-  "source": "upwork",
-  "url": "https://www.upwork.com/jobs/German-Speaking-Camera-span-class-highlight-Video-span-Presenters-Needed-500-Package_~022113740731415694448/?referrer_url_path=/nx/search/jobs/",
-  "per_video_usd": 75,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "Fixed $500 payout per completed video package ($50-100 per one video)"
- },
- {
-  "source": "upwork",
-  "url": "https://www.upwork.com/jobs/Native-British-Camera-Presenter-Wanted-Accent-ONLY-Earn-500-Month-Remote_~022113724889584370487/?referrer_url_path=/nx/search/jobs/",
-  "per_video_usd": 75,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "Video Rate: $50 to $100 per completed video asset"
- },
- {
-  "source": "upwork",
-  "url": "https://www.upwork.com/jobs/Simple-Promo-span-class-highlight-Video-span-Script-Provided_~022113694014683718763/?referrer_url_path=/nx/search/jobs/",
-  "per_video_usd": 50,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "$50 Simple Promo Video (Script Provided)"
- },
- {
-  "source": "upwork",
-  "url": "https://www.upwork.com/jobs/span-class-highlight-UGC-span-span-class-highlight-Video-span-Creator-Spokesperson-Script-Provided_~022113685217357333303/?referrer_url_path=/nx/search/jobs/",
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1vlntbc/do_most_brands_start_out_lowballing/p3gx2e0/",
   "per_video_usd": 25,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "Budget: $20–$30 per completed video."
+  "quote": "i signed unlimited perpetual rights for $25 a video when i was new.",
+  "category": "other"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1qck4zj/paid_collab_looking_for_parent_ugc_creators_for/",
+  "per_video_usd": 175,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Approximate budget for this collab - $150 - $200",
+  "category": "education_study"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1wvlerl/brands_are_ruining_it/",
+  "per_video_usd": 16.67,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "I see all these really bad lowball offers ($1000 for 60 videos, 250 for 30 videos,etc)",
+  "category": "other"
  },
  {
   "source": "reddit",
@@ -309,7 +221,8 @@
   "per_video_usd": 250,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "I used to do $150/video and now have told every agency I start at $250"
+  "quote": "I used to do $150/video and now have told every agency I start at $250",
+  "category": "other"
  },
  {
   "source": "reddit",
@@ -317,7 +230,215 @@
   "per_video_usd": 50,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "a dude wanted a raw video, no edits, nothing. So I thought, ohyeah ezpz $50"
+  "quote": "a dude wanted a raw video, no edits, nothing. So I thought, ohyeah ezpz $50",
+  "category": "other"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1vz37gl/how_would_you_respond_to_this_brand_offer_need/",
+  "per_video_usd": 150,
+  "paid_usage_addon_pct": 33.33,
+  "perpetual_addon_pct": null,
+  "quote": "3 Video at $150 per video concept (up from the $100 we normally work to) 3 concepts, each with 2-3 alternate hooks $50 for the 30 days of Meta whitelisting",
+  "category": "other"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1psdq3y/skincare_brand_looking_for_ugc_creators_paid_40/",
+  "per_video_usd": 40,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "$40 per video",
+  "category": "beauty_skincare"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1qko7y3/ugc_opportunity_looking_for_usbased_creators_ai/",
+  "per_video_usd": 75,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Paid retainer: $50–$100 per video (based on your engagement + following)",
+  "category": "health_fitness"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1oxd7hv/paid_collab_with_skincare_brand/",
+  "per_video_usd": 40,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Pay: 💰 $40 per video to start",
+  "category": "beauty_skincare"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1q23hr3/cosmeticskincare_brand_looking_for_ugc_creators/",
+  "per_video_usd": 30,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "$30 per video Free product provided",
+  "category": "beauty_skincare"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1xdbuij/what_is_ugc_actually_like_in_real_life/19rjrm9pciwn5/",
+  "per_video_usd": 475,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "now I work with lots of those brands off platform and make $350-$600 a video",
+  "category": "other"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1pic45u/paid_900month_base_viral_bonuses_up_to_3k_hiring/",
+  "per_video_usd": 30,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Base Pay: $30 per video (x 1 video daily = ~$900/month guaranteed base).",
+  "category": "tech_apps"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1wprhev/is_the_ugc_industry_becoming_about_underpaid_work/",
+  "per_video_usd": 13.33,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "sometimes as low as $13 per video ($400/month for 30 daily videos)",
+  "category": "other"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1wprhev/is_the_ugc_industry_becoming_about_underpaid_work/pby89qr/",
+  "per_video_usd": 150,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "my niche is beauty but I’ve never been paid less than 150 for a video",
+  "category": "beauty_skincare"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1woe759/weekly_ugc_collab_opportunities_thread_9232026/pbmioym/",
+  "per_video_usd": 150,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Compensation: $150 flat fee per video + free lifetime Premium access to the app.",
+  "category": "tech_apps"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1oiohvr/paid_hiring_female_ugc_creators_for_organic/",
+  "per_video_usd": 300,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "This is a paid collaboration ($300 per 60-second video)",
+  "category": "beauty_skincare"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1pk7wjb/paid_fitness_athlete_ugc_creators_needed_for/",
+  "per_video_usd": 325,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Our budget is $200-$450 per recorded video.",
+  "category": "health_fitness"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1ouzyhf/paid_new_beverage_brand_seeking_15_usbased_ugc/",
+  "per_video_usd": 50,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Compensation: $50/video (PAID) - Payment via PayPal/Venmo upon video delivery",
+  "category": "food_beverage"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1qwmitz/paid_gifted_looking_for_5_individuals_on_health/",
+  "per_video_usd": 75,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Compensation is $75/video (15-30sec) and $25/carousel (3-5 pictures of the towel in use).",
+  "category": "health_fitness"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1q60c87/paid_looking_for_ugc_creators_for_app_launch_food/ny42s8n/",
+  "per_video_usd": 250,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Rates starting at 250 USA",
+  "category": "tech_apps"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1q60c87/paid_looking_for_ugc_creators_for_app_launch_food/ny43yzh/",
+  "per_video_usd": 250,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Rate: $250",
+  "category": "tech_apps"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1q60c87/paid_looking_for_ugc_creators_for_app_launch_food/ny4gr45/",
+  "per_video_usd": 200,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Rate: $200",
+  "category": "tech_apps"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1q60c87/paid_looking_for_ugc_creators_for_app_launch_food/ny4hi69/",
+  "per_video_usd": 250,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Rates: $250",
+  "category": "tech_apps"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1q60c87/paid_looking_for_ugc_creators_for_app_launch_food/ny4hjia/",
+  "per_video_usd": 135,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Rates: $135 Ontario, Canada",
+  "category": "tech_apps"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1q8dmzi/paid_ugc_opportunity_gym_content_for_a_prelaunch/",
+  "per_video_usd": 33.33,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "$1,000 per month (paid) • ~30 short-form videos per month • Flat monthly rate",
+  "category": "tech_apps"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1qcoxwj/paid_collaboration_600_for_20_short_videos_15s/",
+  "per_video_usd": 30,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "$600 total for the full set (20 videos)",
+  "category": "home_lifestyle"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1w6vlot/new_ugc_creator_got_2_different_offers_from_same/",
+  "per_video_usd": 20,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "either flat-rate up to $600 for 30 videos ($20/video)",
+  "category": "tech_apps"
+ },
+ {
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/UGCcreators/comments/1qiywog/paid_looking_for_studytok_creators_for_ugc_ads/",
+  "per_video_usd": 20,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "2 x ~20s videos (but they are very similar, just different in structure)",
+  "category": "education_study"
  },
  {
   "source": "upwork",
@@ -325,7 +446,8 @@
   "per_video_usd": 66.67,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "$1,000 USD per month for 15 net-new ad concepts, with performance bonuses for ads that scale."
+  "quote": "$1,000 USD per month for 15 net-new ad concepts, with performance bonuses for ads that scale.",
+  "category": "other"
  },
  {
   "source": "upwork",
@@ -333,7 +455,8 @@
   "per_video_usd": 15,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "Budget: $15 fixed price."
+  "quote": "Budget: $15 fixed price.",
+  "category": "other"
  },
  {
   "source": "upwork",
@@ -341,7 +464,8 @@
   "per_video_usd": 250,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "Budget: $250 USD, fixed price.\n* Initial deliverable: one complete UGC video."
+  "quote": "Budget: $250 USD, fixed price.\n* Initial deliverable: one complete UGC video.",
+  "category": "tech_apps"
  },
  {
   "source": "upwork",
@@ -349,7 +473,8 @@
   "per_video_usd": 18.15,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "Our initial budget is approximately AED 1,000 for 15 reels video"
+  "quote": "Our initial budget is approximately AED 1,000 for 15 reels video",
+  "category": "finance"
  },
  {
   "source": "upwork",
@@ -357,7 +482,53 @@
   "per_video_usd": 20,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "$20 per approved video, paid through Upwork after approval"
+  "quote": "$20 per approved video, paid through Upwork after approval",
+  "category": "home_lifestyle"
+ },
+ {
+  "source": "upwork",
+  "url": "https://www.upwork.com/jobs/Swedish-span-class-highlight-Video-span-Presenters-Wanted-for-Mobile-Content-500-000-Retainer_~022113753004120936059/?referrer_url_path=/nx/search/jobs/",
+  "per_video_usd": 75,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Asset Unit Rate: $50-100 per approved 60-second video",
+  "category": "tech_apps"
+ },
+ {
+  "source": "upwork",
+  "url": "https://www.upwork.com/jobs/German-Speaking-Camera-span-class-highlight-Video-span-Presenters-Needed-500-Package_~022113740731415694448/?referrer_url_path=/nx/search/jobs/",
+  "per_video_usd": 75,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Fixed $500 payout per completed video package ($50-100 per one video)",
+  "category": "tech_apps"
+ },
+ {
+  "source": "upwork",
+  "url": "https://www.upwork.com/jobs/Native-British-Camera-Presenter-Wanted-Accent-ONLY-Earn-500-Month-Remote_~022113724889584370487/?referrer_url_path=/nx/search/jobs/",
+  "per_video_usd": 75,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Video Rate: $50 to $100 per completed video asset",
+  "category": "tech_apps"
+ },
+ {
+  "source": "upwork",
+  "url": "https://www.upwork.com/jobs/Simple-Promo-span-class-highlight-Video-span-Script-Provided_~022113694014683718763/?referrer_url_path=/nx/search/jobs/",
+  "per_video_usd": 50,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "$50 Simple Promo Video (Script Provided)",
+  "category": "other"
+ },
+ {
+  "source": "upwork",
+  "url": "https://www.upwork.com/jobs/span-class-highlight-UGC-span-span-class-highlight-Video-span-Creator-Spokesperson-Script-Provided_~022113685217357333303/?referrer_url_path=/nx/search/jobs/",
+  "per_video_usd": 25,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Budget: $20–$30 per completed video.",
+  "category": "other"
  },
  {
   "source": "upwork",
@@ -365,7 +536,8 @@
   "per_video_usd": 55,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "💲 Fixed rate: $55 per video"
+  "quote": "Fixed rate: $55 per video",
+  "category": "other"
  },
  {
   "source": "upwork",
@@ -373,7 +545,8 @@
   "per_video_usd": 50,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "budget: $50.00"
+  "quote": "budget: $50.00",
+  "category": "education_study"
  },
  {
   "source": "upwork",
@@ -381,7 +554,8 @@
   "per_video_usd": 45,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "💵 Rate: $45 per video"
+  "quote": "Rate: $45 per video",
+  "category": "other"
  },
  {
   "source": "upwork",
@@ -389,15 +563,17 @@
   "per_video_usd": 150,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "Pay: $150 per video, fixed price."
+  "quote": "Pay: $150 per video, fixed price.",
+  "category": "health_fitness"
  },
  {
   "source": "upwork",
   "url": "https://www.upwork.com/jobs/span-class-highlight-UGC-span-Creator-Wanted-Persimmon-Soap-Free-Product-Commission_~022113625717413416048/?referrer_url_path=/nx/search/jobs/",
-  "per_video_usd": 30,
+  "per_video_usd": 32.4,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "€30 fixed payment"
+  "quote": "€30 fixed payment",
+  "category": "beauty_skincare"
  },
  {
   "source": "upwork",
@@ -405,95 +581,8 @@
   "per_video_usd": 85,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "💵 $85 per video"
- },
- {
-  "source": "upwork",
-  "url": "https://www.upwork.com/jobs/English-span-class-highlight-Video-span-Creators-Wanted-based-Australia-span-class-highlight-UGC-span-span-class-highlight-Videos-span_~022113592333320868754/?referrer_url_path=/nx/search/jobs/",
-  "per_video_usd": 70,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "💰 Payment is $70 for each video."
- },
- {
-  "source": "upwork",
-  "url": "https://www.upwork.com/jobs/Czech-Speaking-span-class-highlight-UGC-span-Creators-Wanted-per-span-class-highlight-Video-span_~022113576289780305531/?referrer_url_path=/nx/search/jobs/",
-  "per_video_usd": 65,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "💵 $65 per completed video"
- },
- {
-  "source": "upwork",
-  "url": "https://www.upwork.com/jobs/French-Speaking-span-class-highlight-UGC-span-Creators-Canada-Wanted-per-span-class-highlight-Video-span_~022113568858148900475/?referrer_url_path=/nx/search/jobs/",
-  "per_video_usd": 65,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "$65 per approved video"
- },
- {
-  "source": "upwork",
-  "url": "https://www.upwork.com/jobs/Czech-span-class-highlight-UGC-span-Content-Opportunity-Male-amp-Female-Creators-100_~022113563490712173561/?referrer_url_path=/nx/search/jobs/",
-  "per_video_usd": 100,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "$100 per approved video for both participants combined"
- },
- {
-  "source": "upwork",
-  "url": "https://www.upwork.com/jobs/Swiss-German-Speaking-Creators-for-Short-span-class-highlight-Video-span-Projects-per-span-class-highlight-Video-span_~022113561406805091435/?referrer_url_path=/nx/search/jobs/",
-  "per_video_usd": 55,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "-$55 per video,"
- },
- {
-  "source": "upwork",
-  "url": "https://www.upwork.com/jobs/Czech-Speaking-Male-amp-Female-span-class-highlight-UGC-span-Duo-Wanted-100-per-span-class-highlight-Video-span_~022113560398318031762/?referrer_url_path=/nx/search/jobs/",
-  "per_video_usd": 100,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "$100 per approved video (for the duo)"
- },
- {
-  "source": "upwork",
-  "url": "https://www.upwork.com/jobs/Swedish-span-class-highlight-Video-span-Creators-for-Short-Form-Projects-per-span-class-highlight-Video-span_~022113553085314467078/?referrer_url_path=/nx/search/jobs/",
-  "per_video_usd": 55,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "- $55 per video"
- },
- {
-  "source": "upwork",
-  "url": "https://www.upwork.com/jobs/span-class-highlight-UGC-span-Creators-Wanted-Families-with-Kids-for-Educational-App-span-class-highlight-Videos-span_~022113548575890108828/?referrer_url_path=/nx/search/jobs/",
-  "per_video_usd": 60,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "[$60 per video / $600 per package of 10 videos]."
- },
- {
-  "source": "upwork",
-  "url": "https://www.upwork.com/jobs/span-class-highlight-UGC-span-Creator-for-Short-Sneaker-span-class-highlight-Videos-span_~022113533401402904187/?referrer_url_path=/nx/search/jobs/",
-  "per_video_usd": 10,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "We are ready to pay $10 per video"
- },
- {
-  "source": "upwork",
-  "url": "https://www.upwork.com/jobs/Argentina-House-span-class-highlight-UGC-span-span-class-highlight-Video-span-Creators-for-Global-Fintech-Brand-Month-Extendable-Contract_~022113509522501942265/?referrer_url_path=/nx/search/jobs/",
-  "per_video_usd": 50,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "$400 per month for content creation"
- },
- {
-  "source": "upwork",
-  "url": "https://www.upwork.com/jobs/span-class-highlight-UGC-span-Creator-for-Camera-Scripted-span-class-highlight-Video-span-Ads-Editing-per-span-class-highlight-Video-span_~022113494009326961926/?referrer_url_path=/nx/search/jobs/",
-  "per_video_usd": 10,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "quote": "$10 per finished video. 20 videos in the first batch."
+  "quote": "$85 per video",
+  "category": "other"
  },
  {
   "source": "upwork",
@@ -501,7 +590,8 @@
   "per_video_usd": 75,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "Project Rate: $50 to $100 per completed video asset"
+  "quote": "Project Rate: $50 to $100 per completed video asset",
+  "category": "tech_apps"
  },
  {
   "source": "upwork",
@@ -509,7 +599,8 @@
   "per_video_usd": 33.33,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "Budget: $100 fixed price for all 3 videos."
+  "quote": "Budget: $100 fixed price for all 3 videos.",
+  "category": "health_fitness"
  },
  {
   "source": "upwork",
@@ -517,7 +608,8 @@
   "per_video_usd": 75,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "Fixed Unit Rate: $50- 100 per verified 60-second video asset."
+  "quote": "Fixed Unit Rate: $50- 100 per verified 60-second video asset.",
+  "category": "tech_apps"
  },
  {
   "source": "upwork",
@@ -525,7 +617,8 @@
   "per_video_usd": 25,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "an ongoing contract at $125 per weekly batch of 5 scripts (about $500/month)"
+  "quote": "an ongoing contract at $125 per weekly batch of 5 scripts (about $500/month)",
+  "category": "other"
  },
  {
   "source": "upwork",
@@ -533,6 +626,115 @@
   "per_video_usd": 30,
   "paid_usage_addon_pct": null,
   "perpetual_addon_pct": null,
-  "quote": "Budget: from $30 per video, depending on length and complexity"
+  "quote": "Budget: from $30 per video, depending on length and complexity",
+  "category": "gaming_entertainment"
+ },
+ {
+  "source": "upwork",
+  "url": "https://www.upwork.com/jobs/English-span-class-highlight-Video-span-Creators-Wanted-based-Australia-span-class-highlight-UGC-span-span-class-highlight-Videos-span_~022113592333320868754/?referrer_url_path=/nx/search/jobs/",
+  "per_video_usd": 70,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "💰 Payment is $70 for each video.",
+  "category": "other"
+ },
+ {
+  "source": "upwork",
+  "url": "https://www.upwork.com/jobs/Czech-Speaking-span-class-highlight-UGC-span-Creators-Wanted-per-span-class-highlight-Video-span_~022113576289780305531/?referrer_url_path=/nx/search/jobs/",
+  "per_video_usd": 65,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "💵 $65 per completed video",
+  "category": "other"
+ },
+ {
+  "source": "upwork",
+  "url": "https://www.upwork.com/jobs/French-Speaking-span-class-highlight-UGC-span-Creators-Canada-Wanted-per-span-class-highlight-Video-span_~022113568858148900475/?referrer_url_path=/nx/search/jobs/",
+  "per_video_usd": 65,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "$65 per approved video",
+  "category": "gaming_entertainment"
+ },
+ {
+  "source": "upwork",
+  "url": "https://www.upwork.com/jobs/Czech-span-class-highlight-UGC-span-Content-Opportunity-Male-amp-Female-Creators-100_~022113563490712173561/?referrer_url_path=/nx/search/jobs/",
+  "per_video_usd": 100,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "$100 per approved video for both participants combined",
+  "category": "gaming_entertainment"
+ },
+ {
+  "source": "upwork",
+  "url": "https://www.upwork.com/jobs/Swiss-German-Speaking-Creators-for-Short-span-class-highlight-Video-span-Projects-per-span-class-highlight-Video-span_~022113561406805091435/?referrer_url_path=/nx/search/jobs/",
+  "per_video_usd": 55,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "-$55 per video,",
+  "category": "other"
+ },
+ {
+  "source": "upwork",
+  "url": "https://www.upwork.com/jobs/Czech-Speaking-Male-amp-Female-span-class-highlight-UGC-span-Duo-Wanted-100-per-span-class-highlight-Video-span_~022113560398318031762/?referrer_url_path=/nx/search/jobs/",
+  "per_video_usd": 100,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "$100 per approved video (for the duo)",
+  "category": "gaming_entertainment"
+ },
+ {
+  "source": "upwork",
+  "url": "https://www.upwork.com/jobs/Swedish-span-class-highlight-Video-span-Creators-for-Short-Form-Projects-per-span-class-highlight-Video-span_~022113553085314467078/?referrer_url_path=/nx/search/jobs/",
+  "per_video_usd": 55,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "- $55 per video",
+  "category": "other"
+ },
+ {
+  "source": "upwork",
+  "url": "https://www.upwork.com/jobs/span-class-highlight-UGC-span-Creators-Wanted-Families-with-Kids-for-Educational-App-span-class-highlight-Videos-span_~022113548575890108828/?referrer_url_path=/nx/search/jobs/",
+  "per_video_usd": 60,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "[$60 per video / $600 per package of 10 videos].",
+  "category": "education_study"
+ },
+ {
+  "source": "upwork",
+  "url": "https://www.upwork.com/jobs/span-class-highlight-UGC-span-Creator-for-Short-Sneaker-span-class-highlight-Videos-span_~022113533401402904187/?referrer_url_path=/nx/search/jobs/",
+  "per_video_usd": 10,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "We are ready to pay $10 per video",
+  "category": "fashion_apparel"
+ },
+ {
+  "source": "upwork",
+  "url": "https://www.upwork.com/jobs/Argentina-House-span-class-highlight-UGC-span-span-class-highlight-Video-span-Creators-for-Global-Fintech-Brand-Month-Extendable-Contract_~022113509522501942265/?referrer_url_path=/nx/search/jobs/",
+  "per_video_usd": 50,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "$400 per month for content creation, split across the weeks of the",
+  "category": "finance"
+ },
+ {
+  "source": "upwork",
+  "url": "https://www.upwork.com/jobs/span-class-highlight-UGC-span-Creator-for-Camera-Scripted-span-class-highlight-Video-span-Ads-Editing-per-span-class-highlight-Video-span_~022113494009326961926/?referrer_url_path=/nx/search/jobs/",
+  "per_video_usd": 10,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "$10 per finished video. 20 videos in the first batch.",
+  "category": "finance"
+ },
+ {
+  "source": "upwork",
+  "url": "https://www.upwork.com/jobs/Short-Form-span-class-highlight-Video-span-Creation_~022113441805839830651/?referrer_url_path=/nx/search/jobs/",
+  "per_video_usd": 30,
+  "paid_usage_addon_pct": null,
+  "perpetual_addon_pct": null,
+  "quote": "Deliverables: 1 UGC video",
+  "category": "tech_apps"
  }
 ]
