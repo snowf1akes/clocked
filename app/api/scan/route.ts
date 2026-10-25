@@ -111,6 +111,8 @@ export async function POST(req: Request) {
     verdict,
     removed,
     from_photo: file.type !== "application/pdf",
+    // the scrubbed text the quotes were checked against, so the report can show the whole contract with highlights
+    text,
   });
   const id = await convex.mutation(api.reports.save, { fileName: file.name, report });
   return Response.json({ ...report, id });

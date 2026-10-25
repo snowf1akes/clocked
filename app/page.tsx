@@ -1,11 +1,12 @@
 "use client";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useConvexAuth, useMutation, useQuery } from "convex/react";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import benchmarks from "@/data/rate_benchmarks.json";
 import { PRICE_TYPE_LABEL, type Benchmarks, type PayCheck, type RightsBundle } from "@/lib/rate";
+import { reflow, segments, spans } from "@/lib/contract";
 import { CATEGORY_LABEL, type Category, type Risk } from "@/lib/rubric";
 import type { Scan, ScanFlag } from "@/lib/scan";
 import s from "./page.module.css";
@@ -16,6 +17,7 @@ type Result = Scan & {
   removed: Record<string, number>;
   from_photo: boolean;
   lawyer?: { recommend: boolean; reason: string };
+  text?: string; // scrubbed contract text; reports scanned before it was saved don't have it
 };
 type View = "overview" | "xray" | "rate";
 
@@ -47,7 +49,6 @@ export default function Home() {
   const saved = useQuery(api.reports.get, openId ? { id: openId } : "skip");
   const shown = openId ? (saved?.report as Result | undefined) : result;
   const signIn = () => loginWithRedirect();
-
   async function scan(file: File) {
     setView("xray");
     setBusy(true);
@@ -190,20 +191,26 @@ function Gate({ loading, signIn }: { loading: boolean; signIn: () => void }) {
 }
 
 // Clo, the team's mascot (public/clo/, one shared canvas, so swapping poses never shifts him).
-// Idle is an animated loop. Shows an empty slot until the image loads.
-type Pose = "idle" | "thinking" | "concerned" | "alarmed" | "celebrate";
+// Idle is an animated loop. Shows an empty slot until the first image loads, then keeps the
+// current pose on screen until the next one has loaded, so a pose change never flashes empty.
+type Pose = "idle" | "thinking" | "speaking" | "concerned" | "alarmed" | "celebrate";
 const POSE_FOR_RISK: Record<Risk, Pose> = { critical: "alarmed", high: "concerned", medium: "concerned", low: "celebrate" };
+const poseSrc = (p: Pose) => (p === "idle" ? "/clo/idle.webp" : `/clo/${p}.png`);
 function Clo({ size = 168, pose = "idle" }: { size?: number; pose?: Pose }) {
-  const src = pose === "idle" ? "/clo/idle.webp" : `/clo/${pose}.png`;
-  const [loaded, setLoaded] = useState<string | null>(null);
+  const src = poseSrc(pose);
+  const [shown, setShown] = useState<string | null>(null);
   useEffect(() => {
+    let live = true;
     const img = new Image();
-    img.onload = () => setLoaded(src);
+    img.onload = () => live && setShown(src);
     img.src = src;
+    return () => {
+      live = false;
+    };
   }, [src]);
-  if (loaded !== src) return <span className={s.cloSlot} style={{ width: (size * 441) / 496, height: size }} aria-hidden />;
+  if (!shown) return <span className={s.cloSlot} style={{ width: (size * 441) / 496, height: size }} aria-hidden />;
   // eslint-disable-next-line @next/next/no-img-element
-  return <img className={s.clo} src={src} alt="Clo, the Clocked bunny" style={{ height: size }} />;
+  return <img key={shown} className={s.clo} src={shown} alt="Clo, the Clocked bunny" style={{ height: size }} />;
 }
 
 function Reading() {
@@ -336,71 +343,86 @@ function Tab({ on, go, label, n }: { on: boolean; go: () => void; label: string;
   );
 }
 
+// Clo reacts to the flag under the pointer: glasses off for critical and high, glasses down for the rest.
+const hoverPose = (f: ScanFlag): Pose => (f.severity === "critical" || f.severity === "high" ? "alarmed" : "concerned");
+const BUBBLE_MS = 450; // gap between Clo's speech bubbles appearing
+
 function Report({ r, toRate }: { r: Result; toRate: () => void }) {
   const [copied, setCopied] = useState(false);
+  const [hover, setHover] = useState<number | null>(null);
+  const [picked, setPicked] = useState<{ i: number; x: number; y: number } | null>(null);
+  const [talking, setTalking] = useState(true);
   const v = payOf(r);
   const removed = Object.values(r.removed ?? {}).reduce((a, b) => a + b, 0);
+  const contract = useMemo(() => {
+    if (!r.text) return null;
+    const { doc, blocks } = reflow(r.text);
+    return { blocks, pieces: segments(doc, blocks, spans(doc, r.flags.map((f) => f.quote))) };
+  }, [r]);
+  // Clo talks while the bubbles appear, then idles; the reaction poses load early so hovering never waits
+  const said = (2 + (r.top_3?.length ?? 0)) * BUBBLE_MS + 600;
+  useEffect(() => {
+    for (const p of ["alarmed", "concerned", "speaking"] as Pose[]) new Image().src = poseSrc(p);
+    const t = setTimeout(() => setTalking(false), said);
+    return () => clearTimeout(t);
+  }, [said]);
+  const lit = hover !== null ? r.flags[hover] : null;
+
   return (
     <div className={s.report}>
-      {r.overall_risk && (
-        <section className={s.summary} data-sev={r.overall_risk}>
-          <div className={s.summaryHead}>
-            <h2>
-              {r.offer.brand ? `${r.offer.brand}: ` : ""}
-              <span className={s.level}>{RISK_LABEL[r.overall_risk]} risk</span>
-            </h2>
-            {v && (
-              <button className={s.payPill} data-tone={v.verdict === "underpaid" ? "bad" : "good"} onClick={toRate}>
-                {v.verdict === "underpaid" ? `Underpaid by ${v.gap_vs_low_pct}% · ask ${usd(v.counteroffer)}` : VERDICT_LINE[v.verdict](v)} <IconArrow />
-              </button>
-            )}
-          </div>
-          {r.top_3?.length > 0 && (
+      <div className={s.xray}>
+        <div className={s.xrayMain}>
+          {r.overall_risk && <CloSays r={r} v={v} toRate={toRate} hasDoc={!!contract} />}
+
+          {r.hidden.length > 0 && (
+            <section className={s.hidden} role="alert">
+              <h2>Hidden text found</h2>
+              <p>This PDF contains text you can&apos;t see but AI tools can read. Clo removed it before reading.</p>
+              {r.hidden.map((h, i) => (
+                <blockquote key={i}>
+                  &ldquo;{h.text}&rdquo; <span>Page {h.page}, {h.why}</span>
+                </blockquote>
+              ))}
+            </section>
+          )}
+
+          {removed > 0 && (
+            <p className={s.privacy}>
+              <IconShield />
+              <span>
+                <strong>{removed} personal details removed before analysis</strong> (
+                {Object.entries(r.removed).map(([k, n]) => `${n} ${k}${n > 1 ? "s" : ""}`).join(", ")}). Your file is never stored; only the scrubbed text is saved with this report.
+                {r.from_photo && " Photos are read before scrubbing, so the saved report is scrubbed afterward."}
+              </span>
+            </p>
+          )}
+
+          {contract ? (
+            <Contract flags={r.flags} contract={contract} nudgeAfter={said} onHover={setHover} onPick={(i, x, y) => setPicked({ i, x, y })} />
+          ) : (
             <>
-              <h3>Top 3 things to fix before signing</h3>
-              <ol>
-                {r.top_3.map((t) => (
-                  <li key={t}>{t}</li>
-                ))}
-              </ol>
+              <Flags title="Clearly unfair" note="Terms that take something from you as written." flags={r.flags.filter((f) => f.tier !== "vague")} />
+              <Flags
+                title="Looks fine, reads against you"
+                note="Small wording choices a brand could use against you later. These are the ones people miss."
+                flags={r.flags.filter((f) => f.tier === "vague")}
+              />
             </>
           )}
-          <p className={s.disclaimer}>
-            This explains your contract so you can decide what to ask for. It is not legal advice.
-            {r.governing_law ? ` Governing law named in the contract: ${r.governing_law}.` : ""}
-          </p>
-        </section>
-      )}
+        </div>
 
-      {r.hidden.length > 0 && (
-        <section className={s.hidden} role="alert">
-          <h2>Hidden text found</h2>
-          <p>This PDF contains text you can&apos;t see but AI tools can read. Clo removed it before reading.</p>
-          {r.hidden.map((h, i) => (
-            <blockquote key={i}>
-              &ldquo;{h.text}&rdquo; <span>Page {h.page}, {h.why}</span>
-            </blockquote>
-          ))}
-        </section>
-      )}
+        <aside className={s.cloCol}>
+          <Clo size={260} pose={lit ? hoverPose(lit) : talking ? "speaking" : "idle"} />
+          {lit && (
+            <p className={s.cloTip} aria-hidden>
+              <strong>{lit.title}</strong>
+              <span>{RISK_LABEL[lit.severity as Risk]} flag · click to see why</span>
+            </p>
+          )}
+        </aside>
+      </div>
 
-      {removed > 0 && (
-        <p className={s.privacy}>
-          <IconShield />
-          <span>
-            <strong>{removed} personal details removed before analysis</strong> (
-            {Object.entries(r.removed).map(([k, n]) => `${n} ${k}${n > 1 ? "s" : ""}`).join(", ")}). Your file is never stored.
-            {r.from_photo && " Photos are read before scrubbing, so the saved report is scrubbed afterward."}
-          </span>
-        </p>
-      )}
-
-      <Flags title="Clearly unfair" note="Terms that take something from you as written." flags={r.flags.filter((f) => f.tier !== "vague")} />
-      <Flags
-        title="Looks fine, reads against you"
-        note="Small wording choices a brand could use against you later. These are the ones people miss."
-        flags={r.flags.filter((f) => f.tier === "vague")}
-      />
+      {picked && <FlagDialog f={r.flags[picked.i]} from={picked} onClose={() => setPicked(null)} />}
 
       {(r.missing_protections?.length > 0 || r.lawyer?.recommend) && (
         <div className={s.pair}>
@@ -449,6 +471,180 @@ function Report({ r, toRate }: { r: Result; toRate: () => void }) {
   );
 }
 
+// Clo's first look at the report, said as speech bubbles that appear one after another.
+function CloSays({ r, v, toRate, hasDoc }: { r: Result; v: PayCheck | null; toRate: () => void; hasDoc: boolean }) {
+  const lines = r.top_3 ?? [];
+  const crit = r.flags.filter((f) => f.severity === "critical").length;
+  const n = r.flags.length;
+  const prompt =
+    crit > 0
+      ? `I marked ${crit} critical flag${crit === 1 ? "" : "s"} in red in your contract. Click ${crit === 1 ? "it" : "one"} to see what it means and what to ask for.`
+      : n > 0
+        ? `I marked ${n} flag${n === 1 ? "" : "s"} in your contract. Click one to see what it means and what to ask for.`
+        : "I found no red flags in this contract.";
+  // scrolls to the worst flag and focuses it, which makes Clo react to it
+  function showMe() {
+    const el = document.getElementById(`flag-${Math.max(0, r.flags.findIndex((f) => f.severity === "critical"))}`);
+    el?.scrollIntoView({ behavior: "smooth", block: "center" });
+    el?.focus({ preventScroll: true });
+  }
+  const at = (i: number) => ({ "--i": i }) as React.CSSProperties;
+  return (
+    <section className={s.says} data-sev={r.overall_risk} aria-label="Clo's summary">
+      <p className={s.cloLabel}>Clo&rsquo;s first look</p>
+      <div className={s.bubble} data-head style={at(0)}>
+        <div className={s.summaryHead}>
+          <h2>
+            {r.offer.brand ? `${r.offer.brand}: ` : ""}
+            <span className={s.level}>{RISK_LABEL[r.overall_risk]} risk</span>
+          </h2>
+          {v && (
+            <button className={s.payPill} data-tone={v.verdict === "underpaid" ? "bad" : "good"} onClick={toRate}>
+              {v.verdict === "underpaid" ? `Underpaid by ${v.gap_vs_low_pct}% · ask ${usd(v.counteroffer)}` : VERDICT_LINE[v.verdict](v)} <IconArrow />
+            </button>
+          )}
+        </div>
+        {lines.length > 0 && <p className={s.bubbleNote}>Top {lines.length} things to fix before signing:</p>}
+      </div>
+      {lines.map((t, k) => (
+        <p key={t} className={s.bubble} data-n style={at(k + 1)}>
+          <span className={s.num}>{k + 1}</span>
+          <span>{t}</span>
+        </p>
+      ))}
+      <p className={s.bubble} data-prompt style={at(lines.length + 1)}>
+        {prompt}
+        {hasDoc && n > 0 && (
+          <button className={s.showMe} onClick={showMe}>
+            Show me
+          </button>
+        )}
+      </p>
+      <p className={s.disclaimer}>
+        This explains your contract so you can decide what to ask for. It is not legal advice.
+        {r.governing_law ? ` Governing law named in the contract: ${r.governing_law}.` : ""}
+      </p>
+    </section>
+  );
+}
+
+const SEVERITIES: Risk[] = ["critical", "high", "medium", "low"];
+
+// The whole contract with every flag's quote highlighted. A highlight opens the flag's card.
+function Contract(props: {
+  flags: ScanFlag[];
+  contract: { blocks: { heading: boolean }[]; pieces: { text: string; i: number | null }[][] };
+  nudgeAfter: number;
+  onHover: (i: number | null) => void;
+  onPick: (i: number, x: number, y: number) => void;
+}) {
+  const { flags, contract, onHover, onPick } = props;
+  const count = (sev: Risk) => flags.filter((f) => f.severity === sev).length;
+  const placed = new Set(contract.pieces.flat().flatMap((p) => (p.i === null ? [] : [p.i])));
+  const seen = new Set<number>();
+  const pickKey = (i: number) => (e: React.KeyboardEvent<HTMLElement>) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    e.preventDefault();
+    const b = e.currentTarget.getBoundingClientRect();
+    onPick(i, b.left + b.width / 2, b.top + b.height / 2);
+  };
+  return (
+    <section className={s.doc} aria-label="Your contract" style={{ "--after": `${props.nudgeAfter}ms` } as React.CSSProperties}>
+      <div className={s.docHead}>
+        <h2 className={s.h2}>
+          Your contract <span className={s.count}>{flags.length}</span>
+        </h2>
+        <ul className={s.legend} aria-label="Highlight colors">
+          {SEVERITIES.filter(count).map((sev) => (
+            <li key={sev} data-sev={sev}>
+              {count(sev)} {RISK_LABEL[sev]}
+            </li>
+          ))}
+          {flags.some((f) => f.tier === "vague") && (
+            <li data-sev="medium" data-tier="vague">
+              Dashed: looks fine, reads against you
+            </li>
+          )}
+        </ul>
+      </div>
+      {contract.blocks.map((b, k) => {
+        const Tag = b.heading ? "h3" : "p";
+        return (
+          <Tag key={k} className={b.heading ? s.docHeading : undefined}>
+            {contract.pieces[k].map((p, j) => {
+              if (p.i === null) return <Fragment key={j}>{p.text}</Fragment>;
+              const i = p.i;
+              const f = flags[i];
+              const first = !seen.has(i);
+              seen.add(i);
+              return (
+                <mark
+                  key={j}
+                  id={first ? `flag-${i}` : undefined}
+                  className={s.hit}
+                  data-sev={f.severity}
+                  data-tier={f.tier}
+                  role="button"
+                  tabIndex={0}
+                  aria-haspopup="dialog"
+                  aria-label={`${RISK_LABEL[f.severity as Risk]} flag, ${f.title}: ${p.text}`}
+                  onMouseEnter={() => onHover(i)}
+                  onMouseLeave={() => onHover(null)}
+                  onFocus={() => onHover(i)}
+                  onBlur={() => onHover(null)}
+                  onClick={(e) => onPick(i, e.clientX, e.clientY)}
+                  onKeyDown={pickKey(i)}
+                >
+                  {p.text}
+                </mark>
+              );
+            })}
+          </Tag>
+        );
+      })}
+      {/* a flag whose words sit inside another flag's highlight still needs a way in */}
+      {flags.some((_, i) => !placed.has(i)) && (
+        <p className={s.docMore}>
+          Also flagged:
+          {flags.map((f, i) =>
+            placed.has(i) ? null : (
+              <button key={i} data-sev={f.severity} onClick={(e) => onPick(i, e.clientX, e.clientY)}>
+                {f.title}
+              </button>
+            ),
+          )}
+        </p>
+      )}
+    </section>
+  );
+}
+
+// The flag's full card in a pop-up that grows out of the highlight that opened it.
+// <dialog> gives the focus trap, Esc to close and focus return for free.
+function FlagDialog({ f, from, onClose }: { f: ScanFlag; from: { x: number; y: number }; onClose: () => void }) {
+  const ref = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const d = ref.current!;
+    d.showModal();
+    const box = d.getBoundingClientRect();
+    d.style.transformOrigin = `${from.x - box.left}px ${from.y - box.top}px`;
+  }, [from]);
+  return (
+    <dialog ref={ref} className={s.modal} aria-label={f.title} onClose={onClose} onClick={(e) => e.target === e.currentTarget && ref.current?.close()}>
+      <div className={s.modalCard}>
+        <button className={s.close} aria-label="Close" onClick={() => ref.current?.close()}>
+          <IconClose />
+        </button>
+        <div className={s.modalClo}>
+          <Clo size={104} pose="speaking" />
+        </div>
+        <FlagCard f={f} />
+      </div>
+    </dialog>
+  );
+}
+
+// For reports saved before the contract text was stored: the flag cards as a list.
 function Flags({ title, note, flags }: { title: string; note: string; flags: ScanFlag[] }) {
   if (!flags.length) return null;
   return (
@@ -459,52 +655,58 @@ function Flags({ title, note, flags }: { title: string; note: string; flags: Sca
       <p className={s.sectionNote}>{note}</p>
       <div className={s.flags}>
         {flags.map((f, i) => (
-          <article key={i} className={s.flag} data-sev={f.severity}>
-            <p className={s.sev}>
-              <span>{RISK_LABEL[f.severity as Risk] ?? f.severity}</span>
-              {CATEGORY_LABEL[f.category as Category] && <span className={s.cat}>{CATEGORY_LABEL[f.category as Category]}</span>}
-            </p>
-            <h3>{f.title}</h3>
-            {f.standard ? (
-              <div className={s.diff}>
-                <p>
-                  <span className={s.label}>Your contract</span>
-                  <Changed a={f.quote} b={f.standard} />
-                </p>
-                <p className={s.fair}>
-                  <span className={s.label}>Fair version</span>
-                  <Changed a={f.standard} b={f.quote} />
-                </p>
-              </div>
-            ) : (
-              <blockquote className={s.quote}>&ldquo;{f.quote}&rdquo;</blockquote>
-            )}
-            <dl>
-              <dt>What it means</dt>
-              <dd>{f.meaning}</dd>
-              <dt>What could happen</dt>
-              <dd>{f.risk}</dd>
-              <dt>Ask for instead</dt>
-              <dd>{f.ask}</dd>
-            </dl>
-            {f.case_ref && (
-              <p className={s.example}>
-                <span className={s.label}>Real-world example</span>
-                {f.case_ref}
-              </p>
-            )}
-            {f.community && (
-              <p className={s.example}>
-                <span className={s.label}>Community signal</span>
-                Creators are warning each other about this: {f.community.mentions} posts from the last 90 days in our research sample of r/UGCcreators.
-                {f.community.negotiated_pct ? ` ${Math.round(f.community.negotiated_pct * 100)}% of them say they got it changed by asking.` : ""}
-              </p>
-            )}
-            {f.law_note && <p className={s.law}>{f.law_note}</p>}
-          </article>
+          <FlagCard key={i} f={f} />
         ))}
       </div>
     </section>
+  );
+}
+
+function FlagCard({ f }: { f: ScanFlag }) {
+  return (
+    <article className={s.flag} data-sev={f.severity}>
+      <p className={s.sev}>
+        <span>{RISK_LABEL[f.severity as Risk] ?? f.severity}</span>
+        {CATEGORY_LABEL[f.category as Category] && <span className={s.cat}>{CATEGORY_LABEL[f.category as Category]}</span>}
+      </p>
+      <h3>{f.title}</h3>
+      {f.standard ? (
+        <div className={s.diff}>
+          <p>
+            <span className={s.label}>Your contract</span>
+            <Changed a={f.quote} b={f.standard} />
+          </p>
+          <p className={s.fair}>
+            <span className={s.label}>Fair version</span>
+            <Changed a={f.standard} b={f.quote} />
+          </p>
+        </div>
+      ) : (
+        <blockquote className={s.quote}>&ldquo;{f.quote}&rdquo;</blockquote>
+      )}
+      <dl>
+        <dt>What it means</dt>
+        <dd>{f.meaning}</dd>
+        <dt>What could happen</dt>
+        <dd>{f.risk}</dd>
+        <dt>Ask for instead</dt>
+        <dd>{f.ask}</dd>
+      </dl>
+      {f.case_ref && (
+        <p className={s.example}>
+          <span className={s.label}>Real-world example</span>
+          {f.case_ref}
+        </p>
+      )}
+      {f.community && (
+        <p className={s.example}>
+          <span className={s.label}>Community signal</span>
+          Creators are warning each other about this: {f.community.mentions} posts from the last 90 days in our research sample of r/UGCcreators.
+          {f.community.negotiated_pct ? ` ${Math.round(f.community.negotiated_pct * 100)}% of them say they got it changed by asking.` : ""}
+        </p>
+      )}
+      {f.law_note && <p className={s.law}>{f.law_note}</p>}
+    </article>
   );
 }
 
@@ -683,4 +885,5 @@ const IconArrow = () => (<svg {...svg} width={18} height={18}><path d="M8 16 16 
 const IconChevron = () => (<svg {...svg} className={s.chevron}><path d="m9.5 6 6 6-6 6" /></svg>);
 const IconTrash = () => (<svg {...svg} width={18} height={18}><path d="M5 7h14M10 7V5h4v2M7 7l.8 11.2a2 2 0 0 0 2 1.8h4.4a2 2 0 0 0 2-1.8L17 7" /></svg>);
 const IconUpload = () => (<svg {...svg} width={28} height={28}><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M5 14v3.5A2.5 2.5 0 0 0 7.5 20h9a2.5 2.5 0 0 0 2.5-2.5V14" /></svg>);
+const IconClose = () => (<svg {...svg}><path d="M6.5 6.5l11 11M17.5 6.5l-11 11" /></svg>);
 const IconShield = () => (<svg {...svg}><path d="M12 3.5 5 6.2v5.3c0 4.3 2.9 7.6 7 9 4.1-1.4 7-4.7 7-9V6.2L12 3.5Z" /><path d="m9 12 2 2 4-4" /></svg>);
