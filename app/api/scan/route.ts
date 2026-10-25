@@ -40,7 +40,11 @@ async function signedIn(req: Request): Promise<string | null> {
 // On Vercel, api/pdftext.py is a Python function; locally `next dev` can't serve it, so run the script.
 async function pdfText(buf: Buffer, origin: string): Promise<PdfText> {
   if (process.env.VERCEL) {
-    const res = await fetch(new URL("/api/pdftext", origin), { method: "POST", body: new Uint8Array(buf) });
+    const res = await fetch(new URL("/api/pdftext", origin), {
+      method: "POST",
+      body: new Uint8Array(buf),
+      headers: { "x-pdftext-key": process.env.PDFTEXT_SECRET ?? "" },
+    });
     return res.json();
   }
   const tmp = path.join(os.tmpdir(), `contract-${crypto.randomUUID()}.pdf`);
@@ -56,6 +60,10 @@ async function pdfText(buf: Buffer, origin: string): Promise<PdfText> {
 export async function POST(req: Request) {
   const token = await signedIn(req);
   if (!token) return Response.json({ error: "Sign in to scan a contract." }, { status: 401 });
+  const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
+  convex.setAuth(token);
+  const quota = await convex.mutation(api.reports.reserveScan, {});
+  if (!quota.ok) return Response.json({ error: `You've used all ${quota.limit} scans for today. Try again tomorrow.` }, { status: 429 });
   const file = (await req.formData()).get("file");
   if (!(file instanceof File)) return Response.json({ error: "Attach a contract PDF or photo." }, { status: 400 });
   if (file.size > 4.4e6) return Response.json({ error: "File is over 4.4 MB." }, { status: 413 });
@@ -97,6 +105,7 @@ export async function POST(req: Request) {
     top_3: scan.top_3.slice(0, 3),
     missing_protections: scan.missing_protections,
     governing_law: scan.governing_law,
+    contract_end_date: scan.contract_end_date,
     lawyer: lawyer(scan),
     community_as_of: SIGNALS.length ? community.as_of : null,
     hidden,
@@ -110,8 +119,6 @@ export async function POST(req: Request) {
     removed,
     from_photo: file.type !== "application/pdf",
   });
-  const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
-  convex.setAuth(token);
   const id = await convex.mutation(api.reports.save, { fileName: file.name, report });
   return Response.json({ ...report, id });
 }

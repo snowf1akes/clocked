@@ -301,6 +301,7 @@ function History({ openId, onOpen }: { openId: Id<"reports"> | null; onOpen: (id
               <span>
                 {new Date(r._creationTime).toLocaleDateString()} · {r.flagCount} red flags
                 {r.underpaidBy && r.underpaidBy > 0 ? ` · underpaid ${usd(r.underpaidBy)}` : ""}
+                {r.deleteAt ? ` · auto-deletes ${new Date(r.deleteAt).toLocaleDateString()}` : ""}
               </span>
             </button>
             <button

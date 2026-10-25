@@ -14,8 +14,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
       authorizationParams={{
         redirect_uri: typeof window === "undefined" ? undefined : window.location.origin,
       }}
+      // Tokens stay in memory, not localStorage, so a script injected into the page can't read them.
+      // On reload the SDK quietly restores the session from Auth0; where the browser blocks that, sign in again.
       useRefreshTokens
-      cacheLocation="localstorage"
+      useRefreshTokensFallback
+      cacheLocation="memory"
     >
       <ConvexProviderWithAuth0 client={convex}>{children}</ConvexProviderWithAuth0>
     </Auth0Provider>

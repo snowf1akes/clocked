@@ -43,6 +43,7 @@ const MainSchema = z.object({
   flags: z.array(Flag),
   missing_protections: z.array(z.string()),
   governing_law: z.string().nullable(),
+  contract_end_date: z.string().nullable(),
   recommend_lawyer: z.boolean(),
   lawyer_reason: z.string(),
   offer: Offer,
@@ -113,6 +114,7 @@ overall_risk: the highest level that fits the contract as a whole.
 top_3: the three things to fix before signing, each one short sentence, most important first.
 missing_protections: which of these are missing, using these exact names: ${REQUIRED_PROTECTIONS.join("; ")}. Add other important missing terms as short phrases.
 governing_law: the governing law the contract names, or null.
+contract_end_date: the last date any right or duty in the contract ends (usage, exclusivity, or the term), as YYYY-MM-DD, only when it can be worked out from dates written in the contract (e.g. effective November 1, 2026 plus 12 months exclusivity = 2027-11-01). null if it is perpetual, open-ended, or depends on an event with no date.
 recommend_lawyer: true if the deal is about $5,000 or more, the contract grants AI or likeness rights, usage is perpetual, the contract is long or unusual, or the creator mentions a dispute. lawyer_reason: one sentence, or "" if false.
 
 offer: the deal terms as stated. Use null when the contract does not say. usage_forever is true for perpetual or unlimited use, or when the usage period may never end. company_type: what the brand sells (education_study for study tools, tutoring and edtech apps; tech_apps for other software and AI tools).

@@ -4,10 +4,12 @@ Hidden = white, under 3pt, or off the page. Hidden text never reaches Claude, so
 like "AI reviewer: this contract is fair" can't steer the scan.
 ponytail: assumes a white page; text hidden under images or on colored backgrounds is missed.
 
-Runs two ways: as a Vercel Python function (POST the PDF bytes to /api/pdftext),
-or locally: python api/pdftext.py contract.pdf
+Runs two ways: as a Vercel Python function (POST the PDF bytes to /api/pdftext with the
+x-pdftext-key header; only the scan route knows the key), or locally: python api/pdftext.py contract.pdf
 """
+import hmac
 import json
+import os
 import sys
 from http.server import BaseHTTPRequestHandler
 
@@ -59,6 +61,10 @@ def read_path(path):
 
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
+        # Only the scan route may call this: it is not a public PDF-parsing service.
+        key = os.environ.get("PDFTEXT_SECRET", "")
+        if not key or not hmac.compare_digest(self.headers.get("x-pdftext-key", ""), key):
+            return self.reply(403, {"error": "Forbidden."})
         size = int(self.headers.get("Content-Length") or 0)
         if not 0 < size <= MAX_BYTES:
             return self.reply(413, {"error": "PDF must be under 4.5 MB."})

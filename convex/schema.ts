@@ -10,5 +10,10 @@ export default defineSchema({
     flagCount: v.number(),
     underpaidBy: v.union(v.number(), v.null()),
     report: v.any(),
-  }).index("by_owner", ["owner"]),
+    deleteAt: v.optional(v.number()), // auto-delete time: 1 week after the contract ends
+  })
+    .index("by_owner", ["owner"])
+    .index("by_deleteAt", ["deleteAt"]),
+  // scans per user per day (UTC), so one account can't run up the AI bill
+  usage: defineTable({ owner: v.string(), day: v.string(), count: v.number() }).index("by_owner_day", ["owner", "day"]),
 });
