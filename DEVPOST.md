@@ -109,45 +109,47 @@ Sponsor technologies first.
 - **Next.js 16 + React 19 + TypeScript** on **Vercel**: one page with three views; a Node function runs the scan and a Python function (PyMuPDF) reads PDFs and detects hidden text.
 - **Deterministic verification layer** (our code): hidden-text stripping, PII scrubbing, quote-in-contract checks, case lookup by clause type, and a pure-math Pay Checker with 11 tests. The model reads language; code decides numbers and rules.
 
-### Apify: the market research pipeline
+### Apify: how we built the market data
 
-Nobody publishes UGC rates, so we built the dataset ourselves.
+Nobody publishes UGC rates, so we built the dataset.
 
-1. **Collect.** Our script starts each Apify actor through the Apify API, polls it every 15 seconds, and downloads the results. Four runs on r/UGCcreators and Upwork: rate questions (300 items), one search per brand industry (400), contract-term complaints for the Radar (250), and UGC job posts from payment-verified brands (100).
-2. **Extract prices (Claude).** Claude reads each post and pulls out every price as a structured record: the exact quoted price, whether it is a creator's ask, a brand's offer or an accepted deal, which rights were included, and the brand's industry.
-3. **Fact-check in code.** Think of a fact-checker at a newspaper. Every price Claude pulled out is checked against the original post: the quoted words must be in the post, and the number must be in the quote. If either check fails, the price is thrown out. We also drop influencer prices, advice ranges, hourly and non-USD prices, and keep at most 3 prices per thread.
-4. **Group.** Asks, offers and accepted deals are never mixed. "$150 for an organic video" is never compared with "$150 for a video plus a year of paid ads". A group is used for pricing only with 15+ prices from 5+ threads.
+1. **Collect.** Our script starts each Apify actor through the Apify API, polls it every 15 seconds, and downloads the results. Four runs: rate questions on r/UGCcreators (300 items), one search per brand industry (400), contract complaints for the Radar (250), and Upwork UGC job posts from payment-verified brands (100).
+2. **Scrub.** Code removes usernames, names, emails and phone numbers before any post reaches the AI.
+3. **Extract.** Claude reads each post and returns one record per price: the quoted words, the amount, whether it is a creator's ask, a brand's offer or an accepted deal, the rights included, and the brand's industry.
+4. **Fact-check.** Code drops a price unless its quoted words appear in the post and the amount appears in the quote. It also drops hourly, non-USD, influencer and advice prices, and keeps at most 3 prices per thread.
+5. **Group.** Asks, offers and accepted deals stay in separate groups, and so do rights bundles: \$150 for an organic video is never compared with \$150 for a video plus a year of paid ads. A group is used for pricing only with 15 or more prices from 5 or more threads.
 
-**Result:** 780 recent items → 229 prices extracted → **119 verified**, with a recorded reason for each of the 110 we dropped. The Radar sorted 250 complaints into our 19 clause types and kept the 4 with enough mentions: perpetual usage (15), paid ads bundled in (14), performance pay with no minimum (8), raw footage (7). Before any post reaches Claude, usernames and personal details are removed (PII scrubbing). Published files contain no post text, links or usernames.
+**Result:** 780 recent items, 229 prices extracted, 119 verified. Each of the 110 dropped prices has a recorded reason. The Radar sorted 250 complaints into our 19 clause types and kept the 4 with 5 or more mentions: perpetual usage (15), paid ads bundled in (14), performance pay with no minimum (8), raw footage (7). The published files contain no post text, links or usernames.
 
-### Agent workflow
+### AI workflow
 
-Clocked is not one prompt. It is a chain of narrow model calls, each with a fixed output format, each checked by code before the next step.
+Clocked is a chain of narrow model calls. Each call has a fixed output format, and code checks each output before the next step.
 
-1. **PDF reader (code).** PyMuPDF reads every piece of text with its color, size and position. White, under-3-point or off-page text is marked hidden and never reaches the model.
+1. **PDF reader (code).** PyMuPDF reads each text span with its color, size and position. White, under-3-point or off-page text is marked hidden and never reaches the model.
 2. **Scrubber (code).** Names, emails, phones, addresses, handles, SSNs and bank numbers become placeholders.
-3. **Pass 1, unfair terms (Claude).** Flags against 19 clause types, plus overall risk, top 3 fixes, missing protections, and the deal terms for pricing.
-4. **Pass 2, vague wording (Claude).** Reads every definition, deadline and condition for small wording with big consequences. Runs at the same time as pass 1.
-5. **Fact-checker (code).** Drops any flag whose quote is not word for word in the contract. Attaches the matching lawsuit and legal note by clause type. The model never writes a case or a statistic, so it cannot invent one.
-6. **Pay Checker (code, 11 tests).** Base rate per video × videos × (1 + uplifts for the rights the contract takes) = fair range. Then verdict, counteroffer, rights to drop, and a one-sentence message to send.
+3. **Pass 1, unfair terms (Claude).** Flags against 19 clause types. Also returns the overall risk, the top 3 fixes, the missing protections, and the deal terms used for pricing.
+4. **Pass 2, vague wording (Claude).** Reads each definition, deadline and condition for small wording with large consequences. Runs in parallel with pass 1.
+5. **Fact-checker (code).** Drops any flag whose quote is not in the contract word for word. Attaches the lawsuit and legal note for that clause type. The model never writes a case or a statistic, so it cannot invent one.
+6. **Pay Checker (code, 11 tests).** Fair range = base rate per video × videos × (1 + uplifts for the rights the contract takes). Then the verdict, a counteroffer, the rights to drop instead, and a one-sentence message to send.
 
 ### Legal fine-tuning
 
-We did not fine-tune a model. We tuned a rubric that our law student teammate can edit in one file:
+We did not fine-tune a model. We tuned a rubric that our law student can edit in one file:
 
-- 19 clause types in 4 categories, each with trigger language, a default risk level, and a real case.
-- Five protections every contract is checked for: usage end date, payment date, AI clause, creator approval before publishing, kill fee.
-- 12 vague-wording patterns, such as clocks the brand controls and "may" where "shall" was needed.
-- Lawyer escalation enforced in code: deals of $5,000 or more, any AI or likeness grant, usage that may never end.
-- Pay uplifts from practitioner data: paid usage +20–50%, perpetual or ownership +50–100%, exclusivity +30–50%, raw footage +30–50%.
+- 19 clause types in 4 categories. Each has trigger language, a default risk level and a real case.
+- 5 protections checked in every contract: usage end date, payment date, AI clause, creator approval before publishing, kill fee.
+- 12 vague-wording patterns, such as a clock the brand controls, or "may" where "shall" was needed.
+- Lawyer escalation in code: deals of \$5,000 or more, any AI or likeness grant, usage with no end date.
+- Pay uplifts from practitioner data: paid usage +20 to 50%, perpetual use or ownership +50 to 100%, exclusivity +30 to 50%, raw footage +30 to 50%.
 
 ### Security
 
-- **Someone reads another user's report.** Every Convex function checks the sign-in token and touches only that user's rows.
-- **Strangers burn our AI budget.** Token checked on the server; 20 scans per user per day; the PDF function answers only with a secret header.
-- **Prompt injection inside the PDF.** Hidden text removed before the model reads; the model has no tools; every flag must quote the real contract.
+- **One user reads another user's report.** Every Convex function checks the sign-in token and reads only that user's rows.
+- **Strangers use our AI budget.** The server checks the token. Each user gets 20 scans per day. The PDF function answers only requests with a secret header.
+- **Prompt injection in the PDF.** Hidden text is removed before the model reads. The model has no tools. Each flag must quote the real contract.
 - **Personal data reaches the model or the database.** Scrubbed before Claude, and again before saving.
-- **A stored contract leaks.** The file is never stored; reports delete themselves one week after the contract ends.
+- **A stored contract leaks.** The file is never stored. A report deletes itself one week after the contract ends.
+
 ## Challenges we ran into
 
 - The venue network kept resetting Apify's long polls mid-run. We switched to short polls with retries.
