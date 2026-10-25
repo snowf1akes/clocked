@@ -36,32 +36,63 @@ SYSTEM ARCHITECTURE
 
 At a high level, Clocked is a Next.js app on Vercel, a Convex database, Auth0 sign-in, and Claude Opus 5.5 for reading language. Apify powers a research pipeline that runs before a scan. A scan never scrapes anything.
 
-BEFORE THE DEMO · run once · market research (Apify)
-┌───────────────┐   ┌────────────────┐   ┌──────────────────┐   ┌─────────────────────┐   ┌──────────────────┐
-│ Apify         │   │ PII scrubbing  │   │ Claude extracts  │   │ Code fact-checks    │   │ Market           │
-│ scrapers      │──►│ usernames,     │──►│ prices           │──►│ quoted words must   │──►│ benchmarks       │
-│ 4 actor runs  │   │ names, emails, │   │ ask, offer or    │   │ be in the post; the │   │ 119 verified     │
-│ r/UGCcreators │   │ phones removed │   │ deal; rights     │   │ number in the quote │   │ prices from      │
-│ ×3, Upwork ×1 │   │ before any AI  │   │ included;        │   │ no hourly, non-USD, │   │ r/UGCcreators +  │
-│ 1,050 items   │   │ raw posts stay │   │ industry         │   │ influencer; max 3   │   │ Upwork, 4 radar  │
-│               │   │ on the laptop  │   │ 229 prices found │   │ per thread          │   │ signals, no PII  │
-└───────────────┘   └────────────────┘   └──────────────────┘   │ 110 thrown out      │   └────────┬─────────┘
-                                                                └─────────────────────┘            │
-DURING A SCAN · every time · about 25 seconds                                        read during every scan
-┌──────────────┐  PDF + token  ┌────────────────────────────────────────────────┐             │
-│ Browser      │──────────────►│ /api/scan  (Vercel, Node)                      │◄────────────┘
-│ Next.js page │◄──────────────│  1 check the sign-in token's signature         │
-└──────┬───────┘    report     │  2 count this scan, max 20/day ───────────────────► Convex: usage
-       │ token, in memory      │  3 read the PDF, strip hidden text ──► /api/pdftext (Python, PyMuPDF)
-┌──────┴───────┐               │  4 remove personal details                     │
-│ Auth0        │               │  5 Claude pass 1: unfair terms   ┐ in parallel │
-│ sign-in, JWT │               │    Claude pass 2: vague wording  ┘ ──► Claude Opus 5.5 (JSON out, no tools)
-└──────────────┘               │  6 fact-check: every flag must quote the contract │
-                               │  7 attach real cases, price the deal (code, 11 tests)
-                               │  8 save scrubbed report ──────────────────────────► Convex: reports
-                               └────────────────────────────────────────────────┘   (owner, delete date;
-                                                                                     hourly cron deletes
-The contract file is never stored. Claude sees only visible, scrubbed text and has no tools.   expired reports)
+BEFORE THE DEMO (run once): market research with Apify
+
+┌──────────────────────────────────────────────────────────────────┐
+│ APIFY SCRAPERS                                                   │
+│ reddit-scraper-lite ×3 on r/UGCcreators, upwork-job-scraper ×1   │
+│ started and polled through the Apify API · 1,050 posts and jobs  │
+└───────────────────────────────┬──────────────────────────────────┘
+                                ▼
+┌──────────────────────────────────────────────────────────────────┐
+│ PII SCRUBBING (code)                                             │
+│ usernames, names, emails, phones removed before any AI reads it  │
+│ raw posts never leave the laptop                                 │
+└───────────────────────────────┬──────────────────────────────────┘
+                                ▼
+┌──────────────────────────────────────────────────────────────────┐
+│ CLAUDE EXTRACTS PRICES (AI)                                      │
+│ reads each post, pulls out every price: creator's ask, brand's   │
+│ offer or accepted deal · rights included · brand industry        │
+│ 229 prices found                                                 │
+└───────────────────────────────┬──────────────────────────────────┘
+                                ▼
+┌──────────────────────────────────────────────────────────────────┐
+│ CODE FACT-CHECKS                                                 │
+│ quoted words must be in the post · number must be in the quote   │
+│ no hourly, non-USD or influencer prices · max 3 per thread       │
+│ 110 thrown out, each with a recorded reason                      │
+└───────────────────────────────┬──────────────────────────────────┘
+                                ▼
+┌──────────────────────────────────────────────────────────────────┐
+│ MARKET BENCHMARKS (two small JSON files in the app)              │
+│ 119 verified prices from r/UGCcreators and Upwork                │
+│ + 4 community warning signals · no quotes, links or names        │
+└──────────────────────────────────────────────────────────────────┘
+
+DURING A SCAN (every time, about 25 seconds)
+
+┌──────────────┐  PDF + token   ┌──────────────────────────────────┐
+│ BROWSER      │───────────────►│ /api/scan  (Vercel, Node)        │
+│ Next.js page │◄───────────────│                                  │
+└──────┬───────┘    report      │ 1 check the sign-in token        │
+       │                        │ 2 count scan, max 20/day ──► Convex: usage
+       │ token, kept in memory  │ 3 read PDF, strip hidden ──► /api/pdftext (Python)
+┌──────┴───────┐                │ 4 remove personal details        │
+│ AUTH0        │                │ 5 Claude pass 1: unfair terms  ┐ in parallel
+│ sign-in, JWT │                │   Claude pass 2: vague wording ┘ (JSON, no tools)
+└──────────────┘                │ 6 fact-check: flags must quote   │
+                                │   the contract                   │
+                                │ 7 attach real cases, price the   │
+                                │   deal (code, 11 tests)          │
+                                │ 8 save scrubbed report ──► Convex: reports
+                                └──────────────────────────────────┘   (owner-scoped,
+                                          ▲                            auto-deletes 1 wk
+                                          │ market benchmarks          after contract ends)
+                                          └── read from the Apify research, never re-scraped
+
+The contract file is never stored. Claude sees only visible, scrubbed text
+and has no tools. Code rejects any flag whose quote is not in the contract.
 
 (The same diagram as a picture is docs/architecture.png in the repo and in the gallery.)
 
