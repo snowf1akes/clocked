@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "app/page.module.css"
+        ],
+        "createdAt": "2026-10-25T07:05:14.978Z",
+        "reason": "Claude: only remaining hit is the .timeline rail (vertical line of an ordered timeline); card side-tabs were removed"
+      }
+    ]
+  }
+}

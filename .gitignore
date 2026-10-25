@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local scratch and raw scrapes
+scratch-*
+data/raw/
+
+.vercel
