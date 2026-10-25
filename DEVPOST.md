@@ -36,7 +36,36 @@ Our mascot, **Clo**, lowers her sunglasses when something needs a second look. C
 
 At a high level, Clocked is a Next.js app on Vercel, a Convex database, Auth0 sign-in, and Claude Opus 5.5 for reading language. Apify powers a research pipeline that runs before a scan. A scan never scrapes anything.
 
-(Architecture diagram: docs/architecture.png in the repo, and the first image in the gallery.)
+```
+BEFORE THE DEMO · run once · market research (Apify)
+┌───────────────┐   ┌────────────────┐   ┌──────────────────┐   ┌─────────────────────┐   ┌──────────────────┐
+│ Apify         │   │ PII scrubbing  │   │ Claude extracts  │   │ Code fact-checks    │   │ Market           │
+│ scrapers      │──►│ usernames,     │──►│ prices           │──►│ quoted words must   │──►│ benchmarks       │
+│ 4 actor runs  │   │ names, emails, │   │ ask, offer or    │   │ be in the post; the │   │ 119 verified     │
+│ r/UGCcreators │   │ phones removed │   │ deal; rights     │   │ number in the quote │   │ prices from      │
+│ ×3, Upwork ×1 │   │ before any AI  │   │ included;        │   │ no hourly, non-USD, │   │ r/UGCcreators +  │
+│ 1,050 items   │   │ raw posts stay │   │ industry         │   │ influencer; max 3   │   │ Upwork, 4 radar  │
+│               │   │ on the laptop  │   │ 229 prices found │   │ per thread          │   │ signals, no PII  │
+└───────────────┘   └────────────────┘   └──────────────────┘   │ 110 thrown out      │   └────────┬─────────┘
+                                                                └─────────────────────┘            │
+DURING A SCAN · every time · about 25 seconds                                        read during every scan
+┌──────────────┐  PDF + token  ┌────────────────────────────────────────────────┐             │
+│ Browser      │──────────────►│ /api/scan  (Vercel, Node)                      │◄────────────┘
+│ Next.js page │◄──────────────│  1 check the sign-in token's signature         │
+└──────┬───────┘    report     │  2 count this scan, max 20/day ───────────────────► Convex: usage
+       │ token, in memory      │  3 read the PDF, strip hidden text ──► /api/pdftext (Python, PyMuPDF)
+┌──────┴───────┐               │  4 remove personal details                     │
+│ Auth0        │               │  5 Claude pass 1: unfair terms   ┐ in parallel │
+│ sign-in, JWT │               │    Claude pass 2: vague wording  ┘ ──► Claude Opus 5.5 (JSON out, no tools)
+└──────────────┘               │  6 fact-check: every flag must quote the contract │
+                               │  7 attach real cases, price the deal (code, 11 tests)
+                               │  8 save scrubbed report ──────────────────────────► Convex: reports
+                               └────────────────────────────────────────────────┘   (owner, delete date;
+                                                                                     hourly cron deletes
+The contract file is never stored. Claude sees only visible, scrubbed text and has no tools.   expired reports)
+```
+
+(The same diagram as a picture is docs/architecture.png in the repo and in the gallery.)
 
 ### Tech stack
 
