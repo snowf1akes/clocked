@@ -24,45 +24,46 @@
   <text x="84" y="150" font-size="13" font-weight="700" fill="#625a6b" letter-spacing="2">BEFORE THE DEMO · RUN ONCE · MARKET RESEARCH</text>
 
   <rect x="84" y="180" width="230" height="150" rx="12" fill="#ffffff" stroke="#ddd7e4" stroke-width="1.5"/>
-  <text x="199" y="214" font-size="18" font-weight="700" fill="#1c1622" text-anchor="middle">Apify</text>
+  <text x="199" y="214" font-size="18" font-weight="700" fill="#1c1622" text-anchor="middle">Apify scrapers</text>
   <text x="199" y="240" font-size="14" fill="#625a6b" text-anchor="middle">4 actor runs</text>
-  <text x="199" y="262" font-size="14" fill="#625a6b" text-anchor="middle">Reddit scraper ×3</text>
-  <text x="199" y="284" font-size="14" fill="#625a6b" text-anchor="middle">Upwork job scraper ×1</text>
+  <text x="199" y="262" font-size="14" fill="#625a6b" text-anchor="middle">Reddit r/UGCcreators ×3</text>
+  <text x="199" y="284" font-size="14" fill="#625a6b" text-anchor="middle">Upwork UGC jobs ×1</text>
   <text x="199" y="310" font-size="13" fill="#625a6b" text-anchor="middle">started and polled via the Apify API</text>
 
   <line x1="314" y1="255" x2="376" y2="255" stroke="#1c1622" stroke-width="2" marker-end="url(#ar)"/>
 
   <rect x="380" y="180" width="230" height="150" rx="12" fill="#ffffff" stroke="#625a6b" stroke-width="1.5" stroke-dasharray="6 4"/>
-  <text x="495" y="214" font-size="18" font-weight="700" fill="#1c1622" text-anchor="middle">Raw data</text>
+  <text x="495" y="214" font-size="18" font-weight="700" fill="#1c1622" text-anchor="middle">PII scrubbing</text>
   <text x="495" y="240" font-size="14" fill="#625a6b" text-anchor="middle">1,050 posts and job posts</text>
-  <text x="495" y="262" font-size="14" fill="#625a6b" text-anchor="middle">usernames, links and</text>
-  <text x="495" y="284" font-size="14" fill="#625a6b" text-anchor="middle">post text stay on the laptop</text>
+  <text x="495" y="262" font-size="14" fill="#625a6b" text-anchor="middle">usernames, names, emails and</text>
+  <text x="495" y="284" font-size="14" fill="#625a6b" text-anchor="middle">phones removed before any AI</text>
+  <text x="495" y="310" font-size="13" fill="#625a6b" text-anchor="middle">raw posts stay on the laptop</text>
 
   <line x1="610" y1="255" x2="672" y2="255" stroke="#e83e78" stroke-width="2" marker-end="url(#arp)"/>
 
   <rect x="676" y="180" width="230" height="150" rx="12" fill="#fde6ef" stroke="#e83e78" stroke-width="1.5"/>
-  <text x="791" y="214" font-size="18" font-weight="700" fill="#1c1622" text-anchor="middle">Claude labels</text>
-  <text x="791" y="240" font-size="14" fill="#625a6b" text-anchor="middle">ask, offer or accepted deal</text>
-  <text x="791" y="262" font-size="14" fill="#625a6b" text-anchor="middle">rights included, industry</text>
-  <text x="791" y="284" font-size="14" fill="#625a6b" text-anchor="middle">exact quote of the price</text>
-  <text x="791" y="310" font-size="13" fill="#625a6b" text-anchor="middle">229 prices extracted</text>
+  <text x="791" y="214" font-size="18" font-weight="700" fill="#1c1622" text-anchor="middle">Claude extracts prices</text>
+  <text x="791" y="240" font-size="14" fill="#625a6b" text-anchor="middle">reads each post, pulls out</text>
+  <text x="791" y="262" font-size="14" fill="#625a6b" text-anchor="middle">every price: ask, offer or deal</text>
+  <text x="791" y="284" font-size="14" fill="#625a6b" text-anchor="middle">+ rights included, industry</text>
+  <text x="791" y="310" font-size="13" fill="#625a6b" text-anchor="middle">229 prices found</text>
 
   <line x1="906" y1="255" x2="968" y2="255" stroke="#1c1622" stroke-width="2" marker-end="url(#ar)"/>
 
   <rect x="972" y="180" width="230" height="150" rx="12" fill="#efebf6" stroke="#2e2437" stroke-width="1.5"/>
-  <text x="1087" y="214" font-size="18" font-weight="700" fill="#1c1622" text-anchor="middle">Code verifies</text>
-  <text x="1087" y="240" font-size="14" fill="#625a6b" text-anchor="middle">quote is in the post</text>
-  <text x="1087" y="262" font-size="14" fill="#625a6b" text-anchor="middle">amount is in the quote</text>
-  <text x="1087" y="284" font-size="14" fill="#625a6b" text-anchor="middle">USD, UGC, max 3 per thread</text>
-  <text x="1087" y="310" font-size="13" fill="#625a6b" text-anchor="middle">110 dropped, each with a reason</text>
+  <text x="1087" y="214" font-size="18" font-weight="700" fill="#1c1622" text-anchor="middle">Code fact-checks</text>
+  <text x="1087" y="240" font-size="14" fill="#625a6b" text-anchor="middle">quoted words must be in the post</text>
+  <text x="1087" y="262" font-size="14" fill="#625a6b" text-anchor="middle">number must be in the quote</text>
+  <text x="1087" y="284" font-size="14" fill="#625a6b" text-anchor="middle">no hourly, non-USD or influencer</text>
+  <text x="1087" y="310" font-size="13" fill="#625a6b" text-anchor="middle">110 thrown out, each with a reason</text>
 
   <line x1="1202" y1="255" x2="1264" y2="255" stroke="#1c1622" stroke-width="2" marker-end="url(#ar)"/>
 
   <rect x="1268" y="180" width="250" height="150" rx="12" fill="#ffffff" stroke="#ddd7e4" stroke-width="1.5"/>
-  <text x="1393" y="214" font-size="18" font-weight="700" fill="#1c1622" text-anchor="middle">Published data</text>
-  <text x="1393" y="240" font-size="14" fill="#625a6b" text-anchor="middle">119 verified prices</text>
-  <text x="1393" y="262" font-size="14" fill="#625a6b" text-anchor="middle">+ 4 community signals</text>
-  <text x="1393" y="284" font-size="14" fill="#625a6b" text-anchor="middle">two small JSON files in the app</text>
+  <text x="1393" y="214" font-size="18" font-weight="700" fill="#1c1622" text-anchor="middle">Market benchmarks</text>
+  <text x="1393" y="240" font-size="14" fill="#625a6b" text-anchor="middle">119 verified prices from</text>
+  <text x="1393" y="262" font-size="14" fill="#625a6b" text-anchor="middle">r/UGCcreators and Upwork</text>
+  <text x="1393" y="284" font-size="14" fill="#625a6b" text-anchor="middle">+ 4 community warning signals</text>
   <text x="1393" y="310" font-size="13" fill="#625a6b" text-anchor="middle">no quotes, links or names</text>
 
 
@@ -116,7 +117,7 @@
   <text x="460" y="778" font-size="15" fill="#1c1622">Claude pass 2: vague wording, in parallel</text>
 
   <rect x="424" y="804" width="330" height="44" rx="9" fill="#efebf6" stroke="#2e2437" stroke-width="1.5"/>
-  <text x="440" y="832" font-size="15" fill="#1c1622"><tspan font-weight="700">6</tspan>  Keep only flags that quote the contract</text>
+  <text x="440" y="832" font-size="15" fill="#1c1622"><tspan font-weight="700">6</tspan>  Fact-check flags against the contract</text>
 
   <rect x="424" y="860" width="330" height="44" rx="9" fill="#efebf6" stroke="#2e2437" stroke-width="1.5"/>
   <text x="440" y="888" font-size="15" fill="#1c1622"><tspan font-weight="700">7</tspan>  Add cases, price the deal, save report</text>
@@ -134,11 +135,11 @@
   <line x1="754" y1="761" x2="786" y2="761" stroke="#e83e78" stroke-width="2" marker-end="url(#arp)"/>
 
   <rect x="790" y="506" width="316" height="44" rx="9" fill="#ffffff" stroke="#ddd7e4" stroke-width="1.5"/>
-  <text x="806" y="526" font-size="14" font-weight="700" fill="#1c1622">Published data</text>
-  <text x="806" y="543" font-size="12.5" fill="#625a6b">benchmarks + community signals</text>
+  <text x="806" y="526" font-size="14" font-weight="700" fill="#1c1622">Market benchmarks</text>
+  <text x="806" y="543" font-size="12.5" fill="#625a6b">from the Apify research, read only</text>
 
   <rect x="790" y="860" width="316" height="44" rx="9" fill="#efebf6" stroke="#2e2437" stroke-width="1.5"/>
-  <text x="806" y="880" font-size="14" font-weight="700" fill="#1c1622">Verifier + Pay Checker  · code</text>
+  <text x="806" y="880" font-size="14" font-weight="700" fill="#1c1622">Fact-checker + Pay Checker · code</text>
   <text x="806" y="897" font-size="12.5" fill="#625a6b">cases attached by clause type, 11 tests</text>
   <line x1="754" y1="882" x2="786" y2="882" stroke="#1c1622" stroke-width="2" marker-end="url(#ar)"/>
 

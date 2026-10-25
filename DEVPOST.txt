@@ -52,11 +52,11 @@ APIFY: THE MARKET RESEARCH PIPELINE
 Nobody publishes UGC rates, so we built the dataset ourselves.
 
 1. Collect. Our script starts each Apify actor through the Apify API, polls it every 15 seconds, and downloads the results. Four runs on r/UGCcreators and Upwork: rate questions (300 items), one search per brand industry (400), contract-term complaints for the Radar (250), and UGC job posts from payment-verified brands (100).
-2. Label. Claude reads each post and returns a structured record: the exact quoted price, whether it is a creator's ask, a brand's offer or an accepted deal, which rights were included, and the brand's industry.
-3. Verify in code. A price is dropped unless its quote appears word for word in the post and the amount appears in the quote. We also drop influencer prices, advice ranges, hourly and non-USD prices, and keep at most 3 prices per thread.
+2. Extract prices (Claude). Claude reads each post and pulls out every price as a structured record: the exact quoted price, whether it is a creator's ask, a brand's offer or an accepted deal, which rights were included, and the brand's industry.
+3. Fact-check in code. Think of a fact-checker at a newspaper. Every price Claude pulled out is checked against the original post: the quoted words must be in the post, and the number must be in the quote. If either check fails, the price is thrown out. We also drop influencer prices, advice ranges, hourly and non-USD prices, and keep at most 3 prices per thread.
 4. Group. Asks, offers and accepted deals are never mixed. "$150 for an organic video" is never compared with "$150 for a video plus a year of paid ads". A group is used for pricing only with 15+ prices from 5+ threads.
 
-Result: 780 recent items → 229 prices extracted → 119 verified, with a recorded reason for each of the 110 we dropped. The Radar sorted 250 complaints into our 19 clause types and kept the 4 with enough mentions: perpetual usage (15), paid ads bundled in (14), performance pay with no minimum (8), raw footage (7). Published files contain no post text, links or usernames.
+Result: 780 recent items → 229 prices extracted → 119 verified, with a recorded reason for each of the 110 we dropped. The Radar sorted 250 complaints into our 19 clause types and kept the 4 with enough mentions: perpetual usage (15), paid ads bundled in (14), performance pay with no minimum (8), raw footage (7). Before any post reaches Claude, usernames and personal details are removed (PII scrubbing). Published files contain no post text, links or usernames.
 
 AGENT WORKFLOW
 
@@ -66,7 +66,7 @@ Clocked is not one prompt. It is a chain of narrow model calls, each with a fixe
 2. Scrubber (code). Names, emails, phones, addresses, handles, SSNs and bank numbers become placeholders.
 3. Pass 1, unfair terms (Claude). Flags against 19 clause types, plus overall risk, top 3 fixes, missing protections, and the deal terms for pricing.
 4. Pass 2, vague wording (Claude). Reads every definition, deadline and condition for small wording with big consequences. Runs at the same time as pass 1.
-5. Verifier (code). Drops any flag whose quote is not word for word in the contract. Attaches the matching lawsuit and legal note by clause type. The model never writes a case or a statistic, so it cannot invent one.
+5. Fact-checker (code). Drops any flag whose quote is not word for word in the contract. Attaches the matching lawsuit and legal note by clause type. The model never writes a case or a statistic, so it cannot invent one.
 6. Pay Checker (code, 11 tests). Base rate per video × videos × (1 + uplifts for the rights the contract takes) = fair range. Then verdict, counteroffer, rights to drop, and a one-sentence message to send.
 
 LEGAL FINE-TUNING
