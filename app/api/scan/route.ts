@@ -5,8 +5,8 @@ import os from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
 import community from "@/data/community_signals.json";
-import rateRows from "@/data/rates.json";
-import { judge, quantile, type RateRow } from "@/lib/rate";
+import benchmarks from "@/data/rate_benchmarks.json";
+import { judge, type Benchmarks } from "@/lib/rate";
 import { annotate, checkFlags, lawyer, scanImage, scanText, type Signal } from "@/lib/scan";
 import { scrub, scrubDeep, type Removed } from "@/lib/scrub";
 import { api } from "@/convex/_generated/api";
@@ -92,13 +92,9 @@ export async function POST(req: Request) {
   if (!scan) return Response.json({ error: "The scan failed. Try again." }, { status: 502 });
 
   const flags = annotate(checkFlags(scan.flags, text), SIGNALS);
-  // Fair rate = what creators report charging. Upwork posts are brand offers, the thing being judged,
-  // so they are shown as context, not mixed into the baseline.
-  const all = rateRows as RateRow[];
-  const verdict = judge(scan.offer, all.filter((r) => r.source !== "upwork"));
-  const posts = all.filter((r) => r.source === "upwork").map((r) => r.per_video_usd).sort((a, b) => a - b);
-  const brand_posts = posts.length >= 5 ? { n: posts.length, median: quantile(posts, 0.5) } : null;
-  const price = verdict ? `$${(Math.round(verdict.fair_total / 10) * 10).toLocaleString("en-US")}` : "a market rate";
+  // Raymond's Pay Checker method, in code: benchmarks never mix asks, offers and deals, or rights bundles.
+  const verdict = judge(scan.offer, benchmarks as Benchmarks);
+  const price = verdict ? `$${verdict.counteroffer.toLocaleString("en-US")}` : "a market rate";
   // scrubDeep again over the whole report: catches anything Claude echoed from a photo, and the hidden text
   const report = scrubDeep({
     overall_risk: scan.overall_risk,
@@ -113,7 +109,6 @@ export async function POST(req: Request) {
     timeline: scan.timeline,
     counteroffer: scan.counteroffer.replaceAll("[FAIR_PRICE]", price),
     verdict,
-    brand_posts,
     removed,
     from_photo: file.type !== "application/pdf",
   });

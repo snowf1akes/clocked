@@ -1,19 +1,18 @@
 "use client";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useConvexAuth, useMutation, useQuery } from "convex/react";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
-import rateRows from "@/data/rates.json";
-import { COMPANY_LABEL, quantile, type CompanyType, type RateRow, type Verdict } from "@/lib/rate";
+import benchmarks from "@/data/rate_benchmarks.json";
+import { PRICE_TYPE_LABEL, type Benchmarks, type PayCheck, type RightsBundle } from "@/lib/rate";
 import { CATEGORY_LABEL, type Category, type Risk } from "@/lib/rubric";
 import type { Scan, ScanFlag } from "@/lib/scan";
 import s from "./page.module.css";
 
 type Result = Scan & {
   hidden: { page: number; text: string; why: string }[];
-  verdict: Verdict | null;
-  brand_posts: { n: number; median: number } | null;
+  verdict: PayCheck | null;
   removed: Record<string, number>;
   from_photo: boolean;
   lawyer?: { recommend: boolean; reason: string };
@@ -190,23 +189,27 @@ function Gate({ loading, signIn }: { loading: boolean; signIn: () => void }) {
   );
 }
 
-// Clo, unchanged: the team's own artwork from public/clo.png. Shows an empty slot until the file loads.
-function Clo({ size = 168 }: { size?: number }) {
-  const [ok, setOk] = useState(false);
+// Clo, the team's mascot (public/clo/, one shared canvas, so swapping poses never shifts him).
+// Idle is an animated loop. Shows an empty slot until the image loads.
+type Pose = "idle" | "thinking" | "concerned" | "alarmed" | "celebrate";
+const POSE_FOR_RISK: Record<Risk, Pose> = { critical: "alarmed", high: "concerned", medium: "concerned", low: "celebrate" };
+function Clo({ size = 168, pose = "idle" }: { size?: number; pose?: Pose }) {
+  const src = pose === "idle" ? "/clo/idle.webp" : `/clo/${pose}.png`;
+  const [loaded, setLoaded] = useState<string | null>(null);
   useEffect(() => {
     const img = new Image();
-    img.onload = () => setOk(true);
-    img.src = "/clo.png";
-  }, []);
-  if (!ok) return <span className={s.cloSlot} style={{ width: size, height: size }} aria-hidden />;
+    img.onload = () => setLoaded(src);
+    img.src = src;
+  }, [src]);
+  if (loaded !== src) return <span className={s.cloSlot} style={{ width: (size * 441) / 496, height: size }} aria-hidden />;
   // eslint-disable-next-line @next/next/no-img-element
-  return <img className={s.clo} src="/clo.png" alt="Clo, the Clocked bunny" style={{ height: size }} />;
+  return <img className={s.clo} src={src} alt="Clo, the Clocked bunny" style={{ height: size }} />;
 }
 
 function Reading() {
   return (
     <section className={s.reading} aria-live="polite">
-      <Clo size={72} />
+      <Clo size={72} pose="thinking" />
       <div>
         <strong>Clo is reading your contract</strong>
         <span>Checking for hidden text, reading every clause twice, comparing the pay. About 25 seconds.</span>
@@ -276,7 +279,7 @@ function Overview(props: { signedIn: boolean; loading: boolean; signIn: () => vo
             </>
           )}
         </div>
-        <Clo />
+        <Clo pose={props.signedIn && latest?.overall ? POSE_FOR_RISK[latest.overall as Risk] ?? "idle" : "idle"} />
       </section>
 
       {props.signedIn && !!rows?.length && (
@@ -335,7 +338,7 @@ function Tab({ on, go, label, n }: { on: boolean; go: () => void; label: string;
 
 function Report({ r, toRate }: { r: Result; toRate: () => void }) {
   const [copied, setCopied] = useState(false);
-  const v = r.verdict;
+  const v = payOf(r);
   const removed = Object.values(r.removed ?? {}).reduce((a, b) => a + b, 0);
   return (
     <div className={s.report}>
@@ -347,8 +350,8 @@ function Report({ r, toRate }: { r: Result; toRate: () => void }) {
               <span className={s.level}>{RISK_LABEL[r.overall_risk]} risk</span>
             </h2>
             {v && (
-              <button className={s.payPill} data-tone={v.underpaid_by > 0 ? "bad" : "good"} onClick={toRate}>
-                {v.underpaid_by > 0 ? `Underpays you by ${usd(v.underpaid_by)}` : "Pay at or above market"} <IconArrow />
+              <button className={s.payPill} data-tone={v.verdict === "underpaid" ? "bad" : "good"} onClick={toRate}>
+                {v.verdict === "underpaid" ? `Underpaid by ${v.gap_vs_low_pct}% · ask ${usd(v.counteroffer)}` : VERDICT_LINE[v.verdict](v)} <IconArrow />
               </button>
             )}
           </div>
@@ -505,62 +508,74 @@ function Flags({ title, note, flags }: { title: string; note: string; flags: Sca
   );
 }
 
-// What creators charge by company type, straight from data/rates.json (creator-reported rates only).
-function useMarket() {
-  return useMemo(() => {
-    const rows = (rateRows as RateRow[]).filter((r) => r.source !== "upwork");
-    const by = new Map<CompanyType, number[]>();
-    rows.forEach((r) => by.set(r.category, [...(by.get(r.category) ?? []), r.per_video_usd]));
-    const all = rows.map((r) => r.per_video_usd).sort((a, b) => a - b);
-    const types = [...by]
-      .filter(([t]) => t !== "other")
-      .map(([t, p]) => ({ t, n: p.length, median: quantile(p.sort((a, b) => a - b), 0.5) }))
-      .sort((a, b) => b.n - a.n);
-    return { n: all.length, median: quantile(all, 0.5), p25: quantile(all, 0.25), p75: quantile(all, 0.75), types };
-  }, []);
-}
+// The Pay Checker result is only shown for reports scanned with Raymond's method (older reports lack fair_range).
+const payOf = (r: Result | null): PayCheck | null => (r?.verdict && "fair_range" in r.verdict ? r.verdict : null);
+
+const VERDICT_LINE: Record<PayCheck["verdict"], (p: PayCheck) => string> = {
+  underpaid: (p) => `Underpaid by about ${p.gap_vs_low_pct}%`,
+  fair: () => "This pay is fair",
+  above_range: () => "Above the fair range. Nice.",
+  cannot_fully_evaluate: () => "Can't fully evaluate",
+};
 
 function RateCheck({ r, toXray }: { r: Result | null; toXray: () => void }) {
-  const m = useMarket();
-  const v = r?.verdict;
+  const p = payOf(r);
+  const b = benchmarks as Benchmarks;
+  const allNiche = b.buckets.filter((x) => x.niche === "all").sort((x, y) => y.n - x.n);
   return (
     <>
       <h1 className={s.h1}>Rate Check</h1>
-      <p className={s.lede}>What creators actually get paid per video, from real deals, so you know a lowball when you see one.</p>
+      <p className={s.lede}>Is the offer fair for what the contract asks? An estimate from reported prices, not financial advice.</p>
 
-      {v && r ? (
+      {p && r ? (
         <section className={s.money}>
           <p className={s.moneyFor}>
-            {r.offer.brand} offers {usd(r.offer.total_pay_usd ?? 0)} for {r.offer.videos} video{r.offer.videos === 1 ? "" : "s"}
+            {r.offer.brand} offers {p.offer ? usd(p.offer) : "no cash fee"} for {p.videos} video{p.videos === 1 ? "" : "s"}
           </p>
-          <h2 className={v.underpaid_by > 0 ? s.bad : s.good}>
-            {v.underpaid_by > 0 ? `This deal underpays you by ${usd(v.underpaid_by)}` : "The pay is at or above market"}
-          </h2>
+          <h2 className={p.verdict === "underpaid" || p.verdict === "cannot_fully_evaluate" ? s.bad : s.good}>{VERDICT_LINE[p.verdict](p)}</h2>
           <p>
-            {usd(v.offer_per_video)} per video. Only {v.percentile}% of {v.n} {v.compared_to ?? "UGC deals"} creators reported were lower. Typical range{" "}
-            {usd(v.p25)}–{usd(v.p75)} per video.
+            Estimated fair range <strong>{usd(p.fair_range.low)}–{usd(p.fair_range.high)}</strong>
+            {p.verdict === "underpaid" ? `, about ${p.gap_vs_mid_pct}% below the ${usd(p.fair_range.midpoint)} midpoint.` : "."}
           </p>
-          <Strip v={v} />
-          {v.category_note && <p className={s.muted}>{v.category_note}</p>}
-          {v.missing_addon && <p className={s.muted}>{v.missing_addon}</p>}
-          {r.brand_posts && (
-            <p className={s.muted}>
-              Brands posting UGC jobs on Upwork offer a median of {usd(r.brand_posts.median)} per video ({r.brand_posts.n} jobs). That gap is why creators get lowballed.
-            </p>
-          )}
-          <details className={s.math}>
-            <summary>Show the math</summary>
+          <FairBar p={p} />
+          <div className={s.howWe}>
+            <h3>How we got this</h3>
             <ul>
-              {v.math.map((line) => (
-                <li key={line}>{line}</li>
+              <li>
+                Base: {p.videos} × {usd(p.base.low)}–{usd(p.base.high)} per video ({p.base.n ? `${p.base.source}, ${p.base.n} reported prices` : p.base.source})
+              </li>
+              {p.uplifts.map((u) => (
+                <li key={u.term}>
+                  +{u.low_pct}–{u.high_pct}% for {u.term}
+                </li>
               ))}
+              <li>
+                Confidence: <strong>{p.confidence}</strong>, {p.confidence_reason}.
+              </li>
             </ul>
-          </details>
+          </div>
+          {p.verdict === "underpaid" && (
+            <div className={s.fixes}>
+              <h3>Two ways to fix it</h3>
+              <ol>
+                <li>
+                  Ask for <strong>{usd(p.counteroffer)}</strong> for the same terms.
+                </li>
+                <li>{p.reduce_rights_option}</li>
+              </ol>
+              {p.script && <p className={s.script}>&ldquo;{p.script}&rdquo;</p>}
+            </div>
+          )}
+          {p.notes.map((n) => (
+            <p key={n} className={s.payNote}>
+              {n}
+            </p>
+          ))}
         </section>
       ) : (
         <section className={s.panel}>
-          <h2 className={s.h3}>Check a real offer</h2>
-          <p className={s.muted}>Scan a contract and Clo compares its pay with deals from the same kind of brand.</p>
+          <h2 className={s.h3}>{r ? "Re-scan to see the new pay check" : "Check a real offer"}</h2>
+          <p className={s.muted}>Scan a contract and Clo prices it: base rate, extra rights the contract takes, a fair range and a counteroffer.</p>
           <button className={s.primary} onClick={toXray}>
             Scan a contract <IconArrow />
           </button>
@@ -568,48 +583,58 @@ function RateCheck({ r, toXray }: { r: Result | null; toXray: () => void }) {
       )}
 
       <section>
-        <h2 className={s.h2}>What creators charge</h2>
+        <h2 className={s.h2}>What creators report</h2>
         <p className={s.sectionNote}>
-          Median {usd(m.median)} per video across {m.n} creator-reported rates (typical {usd(m.p25)}–{usd(m.p75)}). By what the brand sells:
+          Per-video prices from {String(b.validation.items_after_verification)} verified reports, kept apart by type and by the rights included. A group is used
+          for pricing only with 15+ prices from 5+ threads; otherwise the default $100–$200 range applies.
         </p>
         <ul className={s.market}>
-          {m.types.map((t) => (
-            <li key={t.t}>
-              <span>{COMPANY_LABEL[t.t]}</span>
-              <strong>{usd(t.median)}</strong>
-              <span className={s.marketN} data-thin={t.n < 8 || undefined}>
-                {t.n} deal{t.n === 1 ? "" : "s"}
-                {t.n < 8 ? " · thin data" : ""}
+          {allNiche.slice(0, 8).map((x) => (
+            <li key={`${x.price_type}${x.rights_bundle}`}>
+              <span>
+                {PRICE_TYPE_LABEL[x.price_type]} · {RIGHTS_LABEL[x.rights_bundle]}
+              </span>
+              <strong>{usd(x.median_per_video)}</strong>
+              <span className={s.marketN} data-thin={!x.usable || undefined}>
+                {x.n} price{x.n === 1 ? "" : "s"}
+                {x.usable ? "" : " · thin data"}
               </span>
             </li>
           ))}
         </ul>
         <p className={s.muted}>
-          A one-time research sample of r/UGCcreators, scraped with Apify in October 2026. Each price was checked against the post it came from; posts are not stored or
-          shown. Offers are compared within their company type when there are at least 8 deals of that type.
+          Reference points: {b.reference_figures.slice(0, 2).map((f) => `${f.figure.toLowerCase()} ${f.value} (${f.source})`).join("; ")}. {b.sample_note}
         </p>
       </section>
     </>
   );
 }
 
-// Every scraped deal as a dot on one line, with the offer marked.
-function Strip({ v }: { v: Verdict }) {
-  const max = Math.max(v.points[Math.floor(v.points.length * 0.95)] ?? 0, v.offer_per_video) * 1.05;
-  const x = (p: number) => 14 + (Math.min(p, max) / max) * 572;
+const RIGHTS_LABEL: Record<RightsBundle, string> = {
+  base: "organic only",
+  with_short_paid: "with 90 days or less of paid ads",
+  with_long_paid: "with long or forever paid ads",
+  with_exclusivity: "with exclusivity",
+  unknown_rights: "rights not stated",
+};
+
+// The fair range as a band, with the offer marked.
+function FairBar({ p }: { p: PayCheck }) {
+  const max = Math.max(p.fair_range.high, p.offer) * 1.12 || 1;
+  const x = (v: number) => 14 + (v / max) * 572;
   return (
-    <svg className={s.strip} viewBox="0 0 600 76" role="img" aria-label={`Offer of ${usd(v.offer_per_video)} per video against ${v.n} deals`}>
+    <svg className={s.strip} viewBox="0 0 600 76" role="img" aria-label={`Offer ${usd(p.offer)} against a fair range of ${usd(p.fair_range.low)} to ${usd(p.fair_range.high)}`}>
       <line x1="14" x2="586" y1="38" y2="38" stroke="var(--line-strong)" strokeWidth="2" strokeLinecap="round" />
-      {v.points.map((p, i) => (
-        <circle key={i} cx={x(p)} cy={38 + ((i % 5) - 2) * 4} r="4" fill="var(--muted)" opacity="0.35" />
-      ))}
-      <line x1={x(v.median)} x2={x(v.median)} y1="20" y2="56" stroke="var(--ink)" strokeDasharray="3 3" />
-      <text x={x(v.median)} y="13" textAnchor="middle" fontSize="12" fill="var(--muted)">
-        median {usd(v.median)}
+      <rect x={x(p.fair_range.low)} y="30" width={x(p.fair_range.high) - x(p.fair_range.low)} height="16" rx="8" fill="var(--green-soft)" stroke="var(--green)" strokeOpacity="0.4" />
+      <text x={x(p.fair_range.low)} y="18" textAnchor="middle" fontSize="12" fill="var(--muted)">
+        {usd(p.fair_range.low)}
       </text>
-      <circle cx={x(v.offer_per_video)} cy="38" r="9" fill="var(--pink)" stroke="var(--surface)" strokeWidth="3" />
-      <text x={x(v.offer_per_video)} y="72" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--pink-ink)">
-        you {usd(v.offer_per_video)}
+      <text x={x(p.fair_range.high)} y="18" textAnchor="middle" fontSize="12" fill="var(--muted)">
+        {usd(p.fair_range.high)}
+      </text>
+      <circle cx={x(p.offer)} cy="38" r="9" fill="var(--pink)" stroke="var(--surface)" strokeWidth="3" />
+      <text x={x(p.offer)} y="70" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--pink-ink)">
+        offer {usd(p.offer)}
       </text>
     </svg>
   );

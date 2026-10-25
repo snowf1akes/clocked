@@ -1,576 +1,1192 @@
 [
  {
   "source": "reddit",
-  "per_video_usd": 1000,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
- },
- {
-  "source": "reddit",
+  "thread": "389595ce4d",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
   "per_video_usd": 70,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
+  "first_hand": true,
+  "retainer": false
  },
  {
   "source": "reddit",
-  "per_video_usd": 90,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "health_fitness"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 65,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
- },
- {
-  "source": "reddit",
+  "thread": "b019381b43",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "tech_apps",
   "per_video_usd": 30,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
+  "first_hand": true,
+  "retainer": false
  },
  {
   "source": "reddit",
-  "per_video_usd": 20,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
+  "thread": "b019381b43",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "tech_apps",
+  "per_video_usd": 100,
+  "first_hand": true,
+  "retainer": false
  },
  {
   "source": "reddit",
-  "per_video_usd": 300,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "beauty_skincare"
+  "thread": "66cb759e26",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 8,
+  "first_hand": true,
+  "retainer": true
  },
  {
   "source": "reddit",
+  "thread": "1c45e30a8c",
+  "price_type": "accepted_deal",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
   "per_video_usd": 45,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
+  "first_hand": true,
+  "retainer": false
  },
  {
   "source": "reddit",
+  "thread": "9397e29ac1",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "tech_apps",
   "per_video_usd": 150,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
+  "first_hand": true,
+  "retainer": false
  },
  {
   "source": "reddit",
-  "per_video_usd": 250,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 150,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "health_fitness"
- },
- {
-  "source": "reddit",
+  "thread": "fe34c49c45",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "health_fitness",
   "per_video_usd": 350,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "health_fitness"
+  "first_hand": true,
+  "retainer": false
  },
  {
   "source": "reddit",
+  "thread": "603bd138ae",
+  "price_type": "accepted_deal",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
   "per_video_usd": 550,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
+  "first_hand": true,
+  "retainer": false
  },
  {
   "source": "reddit",
-  "per_video_usd": 20,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 250,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 550,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 440,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 25,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 150,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "food_beverage"
- },
- {
-  "source": "reddit",
+  "thread": "13fd729208",
+  "price_type": "accepted_deal",
+  "rights_bundle": "unknown_rights",
+  "category": "fashion_apparel",
   "per_video_usd": 200,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "fashion_apparel"
+  "first_hand": true,
+  "retainer": false
  },
  {
   "source": "reddit",
-  "per_video_usd": 33.33,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
+  "thread": "73587daacd",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "beauty_skincare",
+  "per_video_usd": 5,
+  "first_hand": true,
+  "retainer": false
  },
  {
   "source": "reddit",
-  "per_video_usd": 25,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
+  "thread": "73587daacd",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "beauty_skincare",
+  "per_video_usd": 10,
+  "first_hand": true,
+  "retainer": false
  },
  {
   "source": "reddit",
-  "per_video_usd": 175,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "education_study"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 16.67,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 250,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 50,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 150,
-  "paid_usage_addon_pct": 33.33,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 40,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "beauty_skincare"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 75,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "health_fitness"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 40,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "beauty_skincare"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 30,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "beauty_skincare"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 475,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 30,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 13.33,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 150,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "beauty_skincare"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 150,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 300,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "beauty_skincare"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 325,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "health_fitness"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 50,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "food_beverage"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 75,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "health_fitness"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 250,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 250,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 200,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 250,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 135,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 33.33,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 30,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "home_lifestyle"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 20,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
- },
- {
-  "source": "reddit",
-  "per_video_usd": 20,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "education_study"
- },
- {
-  "source": "upwork",
-  "per_video_usd": 66.67,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "upwork",
+  "thread": "73587daacd",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "beauty_skincare",
   "per_video_usd": 15,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
+  "first_hand": true,
+  "retainer": false
  },
  {
-  "source": "upwork",
-  "per_video_usd": 250,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
+  "source": "reddit",
+  "thread": "1431aef4d9",
+  "price_type": "accepted_deal",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 440,
+  "first_hand": true,
+  "retainer": false
  },
  {
-  "source": "upwork",
-  "per_video_usd": 18.15,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "finance"
- },
- {
-  "source": "upwork",
-  "per_video_usd": 20,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "home_lifestyle"
- },
- {
-  "source": "upwork",
-  "per_video_usd": 75,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
- },
- {
-  "source": "upwork",
-  "per_video_usd": 75,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
- },
- {
-  "source": "upwork",
-  "per_video_usd": 75,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
- },
- {
-  "source": "upwork",
-  "per_video_usd": 50,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "upwork",
-  "per_video_usd": 25,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "upwork",
-  "per_video_usd": 55,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "upwork",
-  "per_video_usd": 50,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "education_study"
- },
- {
-  "source": "upwork",
-  "per_video_usd": 45,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "upwork",
+  "source": "reddit",
+  "thread": "9c4588468b",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "education_study",
   "per_video_usd": 150,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "health_fitness"
+  "first_hand": true,
+  "retainer": false
  },
  {
-  "source": "upwork",
-  "per_video_usd": 32.4,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "beauty_skincare"
+  "source": "reddit",
+  "thread": "9c4588468b",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "education_study",
+  "per_video_usd": 200,
+  "first_hand": true,
+  "retainer": false
  },
  {
-  "source": "upwork",
-  "per_video_usd": 85,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
+  "source": "reddit",
+  "thread": "6e063d9644",
+  "price_type": "creator_ask",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 250,
+  "first_hand": true,
+  "retainer": false
  },
  {
-  "source": "upwork",
-  "per_video_usd": 75,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
+  "source": "reddit",
+  "thread": "e51e362a0c",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "other",
+  "per_video_usd": 117,
+  "first_hand": true,
+  "retainer": false
  },
  {
-  "source": "upwork",
-  "per_video_usd": 33.33,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "health_fitness"
+  "source": "reddit",
+  "thread": "e51e362a0c",
+  "price_type": "creator_ask",
+  "rights_bundle": "with_short_paid",
+  "category": "other",
+  "per_video_usd": 300,
+  "first_hand": true,
+  "retainer": false
  },
  {
-  "source": "upwork",
-  "per_video_usd": 75,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
+  "source": "reddit",
+  "thread": "e51e362a0c",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "other",
+  "per_video_usd": 167,
+  "first_hand": true,
+  "retainer": false
  },
  {
-  "source": "upwork",
-  "per_video_usd": 25,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
+  "source": "reddit",
+  "thread": "10da0567f5",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "beauty_skincare",
+  "per_video_usd": 40,
+  "first_hand": true,
+  "retainer": false
  },
  {
-  "source": "upwork",
+  "source": "reddit",
+  "thread": "c94d671233",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "beauty_skincare",
+  "per_video_usd": 40,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "a6ca52a6ec",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "tech_apps",
   "per_video_usd": 30,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "gaming_entertainment"
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "315bdc60d9",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 13,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "reddit",
+  "thread": "379ef9012a",
+  "price_type": "accepted_deal",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 350,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "379ef9012a",
+  "price_type": "accepted_deal",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 600,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "ea78609d3d",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "tech_apps",
+  "per_video_usd": 150,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "dec370dc4e",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "health_fitness",
+  "per_video_usd": 75,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "cb4f06c1de",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "beauty_skincare",
+  "per_video_usd": 300,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "4ead0e87c7",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "tech_apps",
+  "per_video_usd": 5,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "827464b7cd",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "home_lifestyle",
+  "per_video_usd": 30,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "92501aef69",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "education_study",
+  "per_video_usd": 20,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "04674846c9",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "health_fitness",
+  "per_video_usd": 33,
+  "first_hand": true,
+  "retainer": true
  },
  {
   "source": "upwork",
-  "per_video_usd": 70,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
+  "thread": "4cce3bbd76",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 67,
+  "first_hand": true,
+  "retainer": true
  },
  {
   "source": "upwork",
-  "per_video_usd": 65,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
+  "thread": "9bf2d8b200",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 15,
+  "first_hand": true,
+  "retainer": false
  },
  {
   "source": "upwork",
-  "per_video_usd": 65,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "gaming_entertainment"
+  "thread": "1bbdfbef85",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_long_paid",
+  "category": "tech_apps",
+  "per_video_usd": 250,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "203d15ffc9",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "food_beverage",
+  "per_video_usd": 20,
+  "first_hand": true,
+  "retainer": false
  },
  {
   "source": "upwork",
-  "per_video_usd": 100,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "gaming_entertainment"
+  "thread": "b0063ffb2c",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "home_lifestyle",
+  "per_video_usd": 20,
+  "first_hand": true,
+  "retainer": false
  },
  {
   "source": "upwork",
-  "per_video_usd": 55,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "upwork",
-  "per_video_usd": 100,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "gaming_entertainment"
- },
- {
-  "source": "upwork",
-  "per_video_usd": 55,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "other"
- },
- {
-  "source": "upwork",
-  "per_video_usd": 60,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "education_study"
- },
- {
-  "source": "upwork",
-  "per_video_usd": 10,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "fashion_apparel"
- },
- {
-  "source": "upwork",
+  "thread": "78e6e25cd4",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
   "per_video_usd": 50,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "finance"
+  "first_hand": true,
+  "retainer": false
  },
  {
   "source": "upwork",
+  "thread": "944e3cb900",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 55,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "295cfcc55a",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_long_paid",
+  "category": "education_study",
+  "per_video_usd": 9,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "4c31353673",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "education_study",
+  "per_video_usd": 50,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "e9e08f1a0a",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 45,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "6793e3fadc",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "health_fitness",
+  "per_video_usd": 150,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "effcdfff8c",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 85,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "4a97ecfc59",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 70,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "b32eaebb39",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 65,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "88fdc8fe84",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "gaming_entertainment",
+  "per_video_usd": 65,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "29c20e2daa",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "gaming_entertainment",
+  "per_video_usd": 100,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "485bbaa28f",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 55,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "2e4e32046e",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "gaming_entertainment",
+  "per_video_usd": 100,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "18ee182e64",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 55,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "5446a602f0",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "fashion_apparel",
   "per_video_usd": 10,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "finance"
+  "first_hand": true,
+  "retainer": false
  },
  {
   "source": "upwork",
+  "thread": "f56e365012",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "finance",
+  "per_video_usd": 63,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "upwork",
+  "thread": "991f5eade6",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_long_paid",
+  "category": "finance",
+  "per_video_usd": 10,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "39d1186304",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "tech_apps",
   "per_video_usd": 30,
-  "paid_usage_addon_pct": null,
-  "perpetual_addon_pct": null,
-  "category": "tech_apps"
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "d1fbd3e909",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_long_paid",
+  "category": "health_fitness",
+  "per_video_usd": 5,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "7804dca753",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_long_paid",
+  "category": "health_fitness",
+  "per_video_usd": 5,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "29798dd2b1",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_long_paid",
+  "category": "health_fitness",
+  "per_video_usd": 33,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "c1c1ce61ee",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_long_paid",
+  "category": "other",
+  "per_video_usd": 25,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "c1c1ce61ee",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_long_paid",
+  "category": "other",
+  "per_video_usd": 25,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "249c6d2759",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "gaming_entertainment",
+  "per_video_usd": 30,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "2e13b62ca9",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "health_fitness",
+  "per_video_usd": 90,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "df2ea25063",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "tech_apps",
+  "per_video_usd": 500,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "df2ea25063",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "tech_apps",
+  "per_video_usd": 1500,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "66cb759e26",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 8,
+  "first_hand": false,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "25ecf6c857",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 20,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "a44823c9f7",
+  "price_type": "accepted_deal",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 70,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "259b61b863",
+  "price_type": "creator_ask",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 250,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "259b61b863",
+  "price_type": "creator_ask",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 500,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "259b61b863",
+  "price_type": "accepted_deal",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 250,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "1348599043",
+  "price_type": "accepted_deal",
+  "rights_bundle": "with_long_paid",
+  "category": "other",
+  "per_video_usd": 25,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "ad1e6fbf25",
+  "price_type": "accepted_deal",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 20,
+  "first_hand": false,
+  "retainer": true
+ },
+ {
+  "source": "reddit",
+  "thread": "5c2cb14c66",
+  "price_type": "accepted_deal",
+  "rights_bundle": "unknown_rights",
+  "category": "food_beverage",
+  "per_video_usd": 150,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "4397e8eef0",
+  "price_type": "accepted_deal",
+  "rights_bundle": "with_long_paid",
+  "category": "other",
+  "per_video_usd": 25,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "2ee7c59349",
+  "price_type": "accepted_deal",
+  "rights_bundle": "with_long_paid",
+  "category": "other",
+  "per_video_usd": 25,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "44ca46c61d",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "health_fitness",
+  "per_video_usd": 150,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "58102e24fb",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "tech_apps",
+  "per_video_usd": 600,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "reddit",
+  "thread": "d4e51417d3",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 7,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "6e063d9644",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 17,
+  "first_hand": false,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "6e063d9644",
+  "price_type": "accepted_deal",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 150,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "d838910dce",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 1000,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "reddit",
+  "thread": "583086aba3",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "beauty_skincare",
+  "per_video_usd": 500,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "reddit",
+  "thread": "81276a222c",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "food_beverage",
+  "per_video_usd": 300,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "reddit",
+  "thread": "81276a222c",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "food_beverage",
+  "per_video_usd": 800,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "reddit",
+  "thread": "a6ca52a6ec",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "tech_apps",
+  "per_video_usd": 900,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "reddit",
+  "thread": "c602437394",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "beauty_skincare",
+  "per_video_usd": 30,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "379ef9012a",
+  "price_type": "accepted_deal",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 2000,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "reddit",
+  "thread": "2df1899fcf",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "education_study",
+  "per_video_usd": 1200,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "reddit",
+  "thread": "cfd5cd7264",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "health_fitness",
+  "per_video_usd": 200,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "cfd5cd7264",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "health_fitness",
+  "per_video_usd": 450,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "428f1441b9",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "gaming_entertainment",
+  "per_video_usd": 100,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "428f1441b9",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "gaming_entertainment",
+  "per_video_usd": 270,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "dec370dc4e",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "health_fitness",
+  "per_video_usd": 25,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "b70e2b4260",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "tech_apps",
+  "per_video_usd": 300,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "reddit",
+  "thread": "0bed30c1d9",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "food_beverage",
+  "per_video_usd": 50,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "c2a3731da6",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "education_study",
+  "per_video_usd": 500,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "reddit",
+  "thread": "3513c17f01",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "education_study",
+  "per_video_usd": 500,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "upwork",
+  "thread": "158d8bf65f",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 500,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "reddit",
+  "thread": "203d15ffc9",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "food_beverage",
+  "per_video_usd": 300,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "upwork",
+  "thread": "901d45a872",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "finance",
+  "per_video_usd": 75,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "4d3caaeebd",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "tech_apps",
+  "per_video_usd": 50,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "850b0bc4aa",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "education_study",
+  "per_video_usd": 300,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "upwork",
+  "thread": "a26cb8ebf8",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "tech_apps",
+  "per_video_usd": 50,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "a26cb8ebf8",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "tech_apps",
+  "per_video_usd": 500,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "upwork",
+  "thread": "78e0aa9713",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "tech_apps",
+  "per_video_usd": 50,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "b92330011a",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 20,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "06505d4158",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "education_study",
+  "per_video_usd": 60,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "06505d4158",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "education_study",
+  "per_video_usd": 60,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "f56e365012",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "finance",
+  "per_video_usd": 50,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "upwork",
+  "thread": "a7e51e5153",
+  "price_type": "brand_offer",
+  "rights_bundle": "with_short_paid",
+  "category": "beauty_skincare",
+  "per_video_usd": 10,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "e6b0866c53",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "tech_apps",
+  "per_video_usd": 50,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "e6b0866c53",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "tech_apps",
+  "per_video_usd": 500,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "upwork",
+  "thread": "a25f26e9ba",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "tech_apps",
+  "per_video_usd": 50,
+  "first_hand": true,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "a25f26e9ba",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "tech_apps",
+  "per_video_usd": 500,
+  "first_hand": true,
+  "retainer": true
+ },
+ {
+  "source": "reddit",
+  "thread": "d4e51417d3",
+  "price_type": "creator_ask",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 30,
+  "first_hand": false,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "d4e51417d3",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 250,
+  "first_hand": false,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "e1892f4f0d",
+  "price_type": "brand_offer",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 30,
+  "first_hand": false,
+  "retainer": false
+ },
+ {
+  "source": "reddit",
+  "thread": "203d15ffc9",
+  "price_type": "creator_ask",
+  "rights_bundle": "unknown_rights",
+  "category": "other",
+  "per_video_usd": 150,
+  "first_hand": false,
+  "retainer": false
+ },
+ {
+  "source": "upwork",
+  "thread": "6867e9a22e",
+  "price_type": "brand_offer",
+  "rights_bundle": "base",
+  "category": "tech_apps",
+  "per_video_usd": 175,
+  "first_hand": true,
+  "retainer": false
  }
 ]

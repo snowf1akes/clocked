@@ -27,6 +27,9 @@ const Offer = z.object({
   company_type: z.enum(COMPANY_TYPES),
   total_pay_usd: z.number().nullable(),
   videos: z.number().nullable(),
+  pricing_unit: z.enum(["per_video", "package", "per_month", "commission_only", "product_only"]),
+  commission_pct: z.number().nullable(),
+  ownership_transfer: z.boolean(),
   usage_months: z.number().nullable(),
   usage_forever: z.boolean(),
   paid_ads: z.boolean(),
@@ -117,7 +120,7 @@ governing_law: the governing law the contract names, or null.
 contract_end_date: the last date any right or duty in the contract ends (usage, exclusivity, or the term), as YYYY-MM-DD, only when it can be worked out from dates written in the contract (e.g. effective November 1, 2026 plus 12 months exclusivity = 2027-11-01). null if it is perpetual, open-ended, or depends on an event with no date.
 recommend_lawyer: true if the deal is about $5,000 or more, the contract grants AI or likeness rights, usage is perpetual, the contract is long or unusual, or the creator mentions a dispute. lawyer_reason: one sentence, or "" if false.
 
-offer: the deal terms as stated. Use null when the contract does not say. usage_forever is true for perpetual or unlimited use, or when the usage period may never end. company_type: what the brand sells (education_study for study tools, tutoring and edtech apps; tech_apps for other software and AI tools).
+offer: the deal terms as stated. Use null when the contract does not say. usage_forever is true for perpetual or unlimited use, or when the usage period may never end. videos counts full videos only (not story sets or tiny add-ons). pricing_unit: how the pay is set (package = one fee for all deliverables). commission_pct: the commission rate if pay is commission-based, else null. ownership_transfer: true for work-for-hire or an assignment of rights. company_type: what the brand sells (education_study for study tools, tutoring and edtech apps; tech_apps for other software and AI tools).
 
 timeline: 4-5 steps telling what the brand could legally do with the creator's videos, face and voice over time under this contract, from first post to years later. Concrete and calm, each step one sentence. "when" is short, like "Week 1" or "Year 3".
 

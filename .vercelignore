@@ -46,5 +46,5 @@ data/raw/
 
 .vercel
 
-# Clo stays a placeholder on the live site until the animated version is ready
+# the old single-image cutout; the app now uses public/clo/
 public/clo.png

@@ -262,3 +262,10 @@
   .navItem span { display: none; }
   .navItem[aria-current="page"] span { display: inline; }
 }
+
+/* Pay Checker details */
+.howWe, .fixes { display: grid; gap: 6px; margin-top: 6px; }
+.howWe h3, .fixes h3 { font-size: 0.95rem; font-weight: 600; }
+.howWe ul, .fixes ol { padding-left: 20px; display: grid; gap: 4px; max-width: 75ch; }
+.script { background: var(--canvas); border-radius: 10px; padding: 11px 14px; color: var(--ink-2); max-width: 75ch; }
+.payNote { font-size: 0.92rem; background: var(--amber-soft); color: #5e3a00; padding: 10px 12px; border-radius: 10px; max-width: 75ch; }
