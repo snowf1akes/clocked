@@ -10,16 +10,13 @@ import { CATEGORY_LABEL, type Category, type Risk } from "@/lib/rubric";
 import type { Scan, ScanFlag } from "@/lib/scan";
 import s from "./page.module.css";
 
-type Result = Omit<Scan, "flags"> & {
-  flags: ScanFlag[];
+type Result = Scan & {
   hidden: { page: number; text: string; why: string }[];
-  dropped: number;
   verdict: Verdict | null;
   brand_posts: { n: number; median: number } | null;
   removed: Record<string, number>;
   from_photo: boolean;
   lawyer?: { recommend: boolean; reason: string };
-  community_as_of?: string | null;
 };
 type View = "overview" | "xray" | "rate";
 

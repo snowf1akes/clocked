@@ -13,7 +13,7 @@ export const COMPANY_LABEL: Record<CompanyType, string> = {
 };
 
 export type RateRow = {
-  source: "reddit" | "upwork" | "fiverr";
+  source: "reddit" | "upwork";
   per_video_usd: number; // base price for one video, usage rights excluded when the post says so
   paid_usage_addon_pct: number | null; // extra % charged for paid-ad / whitelisting rights, if stated
   perpetual_addon_pct: number | null; // extra % charged for forever usage, if stated

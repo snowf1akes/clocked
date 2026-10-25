@@ -6,6 +6,8 @@
 type Rule = [kind: string, re: RegExp, to: string];
 
 const NAME = "[A-Z][a-z'’-]+(?: [A-Z]\\.?)?(?: [A-Z][a-z'’-]+){1,2}";
+// Jane Doe ("Creator")  /  Jane Doe (the "Influencer")
+const PARTY = `${NAME}(?=\\s*\\((?:the\\s+)?["“]?(?:Creator|Influencer|Talent|Contractor|Content Creator)\\b)`;
 
 const RULES: Rule[] = [
   ["email", /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g, "[EMAIL]"],
@@ -18,8 +20,7 @@ const RULES: Rule[] = [
   ["address", /\b\d{1,5}\s+(?:[A-Za-z0-9]+\s+){1,3}(?:st|street|ave|avenue|rd|road|blvd|boulevard|dr|drive|ln|lane|way|ct|court|pl|place)\b\.?(?:,?\s*(?:apt|unit|suite|#)\.?\s*\w+)?/gi, "[ADDRESS]"],
   ["date of birth", /\b(?:date of birth|DOB|born)\s*[:\-]?\s*[A-Za-z0-9,\/ .-]{6,20}\d/gi, "[DATE OF BIRTH]"],
   ["handle", /(?<![\w@])@[A-Za-z0-9_.]{2,30}\b/g, "[HANDLE]"],
-  // Jane Doe ("Creator")  /  Jane Doe (the "Influencer")
-  ["name", new RegExp(`${NAME}(?=\\s*\\((?:the\\s+)?["“]?(?:Creator|Influencer|Talent|Contractor|Content Creator)\\b)`, "g"), "[NAME]"],
+  ["name", new RegExp(PARTY, "g"), "[NAME]"],
   // Creator: Jane Doe   /   Print name: Jane Doe
   ["name", new RegExp(`(?<=\\b(?:Creator|Influencer|Talent|Contractor|Name|Print(?:ed)? name|Legal name|Signed|Attn)\\s*(?:name)?\\s*[:\\-]\\s*)${NAME}`, "g"), "[NAME]"],
 ];
@@ -36,7 +37,7 @@ export function scrub(text: string): { text: string; removed: Removed } {
     });
   }
   // a name found once is removed everywhere it appears, labeled or not
-  for (const name of new Set(text.match(new RegExp(`${NAME}(?=\\s*\\((?:the\\s+)?["“]?(?:Creator|Influencer|Talent|Contractor))`, "g")) ?? [])) {
+  for (const name of new Set(text.match(new RegExp(PARTY, "g")) ?? [])) {
     out = out.replaceAll(name, () => {
       removed.name = (removed.name ?? 0) + 1;
       return "[NAME]";
