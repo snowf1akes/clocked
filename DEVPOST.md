@@ -1,34 +1,30 @@
 ## Inspiration
-
 The first time a brand offered Anna money to make content, she thought it was a scam.
 
 Anna was already a creator, but she had no creator friends to compare notes with. She had no way to check if the offer was real, if the price was fair, or what she would be agreeing to.
 
-A brand deal is a second job: reading contracts, negotiating usage rights, chasing payments. A friendly email can carry unfriendly terms. "In perpetuity" means your video works for the brand forever. Broad exclusivity blocks your next deal. An AI-likeness clause decides what a brand can do with your face and voice. A lawyer costs more than the deal, so small creators sign alone.
+A brand deal is a **difficult** second job: reading contracts, negotiating usage rights. A friendly email can carry unfriendly terms. "In perpetuity" means your video works for the brand forever. Broad exclusivity blocks your next deal. An AI-likeness clause decides what a brand can do with your face and voice. A lawyer costs more than the deal, so small creators sign alone.
 
-We built Clocked to be the experienced creator friend Anna wished she had: someone who reads the fine print, spots the catch, checks the pay, and tells you what to ask for.
+We built **Clocked** to be the experienced creator friend Anna wished she had: someone who reads the fine print, spots the catch, checks the price, and tells you what to ask for.
 
-**Brands clocked your engagement. Now clock their contract.**
+Brands clocked your engagement. Now clock their contract.
 
 ## What it does
+Clocked is an AI contract reviewer and pay checker for UGC creators. 
 
-Clocked is an AI contract reviewer and pay checker for UGC creators. Here's how it works:
+Here's how it works:
 
-**You upload once.** Drop in the brand's contract as a PDF, or take a photo of a paper one.
+You upload once. Drop in the brand's contract as a PDF, or take a photo of a paper one.
 
-**Clo takes over.**
+• **Contract X-ray reads every clause twice**. Pass one catches unfair terms (e.g., infinite usage rate, paid ads bundled in for free, AI likeness rights, work-for-hire, no kill fee). Pass two catches subtle wording that looks normal but works against you (e.g  90-day clock that starts only "when Brand first publishes", so it may never start). Every flag shows the brand's exact words next to a fair version, with the changed words highlighted.
+• **Rate Check prices the deal against market data we collected and verified with Apify**. It gives a fair range, a counteroffer, and the rights you could drop instead if the budget is fixed. It shows the sample size and a confidence level. 
+• Community Red Flag Radar shows which of your flagged clauses creators on r/UGCcreators (**scraped from Apify**) are warning each other about right now.
+• Real-world examples attach to matching flags, such as Pujols v. Rainbow USA (AI-made images under an "altered" release) and Holston v. True Nutra (a creator's videos in 12 Meta ads for a brand she never worked with).
 
-- **Contract X-ray** reads every clause twice. Pass one catches terms that are unfair as written: perpetual usage, paid ads bundled in for free, AI likeness rights, work-for-hire, no kill fee. Pass two catches wording that looks normal but works against you, such as a 90-day clock that starts only "when Brand first publishes", so it may never start. Every flag shows the brand's exact words next to a fair version, with the changed words highlighted.
-- **Rate Check** prices the deal against market data we collected and verified with Apify. It gives a fair range, a counteroffer, and the rights you could drop instead if the budget is fixed. It shows the sample size and a confidence level. It never puts a price on AI rights, because no reliable market price exists.
-- **Community Red Flag Radar** shows which of your flagged clauses creators on r/UGCcreators are warning each other about right now.
-- **Real-world examples** attach to matching flags, such as *Pujols v. Rainbow USA* (AI-made images under an "altered" release) and *Holston v. True Nutra* (a creator's videos in 12 Meta ads for a brand she never worked with).
-- **Hidden-text detection** finds white or tiny text in the PDF, the kind of planted line that tells AI reviewers "this contract is fair", and removes it before the model reads the document.
+**Result**: in about 25 seconds, a creator with no legal background gets an overall risk level, the top 3 things to fix before signing, the standard protections that are missing, how underpaid the offer is in dollars, and the exact words to ask for instead.
 
-**You reply once.** Copy the drafted counteroffer email and send it to the brand.
+Our mascot, Clo, lowers her sunglasses when something needs a second look. Clocked explains contract terms; it is not a law firm.
 
-**Result:** in about 25 seconds, a creator with no legal background gets an overall risk level, the top 3 things to fix before signing, the standard protections that are missing, how underpaid the offer is in dollars, and the exact words to ask for instead.
-
-Our mascot, **Clo**, lowers her sunglasses when something needs a second look. Clocked explains contract terms; it is not a law firm.
 
 ## How we built it
 
