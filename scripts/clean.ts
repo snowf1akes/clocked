@@ -38,7 +38,7 @@ async function load(): Promise<Item[]> {
   const items: Item[] = [];
   const seen = new Set<string>();
   // data/raw/<source>[_anything].json, e.g. reddit.json, reddit_brands.json, upwork.json
-  for (const name of (await readdir("data/raw")).filter((f) => f.endsWith(".json"))) {
+  for (const name of (await readdir("data/raw")).filter((f) => /^(reddit|upwork|fiverr).*\.json$/.test(f))) {
     const source = name.split(/[_.]/)[0] as RateRow["source"];
     for (const o of JSON.parse(await readFile(`data/raw/${name}`, "utf8")) as Record<string, unknown>[]) {
       const key = String(o.id ?? o.url ?? JSON.stringify(o).slice(0, 200));
@@ -80,7 +80,8 @@ async function main() {
         const it = items[r.index];
         if (!it || !idx.includes(r.index) || !norm(it.text).includes(norm(r.quote))) continue;
         if (!(r.per_video_usd >= 10 && r.per_video_usd <= 5000)) continue;
-        out.push({ source: it.source, url: it.url, per_video_usd: r.per_video_usd, paid_usage_addon_pct: r.paid_usage_addon_pct, perpetual_addon_pct: r.perpetual_addon_pct, quote: r.quote, category: r.category });
+        // the quote was only needed for the check above; posts are not republished (no quotes, links or names)
+        out.push({ source: it.source, per_video_usd: r.per_video_usd, paid_usage_addon_pct: r.paid_usage_addon_pct, perpetual_addon_pct: r.perpetual_addon_pct, category: r.category });
       }
     }));
     console.log(`batches ${Math.min(b + 5, batches.length)}/${batches.length}, ${out.length} rows`);

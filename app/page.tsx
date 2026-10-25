@@ -5,6 +5,7 @@ import { Fragment, useState } from "react";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import type { Verdict } from "@/lib/rate";
+import { CATEGORY_LABEL, type Category, type Risk } from "@/lib/rubric";
 import type { Scan, ScanFlag } from "@/lib/scan";
 import s from "./page.module.css";
 
@@ -16,7 +17,11 @@ type Result = Omit<Scan, "flags"> & {
   brand_posts: { n: number; median: number } | null;
   removed: Record<string, number>;
   from_photo: boolean;
+  lawyer?: { recommend: boolean; reason: string };
+  community_as_of?: string | null;
 };
+
+const RISK_LABEL: Record<Risk, string> = { critical: "Critical", high: "High", medium: "Medium", low: "Low" };
 
 const usd = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
 
@@ -33,10 +38,6 @@ async function shrink(file: File): Promise<File> {
   return blob ? new File([blob], "contract.jpg", { type: "image/jpeg" }) : file;
 }
 
-const LAW_NOTE: Partial<Record<ScanFlag["category"], string>> = {
-  ai_likeness:
-    "California's AB 2602 (in effect since 2025) can make a clause like this unenforceable when the uses aren't specifically described and you had no lawyer or union. Ask a lawyer before relying on it.",
-};
 
 export default function Home() {
   const { loginWithRedirect, logout, user, getAccessTokenSilently } = useAuth0();
@@ -144,6 +145,21 @@ function Report({ r }: { r: Result }) {
   const v = r.verdict;
   return (
     <div className={s.report}>
+      {r.overall_risk && (
+        <section className={s.summary} data-sev={r.overall_risk}>
+          <p className={s.disclaimer}>This explains your contract so you can decide what to ask for. It is not legal advice.</p>
+          <h2>
+            Overall risk: <span className={s.level}>{RISK_LABEL[r.overall_risk]}</span>
+          </h2>
+          {r.top_3?.length > 0 && (
+            <>
+              <h3>Top 3 things to fix before signing</h3>
+              <ol>{r.top_3.map((t) => <li key={t}>{t}</li>)}</ol>
+            </>
+          )}
+          {r.governing_law && <p className={s.note}>Governing law named in the contract: {r.governing_law}.</p>}
+        </section>
+      )}
       {Object.keys(r.removed ?? {}).length > 0 && (
         <section className={s.privacy}>
           <h2>{Object.values(r.removed).reduce((a, b) => a + b, 0)} personal details removed before analysis</h2>
@@ -186,7 +202,7 @@ function Report({ r }: { r: Result }) {
             <details>
               <summary>Show the math</summary>
               <ul>{v.math.map((m) => <li key={m}>{m}</li>)}</ul>
-              <p className={s.note}>Rates creators reported on r/UGCcreators, scraped with Apify. Each price is checked against the post it came from. Upwork job posts are brand offers, so they are shown for context, not used as the fair rate.</p>
+              <p className={s.note}>Rates creators reported on r/UGCcreators (a one-time research sample, scraped with Apify). Each price was checked against the post it came from; posts are not stored or shown. Upwork job posts are brand offers, so they are shown for context, not used as the fair rate.</p>
             </details>
           </>
         ) : (
@@ -205,6 +221,23 @@ function Report({ r }: { r: Result }) {
         flags={r.flags.filter((f) => f.tier === "vague")}
       />
 
+
+      {r.missing_protections?.length > 0 && (
+        <section>
+          <h2 className={s.h2}>Missing protections</h2>
+          <p className={s.note}>A contract that says nothing usually helps the side that wrote it.</p>
+          <ul className={s.missing}>{r.missing_protections.map((m) => <li key={m}>{m}</li>)}</ul>
+        </section>
+      )}
+
+      {r.lawyer?.recommend && (
+        <section className={s.lawyer}>
+          <h2>When to get a lawyer</h2>
+          <p>
+            {r.lawyer.reason} A short review by an entertainment or contracts lawyer is worth it for this deal. Many offer flat-fee contract reviews.
+          </p>
+        </section>
+      )}
 
       {r.timeline.length > 0 && (
         <section>
@@ -298,7 +331,10 @@ function Flags({ title, note, flags }: { title: string; note: string; flags: Sca
       <div className={s.flags}>
         {flags.map((f, i) => (
           <article key={i} className={s.flag} data-sev={f.severity}>
-            <p className={s.sev}>{f.severity} risk</p>
+            <p className={s.sev}>
+              {RISK_LABEL[f.severity as Risk] ?? f.severity} risk
+              {CATEGORY_LABEL[f.category as Category] && <span className={s.cat}> · {CATEGORY_LABEL[f.category as Category]}</span>}
+            </p>
             <h3>{f.title}</h3>
             {f.standard ? (
               <div className={s.diff}>
@@ -322,7 +358,20 @@ function Flags({ title, note, flags }: { title: string; note: string; flags: Sca
               <dt>Ask for instead</dt>
               <dd>{f.ask}</dd>
             </dl>
-            {LAW_NOTE[f.category] && <p className={s.law}>{LAW_NOTE[f.category]}</p>}
+            {f.case_ref && (
+              <p className={s.example}>
+                <span className={s.label}>Real-world example</span>
+                {f.case_ref}
+              </p>
+            )}
+            {f.community && (
+              <p className={s.example}>
+                <span className={s.label}>Community signal</span>
+                Creators are warning each other about this: {f.community.mentions} posts from the last 90 days in our research sample of r/UGCcreators.
+                {f.community.negotiated_pct ? ` ${Math.round(f.community.negotiated_pct * 100)}% of them say they got it changed by asking.` : ""}
+              </p>
+            )}
+            {f.law_note && <p className={s.law}>{f.law_note}</p>}
           </article>
         ))}
       </div>

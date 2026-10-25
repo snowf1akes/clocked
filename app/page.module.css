@@ -88,3 +88,18 @@
 .label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 2px; }
 .diff mark { background: var(--red-bg); color: var(--red); font-weight: 600; border-radius: 3px; padding: 0 2px; }
 .fair mark { background: color-mix(in srgb, var(--green) 18%, transparent); color: var(--green); }
+
+.summary { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; display: grid; gap: 8px; }
+.summary h2 { font-size: 24px; }
+.summary h3 { font-size: 15px; margin-top: 6px; }
+.summary ol { padding-left: 22px; display: grid; gap: 4px; }
+.level { color: var(--amber); }
+.summary[data-sev="critical"] .level, .summary[data-sev="high"] .level { color: var(--red); }
+.summary[data-sev="low"] .level { color: var(--green); }
+.disclaimer { font-size: 13px; color: var(--muted); }
+.flag[data-sev="critical"] .sev { color: #fff; background: var(--red); }
+.cat { font-weight: 600; text-transform: none; letter-spacing: 0; opacity: 0.85; }
+.example { margin-top: 10px; font-size: 14px; color: var(--muted); }
+.missing { padding-left: 20px; display: grid; gap: 4px; }
+.lawyer { background: var(--amber-bg); border-radius: 14px; padding: 16px 20px; }
+.lawyer h2 { font-size: 18px; margin-bottom: 4px; }

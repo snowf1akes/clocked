@@ -1,0 +1,112 @@
+{
+ "as_of": "2026-10-25",
+ "window_days": 90,
+ "sources": [
+  "reddit_research_sample"
+ ],
+ "signals": [
+  {
+   "clause_type": "perpetual_usage",
+   "category": "usage_ownership",
+   "mentions": 15,
+   "trend": null,
+   "trend_change_pct": null,
+   "top_trigger_phrases": [
+    "perpetual rights",
+    "6 months usage",
+    "unlimited usage rights",
+    "12 months paid usage",
+    "perpetuity rights"
+   ],
+   "common_outcomes": {
+    "signed": 0,
+    "negotiated_changed": 0,
+    "walked_away": 0.07,
+    "dispute": 0.07,
+    "unknown": 0.87
+   },
+   "example_summaries": [
+    "Brand kept running ads beyond the agreed usage window and creator asks what to charge for continued use.",
+    "Advice to bill past overrun usage separately and offer per-video renewal extensions with clear dates.",
+    "Platform grants brands unlimited indefinite paid ad usage for a low flat creator fee with no licensing or renewals."
+   ]
+  },
+  {
+   "clause_type": "paid_ads_bundled",
+   "category": "usage_ownership",
+   "mentions": 14,
+   "trend": null,
+   "trend_change_pct": null,
+   "top_trigger_phrases": [
+    "usage rights",
+    "whitelisting",
+    "no cost to you",
+    "the commission covers whitelisting",
+    "perpetual paid usage"
+   ],
+   "common_outcomes": {
+    "signed": 0,
+    "negotiated_changed": 0,
+    "walked_away": 0.07,
+    "dispute": 0,
+    "unknown": 0.93
+   },
+   "example_summaries": [
+    "Brands fold ad usage rights into the base creation fee, so creators should price creation and usage separately.",
+    "Ad usage and whitelisting are often slipped in for free or tiny budgets despite being the most valuable part of the deal.",
+    "Beginner priced year-long paid ad usage separately from creation and the brand declined as over budget."
+   ]
+  },
+  {
+   "clause_type": "no_minimum_pay",
+   "category": "payment_liability",
+   "mentions": 8,
+   "trend": null,
+   "trend_change_pct": null,
+   "top_trigger_phrases": [
+    "cpm",
+    "$40 a video",
+    "$2 cpm",
+    "no guaranteed base pay",
+    "at least 3,000 views"
+   ],
+   "common_outcomes": {
+    "signed": 0,
+    "negotiated_changed": 0.13,
+    "walked_away": 0,
+    "dispute": 0,
+    "unknown": 0.88
+   },
+   "example_summaries": [
+    "Pay that only triggers when videos hit a view threshold means there is effectively no guaranteed base rate.",
+    "Performance-only offer with no base pay and a view threshold required before any payment.",
+    "Advises getting deliverable terms fixed in writing and notes view-only pay shifts all risk to the creator."
+   ]
+  },
+  {
+   "clause_type": "raw_footage",
+   "category": "payment_liability",
+   "mentions": 7,
+   "trend": null,
+   "trend_change_pct": null,
+   "top_trigger_phrases": [
+    "raw footage",
+    "raw file",
+    "all raw footage",
+    "raw footage only"
+   ],
+   "common_outcomes": {
+    "signed": 0,
+    "negotiated_changed": 0,
+    "walked_away": 0,
+    "dispute": 0,
+    "unknown": 1
+   },
+   "example_summaries": [
+    "Agency keeps all raw footage and can cut multiple videos from one shoot without extra pay.",
+    "Once a raw video file is handed over, only the contract can limit its use, so a takedown window should be specified.",
+    "Some campaigns demand raw files on top of finished videos for roughly the same fee as a single video."
+   ]
+  }
+ ]
+}

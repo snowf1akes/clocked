@@ -4,9 +4,10 @@ import { unlink, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
+import community from "@/data/community_signals.json";
 import rateRows from "@/data/rates.json";
 import { judge, quantile, type RateRow } from "@/lib/rate";
-import { checkFlags, scanImage, scanText } from "@/lib/scan";
+import { annotate, checkFlags, lawyer, scanImage, scanText, type Signal } from "@/lib/scan";
 import { scrub, scrubDeep, type Removed } from "@/lib/scrub";
 import { api } from "@/convex/_generated/api";
 import { ConvexHttpClient } from "convex/browser";
@@ -17,6 +18,7 @@ export const maxDuration = 120;
 const client = new Anthropic();
 const run = promisify(execFile);
 const IMAGES = ["image/jpeg", "image/png", "image/webp"] as const;
+const SIGNALS = community.signals as Signal[];
 type Hidden = { page: number; text: string; why: string };
 type PdfText = { text: string; hidden: Hidden[]; error?: string };
 
@@ -70,9 +72,9 @@ export async function POST(req: Request) {
     // personal details come out before Claude sees the text; quotes are checked against this same scrubbed text
     ({ text, removed } = scrub(pdf.text));
     hidden = pdf.hidden;
-    scan = await scanText(client, text);
+    scan = await scanText(client, text, SIGNALS);
   } else if ((IMAGES as readonly string[]).includes(file.type)) {
-    const img = await scanImage(client, buf.toString("base64"), file.type as (typeof IMAGES)[number]);
+    const img = await scanImage(client, buf.toString("base64"), file.type as (typeof IMAGES)[number], SIGNALS);
     // ponytail: a photo reaches Claude before scrubbing (there is no text to scrub yet); scrubbed before saving
     ({ text, removed } = scrub(img?.transcript ?? ""));
     scan = img;
@@ -81,7 +83,7 @@ export async function POST(req: Request) {
   }
   if (!scan) return Response.json({ error: "The scan failed. Try again." }, { status: 502 });
 
-  const flags = checkFlags(scan.flags, text);
+  const flags = annotate(checkFlags(scan.flags, text), SIGNALS);
   // Fair rate = what creators report charging. Upwork posts are brand offers, the thing being judged,
   // so they are shown as context, not mixed into the baseline.
   const all = rateRows as RateRow[];
@@ -91,6 +93,12 @@ export async function POST(req: Request) {
   const price = verdict ? `$${(Math.round(verdict.fair_total / 10) * 10).toLocaleString("en-US")}` : "a market rate";
   // scrubDeep again over the whole report: catches anything Claude echoed from a photo, and the hidden text
   const report = scrubDeep({
+    overall_risk: scan.overall_risk,
+    top_3: scan.top_3.slice(0, 3),
+    missing_protections: scan.missing_protections,
+    governing_law: scan.governing_law,
+    lawyer: lawyer(scan),
+    community_as_of: SIGNALS.length ? community.as_of : null,
     hidden,
     flags,
     dropped: scan.flags.length - flags.length,

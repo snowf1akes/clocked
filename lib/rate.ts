@@ -14,11 +14,9 @@ export const COMPANY_LABEL: Record<CompanyType, string> = {
 
 export type RateRow = {
   source: "reddit" | "upwork" | "fiverr";
-  url: string;
   per_video_usd: number; // base price for one video, usage rights excluded when the post says so
   paid_usage_addon_pct: number | null; // extra % charged for paid-ad / whitelisting rights, if stated
   perpetual_addon_pct: number | null; // extra % charged for forever usage, if stated
-  quote: string; // the words in the post the numbers came from
   category: CompanyType; // what the brand in the deal sells ("other" when the post doesn't say)
 };
 

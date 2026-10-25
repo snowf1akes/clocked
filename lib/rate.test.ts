@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { judge, type RateRow } from "./rate.ts";
 
 const row = (per: number, perpetual: number | null = null, category: RateRow["category"] = "other"): RateRow =>
-  ({ source: "reddit", url: "u", per_video_usd: per, paid_usage_addon_pct: null, perpetual_addon_pct: perpetual, quote: "q", category });
+  ({ source: "reddit", per_video_usd: per, paid_usage_addon_pct: null, perpetual_addon_pct: perpetual, category });
 
 test("prices the offer against the median and counts forever rights when enough deals state them", () => {
   const rows = [100, 150, 200, 250, 300].map((p) => row(p, 100));

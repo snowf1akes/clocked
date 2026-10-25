@@ -31,6 +31,22 @@ const ACTORS = {
     maxItems: 400,
     includeNSFW: false,
   }],
+  // Community Red Flag Radar: one small research pull of creators discussing contract terms.
+  // Reddit limits commercial use of its data, so this stays a one-time research sample.
+  radar: ["trudax~reddit-scraper-lite", {
+    searches: [
+      "contract", "usage rights", "in perpetuity", "universal usage", "whitelisting", "spark ads",
+      "AI likeness", "exclusivity", "red flag", "net 60", "net 90", "kill fee", "unlimited revisions",
+      "didn't pay", "raw footage", "work for hire",
+    ],
+    searchCommunityName: "UGCcreators",
+    searchPosts: true,
+    searchComments: false,
+    sort: "new",
+    time: "year",
+    maxItems: 250,
+    includeNSFW: false,
+  }],
   upwork: ["neatrat~upwork-job-scraper", {
     query: "UGC video",
     jobType: ["fixed"],
