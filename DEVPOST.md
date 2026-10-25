@@ -59,16 +59,13 @@ DURING A SCAN (every time)                                        │
 
 ### Tech stack
 
-| LAYER | TECHNOLOGY | PURPOSE |
-|---|---|---|
-| Frontend | Next.js 16, React 19, TypeScript | One page with three views |
-| Sign-in | Auth0 | Sign-in token, checked on the server with `jose` |
-| Backend | Vercel functions (Node + Python) | The scan route, and PDF reading with PyMuPDF |
-| Contract AI | Claude Opus 5.5, structured JSON output, no tools | Two reading passes per contract |
-| Database | Convex | Reports per user, daily scan count, live list, hourly auto-delete |
-| Market research | Apify: `reddit-scraper-lite`, `upwork-job-scraper` | 4 runs, 1,050 posts and jobs |
-| Data labeling | Claude Opus 5.5 (offline scripts) | Labels each price and complaint; code checks every label |
-
+- **Frontend:** Next.js 16, React 19, TypeScript. One page with three views.
+- **Sign-in:** Auth0. Sign-in token, checked on the server with `jose`.
+- **Backend:** Vercel functions (Node + Python). The scan route, and PDF reading with PyMuPDF.
+- **Contract AI:** Claude Opus 5.5, structured JSON output, no tools. Two reading passes per contract.
+- **Database:** Convex. Reports per user, daily scan count, live list, hourly auto-delete.
+- **Market research:** Apify: `reddit-scraper-lite`, `upwork-job-scraper`. 4 runs, 1,050 posts and jobs.
+- **Data labeling:** Claude Opus 5.5 (offline scripts). Labels each price and complaint; code checks every label.
 ### Apify: the market research pipeline
 
 Nobody publishes UGC rates, so we built the dataset ourselves.
@@ -103,14 +100,11 @@ We did not fine-tune a model. We tuned a rubric that our law student teammate ca
 
 ### Security
 
-| THREAT | CONTROL |
-|---|---|
-| Someone reads another user's report | Every Convex function checks the sign-in token and touches only that user's rows |
-| Strangers burn our AI budget | Token checked on the server; 20 scans per user per day; the PDF function answers only with a secret header |
-| Prompt injection inside the PDF | Hidden text removed before the model reads; the model has no tools; every flag must quote the real contract |
-| Personal data reaches the model or the database | Scrubbed before Claude, and again before saving |
-| A stored contract leaks | The file is never stored; reports delete themselves one week after the contract ends |
-
+- **Someone reads another user's report.** Every Convex function checks the sign-in token and touches only that user's rows.
+- **Strangers burn our AI budget.** Token checked on the server; 20 scans per user per day; the PDF function answers only with a secret header.
+- **Prompt injection inside the PDF.** Hidden text removed before the model reads; the model has no tools; every flag must quote the real contract.
+- **Personal data reaches the model or the database.** Scrubbed before Claude, and again before saving.
+- **A stored contract leaks.** The file is never stored; reports delete themselves one week after the contract ends.
 ## Challenges we ran into
 
 - The venue network kept resetting Apify's long polls mid-run. We switched to short polls with retries.

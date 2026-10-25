@@ -1,0 +1,133 @@
+INSPIRATION
+
+The first time a brand offered Anna money to make content, she thought it was a scam.
+
+Anna was already a creator, but she had no creator friends to compare notes with. She had no way to check if the offer was real, if the price was fair, or what she would be agreeing to.
+
+A brand deal is a second job: reading contracts, negotiating usage rights, chasing payments. A friendly email can carry unfriendly terms. "In perpetuity" means your video works for the brand forever. Broad exclusivity blocks your next deal. An AI-likeness clause decides what a brand can do with your face and voice. A lawyer costs more than the deal, so small creators sign alone.
+
+We built Clocked to be the experienced creator friend Anna wished she had: someone who reads the fine print, spots the catch, checks the pay, and tells you what to ask for.
+
+Brands clocked your engagement. Now clock their contract.
+
+WHAT IT DOES
+
+Clocked is an AI contract reviewer and pay checker for UGC creators. Here's how it works:
+
+You upload once. Drop in the brand's contract as a PDF, or take a photo of a paper one.
+
+Clo takes over.
+
+• Contract X-ray reads every clause twice. Pass one catches terms that are unfair as written: perpetual usage, paid ads bundled in for free, AI likeness rights, work-for-hire, no kill fee. Pass two catches wording that looks normal but works against you, such as a 90-day clock that starts only "when Brand first publishes", so it may never start. Every flag shows the brand's exact words next to a fair version, with the changed words highlighted.
+• Rate Check prices the deal against market data we collected and verified with Apify. It gives a fair range, a counteroffer, and the rights you could drop instead if the budget is fixed. It shows the sample size and a confidence level. It never puts a price on AI rights, because no reliable market price exists.
+• Community Red Flag Radar shows which of your flagged clauses creators on r/UGCcreators are warning each other about right now.
+• Real-world examples attach to matching flags, such as Pujols v. Rainbow USA (AI-made images under an "altered" release) and Holston v. True Nutra (a creator's videos in 12 Meta ads for a brand she never worked with).
+• Hidden-text detection finds white or tiny text in the PDF, the kind of planted line that tells AI reviewers "this contract is fair", and removes it before the model reads the document.
+
+You reply once. Copy the drafted counteroffer email and send it to the brand.
+
+Result: in about 25 seconds, a creator with no legal background gets an overall risk level, the top 3 things to fix before signing, the standard protections that are missing, how underpaid the offer is in dollars, and the exact words to ask for instead.
+
+Our mascot, Clo, lowers her sunglasses when something needs a second look. Clocked explains contract terms; it is not a law firm.
+
+HOW WE BUILT IT
+
+SYSTEM ARCHITECTURE
+
+At a high level, Clocked is a Next.js app on Vercel, a Convex database, Auth0 sign-in, and Claude Opus 5.5 for reading language. Apify powers a research pipeline that runs before a scan. A scan never scrapes anything.
+
+BEFORE THE DEMO (run once)
+┌────────────┐   ┌───────────────┐   ┌───────────────┐   ┌──────────────────┐
+│ Apify      │──►│ 1,050 posts   │──►│ Claude labels │──►│ 119 verified     │
+│ 4 runs     │   │ and job posts │   │ code verifies │   │ prices + 4 radar │
+└────────────┘   └───────────────┘   └───────────────┘   │ signals (JSON)   │
+                                                         └────────┬─────────┘
+DURING A SCAN (every time)                                        │
+┌─────────┐  PDF + token  ┌──────────────────────────────────────┐ │
+│ Browser │──────────────►│ /api/scan on Vercel                  │ │
+│ (Auth0) │◄──────────────│ 1 check sign-in token                │ │
+└─────────┘    report     │ 2 count scan (max 20/day)  ──► Convex│ │
+                          │ 3 read PDF, strip hidden text        │ │
+                          │ 4 remove personal details            │ │
+                          │ 5 Claude pass 1 + pass 2 in parallel │ │
+                          │ 6 keep only flags that quote the     │ │
+                          │   contract; add cases; price deal ◄──┼─┘
+                          │ 7 save scrubbed report     ──► Convex│
+                          └──────────────────────────────────────┘
+
+TECH STACK
+
+• Frontend: Next.js 16, React 19, TypeScript. One page with three views.
+• Sign-in: Auth0. Sign-in token, checked on the server with jose.
+• Backend: Vercel functions (Node + Python). The scan route, and PDF reading with PyMuPDF.
+• Contract AI: Claude Opus 5.5, structured JSON output, no tools. Two reading passes per contract.
+• Database: Convex. Reports per user, daily scan count, live list, hourly auto-delete.
+• Market research: Apify: reddit-scraper-lite, upwork-job-scraper. 4 runs, 1,050 posts and jobs.
+• Data labeling: Claude Opus 5.5 (offline scripts). Labels each price and complaint; code checks every label.
+APIFY: THE MARKET RESEARCH PIPELINE
+
+Nobody publishes UGC rates, so we built the dataset ourselves.
+
+1. Collect. Our script starts each Apify actor through the Apify API, polls it every 15 seconds, and downloads the results. Four runs on r/UGCcreators and Upwork: rate questions (300 items), one search per brand industry (400), contract-term complaints for the Radar (250), and UGC job posts from payment-verified brands (100).
+2. Label. Claude reads each post and returns a structured record: the exact quoted price, whether it is a creator's ask, a brand's offer or an accepted deal, which rights were included, and the brand's industry.
+3. Verify in code. A price is dropped unless its quote appears word for word in the post and the amount appears in the quote. We also drop influencer prices, advice ranges, hourly and non-USD prices, and keep at most 3 prices per thread.
+4. Group. Asks, offers and accepted deals are never mixed. "$150 for an organic video" is never compared with "$150 for a video plus a year of paid ads". A group is used for pricing only with 15+ prices from 5+ threads.
+
+Result: 780 recent items → 229 prices extracted → 119 verified, with a recorded reason for each of the 110 we dropped. The Radar sorted 250 complaints into our 19 clause types and kept the 4 with enough mentions: perpetual usage (15), paid ads bundled in (14), performance pay with no minimum (8), raw footage (7). Published files contain no post text, links or usernames.
+
+AGENT WORKFLOW
+
+Clocked is not one prompt. It is a chain of narrow model calls, each with a fixed output format, each checked by code before the next step.
+
+1. PDF reader (code). PyMuPDF reads every piece of text with its color, size and position. White, under-3-point or off-page text is marked hidden and never reaches the model.
+2. Scrubber (code). Names, emails, phones, addresses, handles, SSNs and bank numbers become placeholders.
+3. Pass 1, unfair terms (Claude). Flags against 19 clause types, plus overall risk, top 3 fixes, missing protections, and the deal terms for pricing.
+4. Pass 2, vague wording (Claude). Reads every definition, deadline and condition for small wording with big consequences. Runs at the same time as pass 1.
+5. Verifier (code). Drops any flag whose quote is not word for word in the contract. Attaches the matching lawsuit and legal note by clause type. The model never writes a case or a statistic, so it cannot invent one.
+6. Pay Checker (code, 11 tests). Base rate per video × videos × (1 + uplifts for the rights the contract takes) = fair range. Then verdict, counteroffer, rights to drop, and a one-sentence message to send.
+
+LEGAL FINE-TUNING
+
+We did not fine-tune a model. We tuned a rubric that our law student teammate can edit in one file:
+
+• 19 clause types in 4 categories, each with trigger language, a default risk level, and a real case.
+• Five protections every contract is checked for: usage end date, payment date, AI clause, creator approval before publishing, kill fee.
+• 12 vague-wording patterns, such as clocks the brand controls and "may" where "shall" was needed.
+• Lawyer escalation enforced in code: deals of $5,000 or more, any AI or likeness grant, usage that may never end.
+• Pay uplifts from practitioner data: paid usage +20–50%, perpetual or ownership +50–100%, exclusivity +30–50%, raw footage +30–50%.
+
+SECURITY
+
+• Someone reads another user's report. Every Convex function checks the sign-in token and touches only that user's rows.
+• Strangers burn our AI budget. Token checked on the server; 20 scans per user per day; the PDF function answers only with a secret header.
+• Prompt injection inside the PDF. Hidden text removed before the model reads; the model has no tools; every flag must quote the real contract.
+• Personal data reaches the model or the database. Scrubbed before Claude, and again before saving.
+• A stored contract leaks. The file is never stored; reports delete themselves one week after the contract ends.
+CHALLENGES WE RAN INTO
+
+• The venue network kept resetting Apify's long polls mid-run. We switched to short polls with retries.
+• Reddit restricts commercial use of its data, so our pull is a one-time research sample with usernames dropped. In-app anonymous reports are designed to replace it.
+• Scraped prices lie by omission. Posts almost never say a deal was "organic only", so that group is too thin and the Pay Checker falls back to a default range and says so. Honest thin data beats a confident wrong number.
+• The Radar's trend numbers looked great ("perpetual usage up 275%") and were fake: our sample over-represents recent months. We turned trends off.
+
+ACCOMPLISHMENTS THAT WE'RE PROUD OF
+
+• 1,050 scraped items turned into 119 prices we would defend in front of a judge: labeled by type and rights, verified against the source by code, stripped of anything personal.
+• A contract that reads fair to a human and still gets 7 planted traps caught by the second pass, including a 90-day clock that never starts.
+• Zero invented citations by design: the model picks a clause type, code attaches the case.
+• A pay checker that reproduces our law student's worked example to the dollar.
+• Clo, who lowers her sunglasses at the fine print.
+
+WHAT WE LEARNED
+
+A creator's ability to make great content does not come with the knowledge to run the business around it.
+
+Useful AI has to show its reasoning. A flag is worth more when the creator can see the clause, the fair version beside it, and the lawsuit where that wording was fought over. A rate is worth more when it says "based on 22 brand offers, confidence medium" than when it just sounds sure.
+
+Scraping was the easy part. Making scraped numbers safe to negotiate real money on took most of the pipeline.
+
+WHAT'S NEXT FOR CLOCKED
+
+• In-app rate reports: after a check, ask "what did you end up getting paid?", anonymously, with the rights already extracted. Over time this replaces Reddit.
+• Deal Inbox: turn brand emails into a pipeline, so Clo catches the contract before you open it.
+• Weekly Apify refresh with a human spot-check gate before any new data goes live.
