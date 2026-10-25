@@ -36,26 +36,7 @@ Our mascot, **Clo**, lowers her sunglasses when something needs a second look. C
 
 At a high level, Clocked is a Next.js app on Vercel, a Convex database, Auth0 sign-in, and Claude Opus 5.5 for reading language. Apify powers a research pipeline that runs before a scan. A scan never scrapes anything.
 
-```
-BEFORE THE DEMO (run once)
-┌────────────┐   ┌───────────────┐   ┌───────────────┐   ┌──────────────────┐
-│ Apify      │──►│ 1,050 posts   │──►│ Claude labels │──►│ 119 verified     │
-│ 4 runs     │   │ and job posts │   │ code verifies │   │ prices + 4 radar │
-└────────────┘   └───────────────┘   └───────────────┘   │ signals (JSON)   │
-                                                         └────────┬─────────┘
-DURING A SCAN (every time)                                        │
-┌─────────┐  PDF + token  ┌──────────────────────────────────────┐ │
-│ Browser │──────────────►│ /api/scan on Vercel                  │ │
-│ (Auth0) │◄──────────────│ 1 check sign-in token                │ │
-└─────────┘    report     │ 2 count scan (max 20/day)  ──► Convex│ │
-                          │ 3 read PDF, strip hidden text        │ │
-                          │ 4 remove personal details            │ │
-                          │ 5 Claude pass 1 + pass 2 in parallel │ │
-                          │ 6 keep only flags that quote the     │ │
-                          │   contract; add cases; price deal ◄──┼─┘
-                          │ 7 save scrubbed report     ──► Convex│
-                          └──────────────────────────────────────┘
-```
+(Architecture diagram: docs/architecture.png in the repo, and the first image in the gallery.)
 
 ### Tech stack
 

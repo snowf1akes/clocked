@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#1c1622"/></marker>
+    <marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#e83e78"/></marker>
+  </defs>
+  <rect width="1600" height="980" fill="#ffffff"/>
+
+  <!-- title -->
+  <text x="60" y="58" font-size="30" font-weight="700" fill="#1c1622">Clocked: system architecture</text>
+  <text x="60" y="88" font-size="16" fill="#625a6b">Apify builds the market data before the demo. A scan uses that data but never scrapes.</text>
+
+  <!-- legend -->
+  <rect x="1130" y="40" width="22" height="14" rx="3" fill="#fde6ef" stroke="#e83e78" stroke-width="1.5"/>
+  <text x="1160" y="52" font-size="14" fill="#625a6b">AI step (Claude)</text>
+  <rect x="1290" y="40" width="22" height="14" rx="3" fill="#efebf6" stroke="#2e2437" stroke-width="1.5"/>
+  <text x="1320" y="52" font-size="14" fill="#625a6b">Code step</text>
+  <rect x="1130" y="66" width="22" height="14" rx="3" fill="#ffffff" stroke="#625a6b" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="1160" y="78" font-size="14" fill="#625a6b">Stays on the laptop</text>
+  <line x1="1290" y1="73" x2="1312" y2="73" stroke="#1c1622" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="1320" y="78" font-size="14" fill="#625a6b">Reply</text>
+
+  <!-- ===== lane 1: before the demo ===== -->
+  <rect x="60" y="118" width="1480" height="250" rx="18" fill="#f7f6f9"/>
+  <text x="84" y="150" font-size="13" font-weight="700" fill="#625a6b" letter-spacing="2">BEFORE THE DEMO · RUN ONCE · MARKET RESEARCH</text>
+
+  <rect x="84" y="180" width="230" height="150" rx="12" fill="#ffffff" stroke="#ddd7e4" stroke-width="1.5"/>
+  <text x="199" y="214" font-size="18" font-weight="700" fill="#1c1622" text-anchor="middle">Apify</text>
+  <text x="199" y="240" font-size="14" fill="#625a6b" text-anchor="middle">4 actor runs</text>
+  <text x="199" y="262" font-size="14" fill="#625a6b" text-anchor="middle">Reddit scraper ×3</text>
+  <text x="199" y="284" font-size="14" fill="#625a6b" text-anchor="middle">Upwork job scraper ×1</text>
+  <text x="199" y="310" font-size="13" fill="#625a6b" text-anchor="middle">started and polled via the Apify API</text>
+
+  <line x1="314" y1="255" x2="376" y2="255" stroke="#1c1622" stroke-width="2" marker-end="url(#ar)"/>
+
+  <rect x="380" y="180" width="230" height="150" rx="12" fill="#ffffff" stroke="#625a6b" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="495" y="214" font-size="18" font-weight="700" fill="#1c1622" text-anchor="middle">Raw data</text>
+  <text x="495" y="240" font-size="14" fill="#625a6b" text-anchor="middle">1,050 posts and job posts</text>
+  <text x="495" y="262" font-size="14" fill="#625a6b" text-anchor="middle">usernames, links and</text>
+  <text x="495" y="284" font-size="14" fill="#625a6b" text-anchor="middle">post text stay on the laptop</text>
+
+  <line x1="610" y1="255" x2="672" y2="255" stroke="#e83e78" stroke-width="2" marker-end="url(#arp)"/>
+
+  <rect x="676" y="180" width="230" height="150" rx="12" fill="#fde6ef" stroke="#e83e78" stroke-width="1.5"/>
+  <text x="791" y="214" font-size="18" font-weight="700" fill="#1c1622" text-anchor="middle">Claude labels</text>
+  <text x="791" y="240" font-size="14" fill="#625a6b" text-anchor="middle">ask, offer or accepted deal</text>
+  <text x="791" y="262" font-size="14" fill="#625a6b" text-anchor="middle">rights included, industry</text>
+  <text x="791" y="284" font-size="14" fill="#625a6b" text-anchor="middle">exact quote of the price</text>
+  <text x="791" y="310" font-size="13" fill="#625a6b" text-anchor="middle">229 prices extracted</text>
+
+  <line x1="906" y1="255" x2="968" y2="255" stroke="#1c1622" stroke-width="2" marker-end="url(#ar)"/>
+
+  <rect x="972" y="180" width="230" height="150" rx="12" fill="#efebf6" stroke="#2e2437" stroke-width="1.5"/>
+  <text x="1087" y="214" font-size="18" font-weight="700" fill="#1c1622" text-anchor="middle">Code verifies</text>
+  <text x="1087" y="240" font-size="14" fill="#625a6b" text-anchor="middle">quote is in the post</text>
+  <text x="1087" y="262" font-size="14" fill="#625a6b" text-anchor="middle">amount is in the quote</text>
+  <text x="1087" y="284" font-size="14" fill="#625a6b" text-anchor="middle">USD, UGC, max 3 per thread</text>
+  <text x="1087" y="310" font-size="13" fill="#625a6b" text-anchor="middle">110 dropped, each with a reason</text>
+
+  <line x1="1202" y1="255" x2="1264" y2="255" stroke="#1c1622" stroke-width="2" marker-end="url(#ar)"/>
+
+  <rect x="1268" y="180" width="250" height="150" rx="12" fill="#ffffff" stroke="#ddd7e4" stroke-width="1.5"/>
+  <text x="1393" y="214" font-size="18" font-weight="700" fill="#1c1622" text-anchor="middle">Published data</text>
+  <text x="1393" y="240" font-size="14" fill="#625a6b" text-anchor="middle">119 verified prices</text>
+  <text x="1393" y="262" font-size="14" fill="#625a6b" text-anchor="middle">+ 4 community signals</text>
+  <text x="1393" y="284" font-size="14" fill="#625a6b" text-anchor="middle">two small JSON files in the app</text>
+  <text x="1393" y="310" font-size="13" fill="#625a6b" text-anchor="middle">no quotes, links or names</text>
+
+
+  <!-- ===== lane 2: during a scan ===== -->
+  <rect x="60" y="392" width="1480" height="548" rx="18" fill="#f7f6f9"/>
+  <text x="84" y="424" font-size="13" font-weight="700" fill="#625a6b" letter-spacing="2">DURING A SCAN · EVERY TIME · ABOUT 25 SECONDS</text>
+  <!-- connector from published data down to the scan route -->
+  <path d="M1393 330 L1393 528 L1130 528" fill="none" stroke="#1c1622" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#ar)"/>
+  <text x="1405" y="440" font-size="13" fill="#625a6b">read during</text>
+  <text x="1405" y="458" font-size="13" fill="#625a6b">every scan</text>
+
+  <!-- browser -->
+  <rect x="84" y="470" width="200" height="110" rx="12" fill="#ffffff" stroke="#ddd7e4" stroke-width="1.5"/>
+  <text x="184" y="505" font-size="18" font-weight="700" fill="#1c1622" text-anchor="middle">Browser</text>
+  <text x="184" y="530" font-size="14" fill="#625a6b" text-anchor="middle">creator's device</text>
+  <text x="184" y="552" font-size="14" fill="#625a6b" text-anchor="middle">Next.js page</text>
+
+  <!-- auth0 -->
+  <rect x="84" y="640" width="200" height="90" rx="12" fill="#ffffff" stroke="#ddd7e4" stroke-width="1.5"/>
+  <text x="184" y="675" font-size="18" font-weight="700" fill="#1c1622" text-anchor="middle">Auth0</text>
+  <text x="184" y="700" font-size="14" fill="#625a6b" text-anchor="middle">sign-in, issues a token</text>
+  <line x1="184" y1="640" x2="184" y2="582" stroke="#1c1622" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+  <text x="196" y="616" font-size="13" fill="#625a6b">token, kept in memory</text>
+
+  <!-- browser -> scan -->
+  <line x1="284" y1="505" x2="396" y2="505" stroke="#1c1622" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="340" y="497" font-size="13" fill="#625a6b" text-anchor="middle">PDF + token</text>
+  <line x1="396" y1="548" x2="286" y2="548" stroke="#1c1622" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+  <text x="340" y="568" font-size="13" fill="#625a6b" text-anchor="middle">report</text>
+
+  <!-- scan route -->
+  <rect x="400" y="450" width="730" height="470" rx="14" fill="#ffffff" stroke="#ddd7e4" stroke-width="1.5"/>
+  <text x="424" y="484" font-size="18" font-weight="700" fill="#1c1622">/api/scan</text>
+  <text x="520" y="484" font-size="14" fill="#625a6b">Vercel, Node</text>
+
+  <!-- steps -->
+  <rect x="424" y="506" width="330" height="44" rx="9" fill="#efebf6" stroke="#2e2437" stroke-width="1.5"/>
+  <text x="440" y="534" font-size="15" fill="#1c1622"><tspan font-weight="700">1</tspan>  Check the sign-in token's signature</text>
+
+  <rect x="424" y="562" width="330" height="44" rx="9" fill="#efebf6" stroke="#2e2437" stroke-width="1.5"/>
+  <text x="440" y="590" font-size="15" fill="#1c1622"><tspan font-weight="700">2</tspan>  Count this scan, max 20 per day</text>
+
+  <rect x="424" y="618" width="330" height="44" rx="9" fill="#efebf6" stroke="#2e2437" stroke-width="1.5"/>
+  <text x="440" y="646" font-size="15" fill="#1c1622"><tspan font-weight="700">3</tspan>  Read the PDF, strip hidden text</text>
+
+  <rect x="424" y="674" width="330" height="44" rx="9" fill="#efebf6" stroke="#2e2437" stroke-width="1.5"/>
+  <text x="440" y="702" font-size="15" fill="#1c1622"><tspan font-weight="700">4</tspan>  Remove personal details</text>
+
+  <rect x="424" y="730" width="330" height="62" rx="9" fill="#fde6ef" stroke="#e83e78" stroke-width="1.5"/>
+  <text x="440" y="756" font-size="15" fill="#1c1622"><tspan font-weight="700">5</tspan>  Claude pass 1: unfair terms</text>
+  <text x="460" y="778" font-size="15" fill="#1c1622">Claude pass 2: vague wording, in parallel</text>
+
+  <rect x="424" y="804" width="330" height="44" rx="9" fill="#efebf6" stroke="#2e2437" stroke-width="1.5"/>
+  <text x="440" y="832" font-size="15" fill="#1c1622"><tspan font-weight="700">6</tspan>  Keep only flags that quote the contract</text>
+
+  <rect x="424" y="860" width="330" height="44" rx="9" fill="#efebf6" stroke="#2e2437" stroke-width="1.5"/>
+  <text x="440" y="888" font-size="15" fill="#1c1622"><tspan font-weight="700">7</tspan>  Add cases, price the deal, save report</text>
+
+  <!-- right column inside scan: side services -->
+  <rect x="790" y="618" width="316" height="44" rx="9" fill="#efebf6" stroke="#2e2437" stroke-width="1.5"/>
+  <text x="806" y="638" font-size="14" font-weight="700" fill="#1c1622">/api/pdftext  · Vercel, Python</text>
+  <text x="806" y="655" font-size="12.5" fill="#625a6b">PyMuPDF: white, tiny or off-page text = hidden</text>
+  <line x1="754" y1="640" x2="786" y2="640" stroke="#1c1622" stroke-width="2" marker-end="url(#ar)"/>
+
+  <rect x="790" y="730" width="316" height="62" rx="9" fill="#fde6ef" stroke="#e83e78" stroke-width="1.5"/>
+  <text x="806" y="754" font-size="14" font-weight="700" fill="#1c1622">Claude Opus 5.5</text>
+  <text x="806" y="772" font-size="12.5" fill="#625a6b">structured JSON output, no tools</text>
+  <text x="806" y="786" font-size="12.5" fill="#625a6b">19 clause types, fair-version diffs</text>
+  <line x1="754" y1="761" x2="786" y2="761" stroke="#e83e78" stroke-width="2" marker-end="url(#arp)"/>
+
+  <rect x="790" y="506" width="316" height="44" rx="9" fill="#ffffff" stroke="#ddd7e4" stroke-width="1.5"/>
+  <text x="806" y="526" font-size="14" font-weight="700" fill="#1c1622">Published data</text>
+  <text x="806" y="543" font-size="12.5" fill="#625a6b">benchmarks + community signals</text>
+
+  <rect x="790" y="860" width="316" height="44" rx="9" fill="#efebf6" stroke="#2e2437" stroke-width="1.5"/>
+  <text x="806" y="880" font-size="14" font-weight="700" fill="#1c1622">Verifier + Pay Checker  · code</text>
+  <text x="806" y="897" font-size="12.5" fill="#625a6b">cases attached by clause type, 11 tests</text>
+  <line x1="754" y1="882" x2="786" y2="882" stroke="#1c1622" stroke-width="2" marker-end="url(#ar)"/>
+
+  <!-- convex -->
+  <rect x="1190" y="610" width="328" height="300" rx="14" fill="#ffffff" stroke="#ddd7e4" stroke-width="1.5"/>
+  <text x="1214" y="644" font-size="18" font-weight="700" fill="#1c1622">Convex</text>
+  <text x="1296" y="644" font-size="14" fill="#625a6b">database</text>
+  <rect x="1214" y="664" width="280" height="56" rx="9" fill="#efebf6" stroke="#2e2437" stroke-width="1.5"/>
+  <text x="1230" y="687" font-size="14" font-weight="700" fill="#1c1622">usage</text>
+  <text x="1230" y="706" font-size="12.5" fill="#625a6b">scans per user per day</text>
+  <rect x="1214" y="732" width="280" height="76" rx="9" fill="#efebf6" stroke="#2e2437" stroke-width="1.5"/>
+  <text x="1230" y="755" font-size="14" font-weight="700" fill="#1c1622">reports</text>
+  <text x="1230" y="774" font-size="12.5" fill="#625a6b">scrubbed report, owner, delete date</text>
+  <text x="1230" y="792" font-size="12.5" fill="#625a6b">every function checks the caller's token</text>
+  <rect x="1214" y="820" width="280" height="56" rx="9" fill="#efebf6" stroke="#2e2437" stroke-width="1.5"/>
+  <text x="1230" y="843" font-size="14" font-weight="700" fill="#1c1622">cron: every hour</text>
+  <text x="1230" y="862" font-size="12.5" fill="#625a6b">delete reports past their delete date</text>
+
+  <!-- scan -> convex arrows -->
+  <path d="M754 584 L1160 584 L1160 692 L1210 692" fill="none" stroke="#1c1622" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="900" y="576" font-size="13" fill="#625a6b">+1 scan today</text>
+  <path d="M1106 882 L1160 882 L1160 770 L1210 770" fill="none" stroke="#1c1622" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="1120" y="905" font-size="13" fill="#625a6b">save</text>
+
+  <!-- footnote -->
+  <text x="84" y="930" font-size="13" fill="#625a6b">The contract file is never stored. Claude sees only visible, scrubbed text and has no tools. Code rejects any flag whose quote is not word for word in the contract.</text>
+</svg>
