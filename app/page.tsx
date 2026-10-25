@@ -1,5 +1,9 @@
 "use client";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useConvexAuth, useMutation, useQuery } from "convex/react";
 import { useState } from "react";
+import { api } from "@/convex/_generated/api";
+import type { Id } from "@/convex/_generated/dataModel";
 import type { Verdict } from "@/lib/rate";
 import type { Scan, ScanFlag } from "@/lib/scan";
 import s from "./page.module.css";
@@ -10,6 +14,8 @@ type Result = Omit<Scan, "flags"> & {
   dropped: number;
   verdict: Verdict | null;
   brand_posts: { n: number; median: number } | null;
+  removed: Record<string, number>;
+  from_photo: boolean;
 };
 
 const usd = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
@@ -33,20 +39,28 @@ const LAW_NOTE: Partial<Record<ScanFlag["category"], string>> = {
 };
 
 export default function Home() {
+  const { loginWithRedirect, logout, user, getAccessTokenSilently } = useAuth0();
+  const { isAuthenticated, isLoading } = useConvexAuth();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [result, setResult] = useState<Result | null>(null);
+  const [openId, setOpenId] = useState<Id<"reports"> | null>(null);
+  const saved = useQuery(api.reports.get, openId ? { id: openId } : "skip");
+  const shown = openId ? (saved?.report as Result | undefined) : result;
 
   async function scan(file: File) {
     setBusy(true);
     setError("");
     setResult(null);
+    setOpenId(null);
     try {
+      const id_token = (await getAccessTokenSilently({ detailedResponse: true }))?.id_token;
+      if (!id_token) throw new Error("Your sign-in expired. Sign in again.");
       const body = new FormData();
       const upload = await shrink(file);
       if (upload.size > 4.4e6) throw new Error("File is over 4.4 MB. Try a smaller PDF or a photo.");
       body.append("file", upload);
-      const res = await fetch("/api/scan", { method: "POST", body });
+      const res = await fetch("/api/scan", { method: "POST", body, headers: { Authorization: `Bearer ${id_token}` } });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Scan failed.");
       setResult(json);
@@ -64,14 +78,36 @@ export default function Home() {
 
   return (
     <main className={s.main}>
-      <header className={s.header}>
+      <nav className={s.topbar}>
         <p className={s.brand}>Clocked</p>
+        {isAuthenticated ? (
+          <span className={s.account}>
+            <span>{user?.email ?? user?.name}</span>
+            <button className={s.link} onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+              Sign out
+            </button>
+          </span>
+        ) : (
+          <button className={s.link} onClick={() => loginWithRedirect()} disabled={isLoading}>
+            Sign in
+          </button>
+        )}
+      </nav>
+      <header className={s.header}>
         <h1>Know what you&apos;re signing and what you&apos;re worth.</h1>
         <p className={s.lede}>
           Drop in a brand deal. We flag the clauses that take your rights, explain them in plain English, and check the pay against real UGC deals.
         </p>
       </header>
 
+      {!isAuthenticated ? (
+        <section className={s.gate}>
+          <p>Sign in to scan a contract. Your reports are saved to your account and only you can see them.</p>
+          <button className={s.primary} onClick={() => loginWithRedirect()} disabled={isLoading}>
+            {isLoading ? "Checking…" : "Sign in to start"}
+          </button>
+        </section>
+      ) : (
       <section className={s.upload}>
         <label className={s.drop}>
           <input
@@ -86,10 +122,12 @@ export default function Home() {
           Try the demo contract
         </button>
       </section>
+      )}
 
       {busy && <p className={s.status}>Checking for hidden text, reading every clause, comparing the pay. About 25 seconds.</p>}
       {error && <p className={s.error} role="alert">{error}</p>}
-      {result && <Report r={result} />}
+      {shown && <Report r={shown} />}
+      {isAuthenticated && <History openId={openId} onOpen={(id) => { setOpenId(id); window.scrollTo({ top: 0 }); }} />}
 
       <footer className={s.footer}>Clocked explains contract terms. It is not legal advice.</footer>
     </main>
@@ -101,6 +139,15 @@ function Report({ r }: { r: Result }) {
   const v = r.verdict;
   return (
     <div className={s.report}>
+      {Object.keys(r.removed ?? {}).length > 0 && (
+        <section className={s.privacy}>
+          <h2>{Object.values(r.removed).reduce((a, b) => a + b, 0)} personal details removed before analysis</h2>
+          <p>
+            {Object.entries(r.removed).map(([k, n]) => `${n} ${k}${n > 1 ? "s" : ""}`).join(", ")}. Your file is never stored; only this scrubbed report is saved to your account.
+            {r.from_photo && " Photos are read before scrubbing, so the saved report is scrubbed afterward."}
+          </p>
+        </section>
+      )}
       {r.hidden.length > 0 && (
         <section className={s.hidden} role="alert">
           <h2>Hidden text found</h2>
@@ -208,5 +255,40 @@ function Strip({ v }: { v: Verdict }) {
       <circle cx={x(v.offer_per_video)} cy="35" r="8" fill="var(--red)" />
       <text x={x(v.offer_per_video)} y="66" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--red)">you {usd(v.offer_per_video)}</text>
     </svg>
+  );
+}
+
+// The signed-in user's past scans. Convex only returns rows they own.
+function History({ openId, onOpen }: { openId: Id<"reports"> | null; onOpen: (id: Id<"reports"> | null) => void }) {
+  const rows = useQuery(api.reports.list);
+  const remove = useMutation(api.reports.remove);
+  if (!rows?.length) return null;
+  return (
+    <section className={s.history}>
+      <h2 className={s.h2}>Your scans</h2>
+      <ul>
+        {rows.map((r) => (
+          <li key={r._id} data-open={r._id === openId}>
+            <button className={s.row} onClick={() => onOpen(r._id)}>
+              <strong>{r.brand || r.fileName}</strong>
+              <span>
+                {new Date(r._creationTime).toLocaleDateString()} · {r.flagCount} red flags
+                {r.underpaidBy && r.underpaidBy > 0 ? ` · underpaid ${usd(r.underpaidBy)}` : ""}
+              </span>
+            </button>
+            <button
+              className={s.link}
+              aria-label={`Delete scan of ${r.brand || r.fileName}`}
+              onClick={() => {
+                if (r._id === openId) onOpen(null);
+                remove({ id: r._id });
+              }}
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }

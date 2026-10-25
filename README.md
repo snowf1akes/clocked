@@ -24,6 +24,19 @@ photo ────────────────────────�
 
 So: deciding **which clauses are risky** is Claude's judgment, guided by the checklist in the prompt and checked against the real contract text. Deciding **whether the pay is fair** is code, from scraped data, with the math shown on the page.
 
+## How contracts stay private
+
+| Risk | What Clocked does | File |
+|---|---|---|
+| Someone else sees your contract | Sign-in with Auth0. Every Convex function checks the caller's token and only reads or deletes rows they own. | [convex/reports.ts](convex/reports.ts) |
+| Strangers run up the AI bill | The scan route rejects requests without a valid Auth0 token (checked against Auth0's signing keys). | [app/api/scan/route.ts](app/api/scan/route.ts) |
+| Personal details reach the AI or the database | Names, emails, phones, addresses, handles, SSNs, tax IDs and bank/card numbers are replaced with placeholders before Claude reads the text, and the whole report is scrubbed again before saving. | [lib/scrub.ts](lib/scrub.ts) |
+| The contract file leaks later | The file is never stored. It lives in memory for one request; only the scrubbed report is saved. Users can delete any report. | [convex/schema.ts](convex/schema.ts) |
+| A booby-trapped contract steers the AI | Hidden text is removed in code before Claude sees it. The model has no tools, so text in a contract can't make it do anything. Every flag must quote the real contract. | [api/pdftext.py](api/pdftext.py), [lib/scan.ts](lib/scan.ts) |
+| A malicious PDF attacks the server | PDFs are parsed in their own short-lived Python function, separate from the app server that holds the user's session. | [api/pdftext.py](api/pdftext.py) |
+
+Known limits: the scrubber is pattern-based, so a name in running text with no label can slip through. A photo is read by Claude before scrubbing (there's no text to scrub yet); its saved report is scrubbed. Anthropic's API does not train on inputs by default.
+
 ## Where to refine (for the legal side)
 
 | What you want to change | Where |
@@ -53,7 +66,7 @@ pip install -r requirements.txt
 npm run dev
 ```
 
-`.env.local` needs `ANTHROPIC_API_KEY` (and `APIFY_TOKEN` only to re-scrape). `npm test` runs the rate math tests. `npm run demo-contract` rebuilds `public/demo-contract.pdf`, the demo contract with planted traps and one hidden line.
+`.env.local` needs `ANTHROPIC_API_KEY`, `NEXT_PUBLIC_CONVEX_URL`, `NEXT_PUBLIC_AUTH0_DOMAIN`, `NEXT_PUBLIC_AUTH0_CLIENT_ID` (and `APIFY_TOKEN` only to re-scrape). Run `npx convex dev` alongside `npm run dev`. `npm test` runs the rate math tests. `npm run demo-contract` rebuilds `public/demo-contract.pdf`, the demo contract with planted traps and one hidden line.
 
 ## Data
 

@@ -61,3 +61,21 @@
 .counter { white-space: pre-wrap; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; font: inherit; }
 
 .footer { margin-top: 56px; color: var(--muted); font-size: 13px; }
+
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 28px; }
+.account { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 14px; min-width: 0; }
+.account > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.link { background: none; border: 0; padding: 4px 0; color: var(--accent); font-weight: 600; }
+.gate { margin: 28px 0 8px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+.gate p { margin-bottom: 4px; }
+
+.privacy { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; }
+.privacy h2 { font-size: 17px; color: var(--green); margin-bottom: 2px; }
+.privacy p { color: var(--muted); font-size: 14px; }
+
+.history { margin-top: 48px; }
+.history ul { list-style: none; padding: 0; display: grid; gap: 8px; }
+.history li { display: flex; align-items: center; gap: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 4px 16px 4px 4px; }
+.history li[data-open="true"] { border-color: var(--accent); }
+.row { flex: 1; min-width: 0; display: grid; text-align: left; background: none; border: 0; padding: 10px 12px; color: var(--ink); }
+.row span { color: var(--muted); font-size: 14px; }

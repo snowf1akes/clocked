@@ -7,6 +7,10 @@ import { promisify } from "node:util";
 import rateRows from "@/data/rates.json";
 import { judge, quantile, type RateRow } from "@/lib/rate";
 import { checkFlags, scanImage, scanText } from "@/lib/scan";
+import { scrub, scrubDeep, type Removed } from "@/lib/scrub";
+import { api } from "@/convex/_generated/api";
+import { ConvexHttpClient } from "convex/browser";
+import { createRemoteJWKSet, jwtVerify } from "jose";
 
 export const maxDuration = 120;
 
@@ -15,6 +19,21 @@ const run = promisify(execFile);
 const IMAGES = ["image/jpeg", "image/png", "image/webp"] as const;
 type Hidden = { page: number; text: string; why: string };
 type PdfText = { text: string; hidden: Hidden[]; error?: string };
+
+// Scans cost money and reports are private, so every scan needs a signed-in user.
+// The browser sends its Auth0 ID token; Convex checks the same token again when saving.
+const AUTH0 = `https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/`;
+const JWKS = createRemoteJWKSet(new URL(".well-known/jwks.json", AUTH0));
+async function signedIn(req: Request): Promise<string | null> {
+  const token = req.headers.get("authorization")?.replace(/^Bearer /, "");
+  if (!token) return null;
+  try {
+    await jwtVerify(token, JWKS, { issuer: AUTH0, audience: process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID });
+    return token;
+  } catch {
+    return null;
+  }
+}
 
 // On Vercel, api/pdftext.py is a Python function; locally `next dev` can't serve it, so run the script.
 async function pdfText(buf: Buffer, origin: string): Promise<PdfText> {
@@ -33,6 +52,8 @@ async function pdfText(buf: Buffer, origin: string): Promise<PdfText> {
 }
 
 export async function POST(req: Request) {
+  const token = await signedIn(req);
+  if (!token) return Response.json({ error: "Sign in to scan a contract." }, { status: 401 });
   const file = (await req.formData()).get("file");
   if (!(file instanceof File)) return Response.json({ error: "Attach a contract PDF or photo." }, { status: 400 });
   if (file.size > 4.4e6) return Response.json({ error: "File is over 4.4 MB." }, { status: 413 });
@@ -40,16 +61,20 @@ export async function POST(req: Request) {
 
   let text = "";
   let hidden: Hidden[] = [];
+  let removed: Removed = {};
   let scan;
   if (file.type === "application/pdf") {
     const pdf = await pdfText(buf, req.url);
     if (pdf.error) return Response.json({ error: pdf.error }, { status: 422 });
-    ({ text, hidden } = pdf);
-    if (!text.trim()) return Response.json({ error: "This PDF has no text layer. Take a photo of it instead." }, { status: 422 });
+    if (!pdf.text.trim()) return Response.json({ error: "This PDF has no text layer. Take a photo of it instead." }, { status: 422 });
+    // personal details come out before Claude sees the text; quotes are checked against this same scrubbed text
+    ({ text, removed } = scrub(pdf.text));
+    hidden = pdf.hidden;
     scan = await scanText(client, text);
   } else if ((IMAGES as readonly string[]).includes(file.type)) {
     const img = await scanImage(client, buf.toString("base64"), file.type as (typeof IMAGES)[number]);
-    text = img?.transcript ?? "";
+    // ponytail: a photo reaches Claude before scrubbing (there is no text to scrub yet); scrubbed before saving
+    ({ text, removed } = scrub(img?.transcript ?? ""));
     scan = img;
   } else {
     return Response.json({ error: "Upload a PDF, JPG, PNG or WebP." }, { status: 415 });
@@ -64,7 +89,8 @@ export async function POST(req: Request) {
   const posts = all.filter((r) => r.source === "upwork").map((r) => r.per_video_usd).sort((a, b) => a - b);
   const brand_posts = posts.length >= 5 ? { n: posts.length, median: quantile(posts, 0.5) } : null;
   const price = verdict ? `$${(Math.round(verdict.fair_total / 10) * 10).toLocaleString("en-US")}` : "a market rate";
-  return Response.json({
+  // scrubDeep again over the whole report: catches anything Claude echoed from a photo, and the hidden text
+  const report = scrubDeep({
     hidden,
     flags,
     dropped: scan.flags.length - flags.length,
@@ -73,5 +99,11 @@ export async function POST(req: Request) {
     counteroffer: scan.counteroffer.replaceAll("[FAIR_PRICE]", price),
     verdict,
     brand_posts,
+    removed,
+    from_photo: file.type !== "application/pdf",
   });
+  const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
+  convex.setAuth(token);
+  const id = await convex.mutation(api.reports.save, { fileName: file.name, report });
+  return Response.json({ ...report, id });
 }

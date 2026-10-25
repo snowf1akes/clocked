@@ -12,8 +12,12 @@ from pdftext import read_path  # noqa: E402
 OUT = os.path.join(os.path.dirname(__file__), "..", "public", "demo-contract.pdf")
 
 TITLE = "UGC CONTENT CREATION AGREEMENT"
-INTRO = ('This Agreement is made between Lumora Skin Co. ("Brand") and the undersigned content '
-         'creator ("Creator"), effective on the date of signature.')
+INTRO = ('This Agreement is made between Lumora Skin Co. ("Brand") and Maya Chen ("Creator"), '
+         'effective on the date of signature.')
+# fake personal details, so the demo shows the scrubber working
+CONTACT = ("Creator: Maya Chen    Email: maya.chen@gmail.com    Phone: (415) 555-0142\n"
+           "Address: 1250 Mission Street, Apt 4B, San Francisco, CA    TikTok: @mayamakes\n"
+           "Payment to account number 000123456789")
 CLAUSES = [
     ("1. Deliverables", "Creator will produce three (3) short-form vertical videos, 30 to 60 seconds each, "
      "featuring the Brand's Daily Glow Serum, plus one hook variation per video."),
@@ -59,7 +63,8 @@ def build():
         y = textbox(page, y + 18, body, 10.5)
     # the trap: white 1pt text, invisible on paper, readable by any PDF text extractor
     page.insert_textbox(pymupdf.Rect(72, y + 4, 540, y + 20), HIDDEN, fontsize=1, color=(1, 1, 1))
-    page.insert_text((72, min(y + 50, 800)), "Creator signature: ____________________     Date: __________",
+    y = textbox(page, y + 30, CONTACT, 10)
+    page.insert_text((72, min(y + 20, 810)), "Creator signature: ____________________     Date: __________",
                      fontsize=10.5)
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     doc.save(OUT)
